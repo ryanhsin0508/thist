@@ -1,0 +1,166 @@
+.q-menu {
+  max-height: 200px !important;
+  .q-item__label {
+    font-family: Overpass;
+  }
+}
+.q-page {
+  background-color: #f0eff4;
+}
+.fa,
+.fas,
+.far,
+.fal,
+.fad,
+.fab {
+  font-family: "Font Awesome 6 Pro";
+}
+.fad, .fa-duotone {
+  position: relative;
+  font-family: 'Font Awesome 6 Duotone';
+  font-weight: 900;
+}
+.q-table__container {
+  .checkbox {
+    width: 60px;
+    pointer-events: none;
+    .q-checkbox{
+      pointer-events: all;
+    }
+  }
+  max-width: 100%;
+  th {
+    background-color: $gray2 !important;
+    color: $gray7;
+    height: 56px;
+  }
+  thead tr,
+  tbody td {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 44px;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: $gray11;
+  }
+  tbody tr:hover {
+    td {
+      background-color: $main100a;
+    }
+  }
+  tbody td:before {
+    display: none;
+  }
+  tbody tr.selected td:after {
+    display: none;
+  }
+  &.selectable {
+    th,
+    td {
+      &:first-child {
+        width: 60px;
+      }
+    }
+  }
+  &.mini {
+    th {
+      height: 35px;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    thead tr,
+    tbody td {
+      padding-top: 0;
+      padding-bottom: 0;
+      // font-size: 12px;
+      font-size: 13px;
+      height: 29px;
+      color: $gray11;
+    }
+  }
+}
+.q-checkbox .q-checkbox__bg {
+  border-width: 1px;
+  border-color: $gray4;
+  color: #fff;
+  background-color: #fff;
+}
+.q-checkbox__inner--truthy .q-checkbox__bg {
+  border-color: $main500a;
+}
+.q-checkbox__inner--truthy,
+.q-checkbox__inner--indet {
+  color: #fff;
+}
+.q-checkbox__svg {
+  color: $main500a;
+}
+.q-checkbox__inner {
+  font-size: 28px;
+}
+.q-scrollarea__bar {
+  right: 0px;
+  border-radius: 9px;
+  background-color: #2196f3;
+  width: 9px;
+  opacity: 0.2;
+}
+.q-scrollarea__thumb {
+  right: 2px;
+  border-radius: 5px;
+  background-color: #2196f3;
+  width: 5px;
+  opacity: 0.75;
+}
+.q-select__dropdown-icon {
+  font-size: 12px;
+  color: #0092b0;
+}
+.q-item__section--side > .q-icon {
+  font-size: 12px;
+}
+.q-item--active {
+  background-color: #c7f9f2;
+  color: #0092b0;
+}
+.device-management .q-item {
+  min-height: 42px;
+}
+.q-field--outlined .q-field__control:before,
+.q-field--outlined .q-field__control:hover:before,
+.q-field--outlined.q-field--highlighted .q-field__control:after {
+  border-color: #58dadc;
+}
+.custom-height {
+  display: block;
+  .q-field__control,
+  .q-field__marginal,
+  .q-field__native {
+    min-height: 32px;
+    height: 32px;
+  }
+}
+.q-table {
+  table-layout: fixed;
+  width:auto;
+  min-width: 100%;
+  max-width:none;
+  th {
+    font-weight: initial;
+    font-size: 12px;
+    color: $gray8;
+  }
+  th,td{
+    max-width: 240px;
+  }
+}
+body.desktop .q-focusable:focus > .q-focus-helper, body.desktop .q-manual-focusable--focused > .q-focus-helper, body.desktop .q-hoverable:hover > .q-focus-helper{
+  background: none;
+}
+.q-expansion-item{
+  border-bottom: 1px solid #e7e7e8;
+  .q-item__section--side > .q-icon{
+  font-size: 16px;
+}
+}

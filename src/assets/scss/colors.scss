@@ -1,0 +1,82 @@
+.text-register {
+  color: #207480 !important;
+}
+.bg-register {
+  background: rgba(255, 255, 255, 0.6) !important;
+}
+.label-register {
+  background: #207480 !important;
+}
+$danger100:#FEE6D6;
+$danger200: #FDC7AE;
+$danger300: #FBA186;
+$danger500: #F44336;
+$danger600: #d12729;
+$danger700: #af1b29;
+$gray1: #f9fafb;
+$gray2: #f1f2f3;
+$gray3: #e7e7e8;
+$gray4: #d1d2d4;
+$gray5: #bbbcbf;
+$gray6: #a5a7aa;
+$gray7: #8f9195;
+$gray8: #797c80;
+$gray9: #63666b;
+$gray11: #373b42;
+$info500: #2196f3;
+$info600: #1874d0;
+$info700: #1057ae;
+$main100: #c7f9f2;
+$main100a: #eefffd;
+$main200: #92f3ed;
+$main300: #58dadc;
+$main400: #2eadba;
+$main500: #00758d;
+$main500a: #0092b0;
+$main600: #005b79;
+$main700: #004465;
+$main800: #003151;
+$main900: #002343;
+$success500: #8bc34a;
+$success700: #538c25;
+$success800: #3b7117;
+$success900: #2a5d0e;
+$warning500: #ffc107;
+$warning600: #dba005;
+$warning800: #936402;
+$excellent: #b0db75;
+$good: #e5f9bb;
+$fair: #ffe16a;
+$poor: #f44336;
+.color {
+  &-danger500 {
+    color: $danger500;
+  }
+  &-danger600 {
+    color: $danger600;
+  }
+  &-danger700 {
+    color: $danger700;
+  }
+  &-gray7 {
+    color: $gray7;
+  }
+  &-info600 {
+    color: $info600;
+  }
+  &-info700 {
+    color: $info700;
+  }
+  &-success500 {
+    color: $success500;
+  }
+  &-success700 {
+    color: $success700;
+  }
+  &-warning600 {
+    color: $warning600;
+  }
+  &-warning800 {
+    color: $warning800;
+  }
+}

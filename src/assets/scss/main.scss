@@ -1,0 +1,249 @@
+a {
+  display: flex;
+  align-items: center;
+  font-size: inherit;
+  color: #3676b3;
+  text-decoration: none;
+  outline: none;
+}
+code {
+  font-family: Consolas, "courier new";
+  color: crimson;
+  background-color: #f1f1f1;
+  padding: 2px;
+  font-size: 105%;
+}
+*{
+  line-height: 1.5;
+}
+h2 {
+  margin-top: 1.5em;
+  font-size: 24px;
+}
+h1,h2,h3,h4,h5{
+  margin-bottom: 0.5em;
+}
+strong {
+  font-weight: bold;
+}
+.flex {
+  display: flex;
+}
+.column {
+  flex-direction: column;
+}
+.container {
+  width: 100%;
+  max-width: 1366px;
+  margin: 0 auto;
+}
+#app {
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    border-radius: 5px;
+  }
+  *::-webkit-scrollbar-track {
+    // box-shadow: inset 0 0 1px #004150;
+    background: $gray2;
+    border-radius: 5px;
+  }
+
+  /* Handle */
+  *::-webkit-scrollbar-thumb {
+    width: 4px;
+    background: #4caafd;
+
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  *::-webkit-scrollbar-thumb:hover {
+    background: $main600;
+  }
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  border-bottom: 1px solid $gray3;
+  padding: 10px 24px;
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .title {
+    font-size: 24px;
+  }
+}
+.button {
+  outline: none;
+  cursor: pointer;
+  border: 1px solid $gray4;
+  border-radius: 4px;
+  color: $gray9;
+  background-color: transparent;
+  min-height: 32px;
+  padding: 5px 20px;
+  font-size: 14px;
+  line-height: 1.25;
+  &.mini {
+    padding: 2px 10px;
+    min-height: 0;
+  }
+  &.white {
+    color: $gray9;
+    &:hover {
+    }
+  }
+  i {
+    margin-right: 4px;
+  }
+  &.control {
+    font-size: 14px;
+    line-height: 26px;
+    height: 26px;
+    border-radius: 26px;
+    padding: 0 20px;
+  }
+  &.icon {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    padding: 0;
+    color: $main500;
+  }
+  &.iconed {
+    position: relative;
+    // color: $main500a;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin-bottom: 10px;
+    .icon {
+      position: absolute;
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      left: 0;
+      top: 0;
+    }
+    &:hover {
+    }
+    &:active {
+      background-color: $main100;
+    }
+  }
+  &.no-border {
+    border: none;
+  }
+  &:hover {
+    color: $main500;
+    border-color: $main200;
+  }
+  &:active {
+    border-color: $main300;
+  }
+  &.flat {
+    background-color: #4caafd;
+    color: #ffffff;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  &.auto {
+    width: auto;
+  }
+  &.full,
+  &.full-width {
+    width: 100%;
+  }
+  &:disabled,
+  &.disabled {
+    border: none;
+    user-select: none;
+    background-color: $gray1;
+    color: $gray4;
+    cursor: not-allowed;
+  }
+  &.colored {
+    background-color: $main100;
+    color: $main500;
+    border-color: $main300;
+    &:hover {
+      background-color: $main100a;
+    }
+    &:active {
+      background-color: $main300;
+    }
+    &:disabled,
+    &.disabled {
+      background-color: $main100;
+      color: $main300;
+    }
+  }
+  &.danger {
+    background-color: $danger200;
+    color: $danger700;
+    border-color: $danger300;
+    &:hover {
+      background-color: $danger100;
+    }
+    &:active {
+      background-color: $danger300;
+    }
+  }
+}
+main {
+  .title {
+    font-size: 24px;
+  }
+}
+.code {
+  font-family: consolas;
+  &.title{
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+}
+.code-block {
+  text-align: left;
+  background-color: #505050;
+  color: #ffffff;
+  padding: 24px 16px;
+  .code-key,
+  .code-var {
+    color: #ffffff;
+  }
+  .code-string {
+    color: #c3c6f3;
+  }
+  .code-parameter {
+    color: #ffc000;
+  }
+  .code-number {
+    color: #ff8efc;
+  }
+  .code-function-name {
+    color: #46eeff;
+  }
+  .code-js-function {//let
+    color: #ffbbd1;
+  }
+  .code-operator {
+    color: #00ff37;
+  }
+}
+pre {
+  padding: 0 10px;
+  font-size: 12px;
+  font-family: "consolas";
+  line-height: 1.33;
+}
+pre.json {
+  color: #d0ceb7;
+}
