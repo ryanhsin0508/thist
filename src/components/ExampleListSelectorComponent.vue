@@ -6,6 +6,7 @@
       :placeholder="'Please select an example'"
       @change="updateSelected"
     />
+    <input type="text">
     <pre v-if="selected === 'family'">
 <span class="code-js-function">var</span> <span class="code-var">familyList</span> <span class="code-operator">=</span> [
   {
@@ -167,7 +168,6 @@ export default {
     return {
       selected: "",
       get test() {
-        console.log(that);
         return "asd";
       },
       examples: {},
@@ -178,8 +178,7 @@ export default {
       this.selected = list[0].value;
     },
     selected(value) {
-      console.log("asd");
-      this.$store.commit("SET_DATA", { selectedExample: value });
+      this.$store.commit("SET_DATA", { selectedExampleName: value });
     },
   },
   computed: {
@@ -195,8 +194,11 @@ export default {
     updateSelected() {},
   },
   async mounted() {
-    if (this.dataX.selectedExample) {
-      this.selected = this.dataX.selectedExample;
+    if(this.optionList){
+      this.selected = this.optionList[0].value;
+    }
+    if (this.dataX.selectedExampleName) {
+      this.selected = this.dataX.selectedExampleName;
     }
   },
 };

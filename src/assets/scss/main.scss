@@ -13,14 +13,18 @@ code {
   padding: 2px;
   font-size: 105%;
 }
-*{
+* {
   line-height: 1.5;
 }
 h2 {
   margin-top: 1.5em;
   font-size: 24px;
 }
-h1,h2,h3,h4,h5{
+h1,
+h2,
+h3,
+h4,
+h5 {
   margin-bottom: 0.5em;
 }
 strong {
@@ -34,7 +38,7 @@ strong {
 }
 .container {
   width: 100%;
-  max-width: 1366px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 #app {
@@ -205,7 +209,7 @@ main {
 }
 .code {
   font-family: consolas;
-  &.title{
+  &.title {
     font-style: italic;
     margin-bottom: 16px;
   }
@@ -231,15 +235,18 @@ main {
   .code-function-name {
     color: #46eeff;
   }
-  .code-js-function {//let
+  .code-js-function {
+    //let
     color: #ffbbd1;
   }
   .code-operator {
     color: #00ff37;
   }
+  .code-seperator {
+    color: #fff;
+  }
 }
 pre {
-  padding: 0 10px;
   font-size: 12px;
   font-family: "consolas";
   line-height: 1.33;

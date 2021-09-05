@@ -4,7 +4,7 @@ export default {
       usageList: [
         {
           desc: "Get Great Granddaughter’s data",
-          code: `tt.find($exampleList, item => item.role === "Great granddaughter", "children")`,
+          code: `tt.find($exampleList, (item, index) => item.role === "Great granddaughter", "children")`,
           result: `{
   role: "Great granddaughter",
   name: "Lisa",
@@ -12,15 +12,7 @@ export default {
 },
 `,
         },
-        {
-          desc: "Get Jack's data",
-          code: `tt.find($exampleList, item => item.name === "Jack", "children")`,
-          result: `{
-  role: "Great grandson",
-  name: "Jack",
-  age: 2,
-}`,
-        },
+        
       ],
     },
     business: {

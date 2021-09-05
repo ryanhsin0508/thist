@@ -3,7 +3,7 @@ let defaultState = () => ({
   dataX: {
     listExamples: {},
     codeExamples: {},
-    selectedExample: "",
+    selectedExampleName: "",
   },
 });
 export default createStore({
@@ -13,6 +13,13 @@ export default createStore({
       for (let key in payload) {
         state.dataX[key] = payload[key];
       }
+    },
+  },
+  getters: {
+    selectedExampleList: state => {
+      return state.dataX.selectedExampleName
+        ? state.dataX.listExamples[state.dataX.selectedExampleName].list
+        : [];
     },
   },
   actions: {},

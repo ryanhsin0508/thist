@@ -22,17 +22,41 @@
             v-if="usg.code"
             v-html="
               codeColorize(
-                usg.code.replace('$exampleList', `${dataX.selectedExample}List`)
+                usg.code.replace(
+                  '$exampleList',
+                  `${dataX.selectedExampleName}List`
+                ),
+                true
               )
             "
           ></div>
-          <div class="result" v-if="usg.code">
-            // =>
-            {{
-              looseJsonParse(
-                usg.code.replace("$exampleList", JSON.stringify(exampleList))
+          <div class="test" v-html="codeColorize(test)"></div>
+          <pre
+            v-if="false"
+            v-html="
+              codeColorize(
+                JSON.stringify(selectedExampleList, null, '  '),
+                true
               )
-            }}
+            "
+          ></pre>
+
+          <div class="result" v-if="usg.code">
+            <span style="margin-right:1em;">// => </span>
+            <pre
+              >{{
+                JSON.stringify(
+                  looseJsonParse(
+                    usg.code.replace(
+                      "$exampleList",
+                      JSON.stringify(exampleList, null, "  ")
+                    )
+                  ),
+                  null,
+                  "  "
+                )
+              }}
+            </pre>
           </div>
         </div>
       </div>
@@ -51,16 +75,18 @@ export default {
   },
   components: {},
   data() {
-    return {};
+    return {
+      test: `tt.find(list, (item, index) => test(item, index).role === "Great granddaughter", "children")`,
+    };
   },
   watch: {},
   computed: {
     exampleList() {
-      return this.dataX.listExamples[this.dataX.selectedExample].list;
+      return this.dataX.listExamples[this.dataX.selectedExampleName].list;
     },
     usageList() {
-      return this.dataX.selectedExample
-        ? this.dataX.codeExamples[this.title][this.dataX.selectedExample]
+      return this.dataX.selectedExampleName
+        ? this.dataX.codeExamples[this.title][this.dataX.selectedExampleName]
             .usageList
         : [];
     },

@@ -9,15 +9,15 @@
 <script>
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import codeExamples from "@/assets/js/codeExamples";
+import listExamples from "@/assets/js/listExamples";
 export default {
   name: "App",
   components: { HeaderComponent },
   async mounted() {
-    let listExamplesRes = await this.axios.get(`/listExamples.json`);
-    let codeExamplesRes = await this.axios.get(`/codeExamples.json`);
+    console.log(listExamples)
     this.$store.commit("SET_DATA", {
-      listExamples: listExamplesRes.data,
-      codeExamples: codeExamples,
+      listExamples,
+      codeExamples,
     });
   },
 };
