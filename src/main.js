@@ -79,7 +79,6 @@ app.mixin({
         let end = withinIndexList[1];
         console.log(str2.substring(start, end));
       });
-      return;
       // console.log(functionPartialList)
 
       /* jsFunctionList.forEach(value => {
@@ -103,33 +102,34 @@ app.mixin({
       }
       // renderFunctionNameColor(_code); //OOO
       function renderArrowFunctionArgColor(str) {
-        let matchedIndexList = str.withinIndexList(",", "=>", true);
+        let matchedIndexList = str.withinIndexList(",", "=>", true, null, [
+          ")",
+          null,
+        ]);
         let argList = [];
         matchedIndexList.forEach(withinIndexList => {
           let startIndex = withinIndexList[0];
           let endIndex = withinIndexList[1];
           let withinString = str.substring(startIndex, endIndex);
-          if (withinString.includes(")")) {
-            let _str = str.substring(0, endIndex);
-            startIndex = _str.lastIndexOf("(");
-            console.log(endIndex);
-          }
-          while (str[startIndex] === " ") {
-            startIndex++;
-          }
-          while (str[endIndex - 1] === " ") {
-            endIndex--;
-          }
-
+          let argStr = withinString
+            .replaceAll("(", "")
+            .replaceAll(")", "")
+            .replaceAll(" ", "");
+          argList = argStr.split(",")
+            console.log(argList);
           _code = _code.insert(endIndex, "</span>");
           _code = _code.insert(startIndex, '<span class="code-parameter">');
         });
         console.log(matchedIndexList);
-        let _matchedIndexList = str.withinIndexList("=>", ",", true);
+        let _matchedIndexList = str.withinIndexList("=>", ",", true, null, [
+          null,
+          "(",
+        ]);
         _matchedIndexList.forEach(withinIndexList => {
-          let startIndex = withinIndexList[0] + 1;
+          let startIndex = withinIndexList[0];
           let endIndex = withinIndexList[1];
           let withinString = str.substring(startIndex, endIndex);
+
           console.log(withinString);
         });
       }
