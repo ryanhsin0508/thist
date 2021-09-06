@@ -15,12 +15,12 @@ Array.prototype.bubbleSort = function () {
   }
   return arr;
 };
-String.prototype.allIndexOf = function (findValue) {
+String.prototype.allIndexOf = function (findValue, withStr) {
   let str = this.toString();
   let list = [];
   let index = str.indexOf(findValue);
   while (index >= 0) {
-    list.push(index);
+    list.push(withStr ? index + findValue.length : index);
     index = str.indexOf(findValue, index + 1);
   }
   return list;
@@ -50,8 +50,6 @@ String.prototype.withins = function (startStr, endStr, isParentheses) {
     let findedStr = str.substring(startIndex + 1, endIndex);
     let startLen = findedStr.allIndexOf(startStr).length;
     let endLen = findedStr.allIndexOf(endStr).length;
-    console.log(startLen, endLen);
-    console.log(str, startIndex, endIndex);
     let done = startLen === endLen;
     let index = 0;
     if (startLen > endLen && isParentheses) {
@@ -68,29 +66,36 @@ String.prototype.withins = function (startStr, endStr, isParentheses) {
     list.push(findedStr);
     // findedStr = str.substring(startIndex, endIndex + 1);
   });
-  console.log(list);
   return list;
 };
-String.prototype.withinIndexList = function (startStr, endStr, isParentheses) {
+String.prototype.withinIndexList = function (
+  startStr,
+  endStr,
+  isParentheses,
+  offset,
+  skipList
+) {
   let str = this.toString();
+  let _offset = offset ? offset : 0;
+  let _skipList = skipList ? skipList : [];
+  let startStrLen = startStr.length;
   let list = [];
-  let startIndexList = str.allIndexOf(startStr);
+  let startIndexList = str.allIndexOf(startStr, true);
   startIndexList.forEach(startIndex => {
     let endIndex = str.indexOf(endStr, startIndex);
-    let findedStr = str.substring(startIndex + 1, endIndex);
+    let findedStr = str.substring(startIndex, endIndex);
     let startLen = findedStr.allIndexOf(startStr).length;
     let endLen = findedStr.allIndexOf(endStr).length;
     let done = startLen === endLen;
-    let index = 0;
-    console.log(endIndex);
-    if (startLen > endLen && endIndex >= 0 && isParentheses) {
+    console.log(startIndex, endIndex);
+    if (startLen > endLen && endIndex >= 0 && !done && isParentheses) {
       let index = 0;
       while (!done) {
         console.log(endIndex, findedStr, str);
         endIndex = str.indexOf(endStr, endIndex + 1);
-        findedStr = str.substring(startIndex + 1, endIndex);
-        let startLen = findedStr.allIndexOf(startStr).length;
-        let endLen = findedStr.allIndexOf(endStr).length;
+        findedStr = str.substring(startIndex, endIndex);
+        startLen = findedStr.allIndexOf(startStr).length;
+        endLen = findedStr.allIndexOf(endStr).length;
         if (startLen === endLen || endIndex < 0) {
           done = true;
         }
@@ -98,7 +103,35 @@ String.prototype.withinIndexList = function (startStr, endStr, isParentheses) {
       }
     }
     if (endIndex > 0) {
-      list.push([startIndex + 1, endIndex]);
+      let _startIndex = startIndex;
+      let _endIndex = endIndex;
+      let text = str.substring(startIndex + _offset, endIndex + _offset);
+      console.log(text);
+      if (_skipList.length) {
+        let index = 0;
+        let findOutside = function (value, findLeft, fromIndex) {
+          if (findLeft) {
+            _startIndex =
+              str.lastIndexOf(startStr, _startIndex - startStrLen - 1) +
+              startStrLen;
+            text = str.substring(_startIndex, startIndex);
+            startIndex = _startIndex
+          } else {
+            _endIndex = str.indexOf(endStr, _endIndex + 1);
+            text = str.substring(endIndex, _endIndex);
+            endIndex = _endIndex;
+          }
+          if (text.includes(value)) {
+            findOutside(value, findLeft);
+          }
+        };
+        skipList.forEach((value, index) => {
+          if (text.includes(value)) {
+            findOutside(value, index === 0);
+          }
+        });
+      }
+      list.push([_startIndex + _offset, _endIndex + _offset]);
     }
     // findedStr = str.substring(startIndex, endIndex + 1);
   });

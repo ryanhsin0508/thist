@@ -1,6 +1,5 @@
 class Thist {
   find(list, findFunction, childrenKeyName) {
-    console.log(list)
     let match = undefined;
     list.forEach(item => {
       if (findFunction(item)) {
