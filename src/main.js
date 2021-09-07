@@ -61,7 +61,7 @@ app.mixin({
       if (skip) {
         return code;
       }
-      let operatorList = ["+", "=", "-", "*", "!", "/"];
+      let operatorList = ["+", "=", "-", "*", "!", "/", "return", "if", "else"];
       let seperatorList = [":", ",", ".", "(", ")"];
       let _seperatorList = [...seperatorList, ...operatorList];
       let jsFunctionList = ["=>", "function"];
@@ -96,9 +96,12 @@ app.mixin({
       // return;
       // console.log(functionPartialList)
 
-      
-
       function renderArrowFunctionArgColor() {
+
+        function renderArgs(matchedIndexList, str, definedArgList){
+
+        }
+        //render defined args in arrow function
         let matchedIndexList = _code.withinIndexList(",", "=>", true, null, {
           left: { skipValue: ")", untilMet: "(" },
         });
@@ -108,15 +111,42 @@ app.mixin({
           let endIndex = withinIndexList[1];
           let withinString = _code.substring(startIndex, endIndex);
           let argStr = withinString
-            .replaceAll("(", "")
-            .replaceAll(")", "")
-            .replaceAll(" ", "");
-
+          .replaceAll("(", "")
+          .replaceAll(")", "")
+          .replaceAll(" ", "");
+          
           argList = argStr.split(",");
-
-          _code = _code.insert(endIndex, "</span>");
-          _code = _code.insert(startIndex, '<span class="code-parameter">');
+          argList.forEach(arg => {
+            let _arg = arg.trim();
+            let findedStartIndexList = withinString.allIndexOf(_arg).reverse()
+            findedStartIndexList.forEach(_startIndex => {
+              let __endIndex = _startIndex + _arg.length;
+              _code = _code.insert(startIndex + __endIndex, "</span>");
+              _code = _code.insert(
+                startIndex + _startIndex,
+                '<span class="code-parameter">'
+              );
+            });
+          })
+          // _code = _code.insert(endIndex, "</span>");
+          // _code = _code.insert(startIndex, '<span class="code-parameter">');
         });
+        
+        //render defined args in es5 function
+        matchedIndexList = _code.withinIndexList("function", "{")
+        matchedIndexList.forEach(withinIndexList => {
+          let startIndex = withinIndexList[0];
+          let endIndex = withinIndexList[1];
+          let withinString = _code.substring(startIndex, endIndex);
+          let argStr = withinString
+          .replaceAll("(", "")
+          .replaceAll(")", "")
+          .replaceAll(" ", "");
+          argList = argStr.split(",");
+          console.log(argStr)
+        })
+
+        //render args inside arrow function
         let _matchedIndexList = _code.withinIndexList(
           "=>",
           ",",
@@ -127,8 +157,7 @@ app.mixin({
           },
           true
         );
-
-        //render args inside arrow function
+        
         _matchedIndexList.forEach(withinIndexList => {
           let startIndex = withinIndexList[0];
           let endIndex = withinIndexList[1];
@@ -142,11 +171,14 @@ app.mixin({
             matchedIndexList.forEach(_startIndex => {
               //_startIndex === 0;
               let nextChar = withinString.nextChar(arg, " ");
-              console.log(_startIndex)
+              console.log(_startIndex);
               let _endIndex = _startIndex + startIndex + arg.length;
               if (nextChar === ".") {
                 _code = _code.insert(_endIndex, "</span>");
-                _code = _code.insert(_startIndex + startIndex, '<span class="code-parameter">');
+                _code = _code.insert(
+                  _startIndex + startIndex,
+                  '<span class="code-parameter">'
+                );
               }
             });
             console.log(matchedIndexList);
@@ -190,7 +222,7 @@ app.mixin({
             _code.substring(start - 6, end).indexOf('class="code') >= 0;
           if (!isClassName && _code.substring(end + 1, end + 2) !== ":") {
             _code = _code.insert(end, `</span>`);
-            _code = _code.insert(start, `<span class="code-function-name">`);
+            _code = _code.insert(start, `<span class="code-func-name">`);
           }
         });
       }
@@ -246,7 +278,7 @@ app.mixin({
       jsFunctionList.forEach(value => {
         _code = _code.replaceAll(
           value,
-          `<span class="code-js-function">${value}</span>`
+          `<span class="code-js-func">${value}</span>`
         );
       });
       return _code;

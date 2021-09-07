@@ -1,7 +1,7 @@
 <template>
   <div class="code-intro code-intro-component">
     <div class="code-title">
-      <div class="code-name code code-function-name">{{ title }}</div>
+      <div class="code-name code code-func-name">{{ title }}</div>
       <p class="desc">{{ desc }}</p>
     </div>
     <section class="arguments-intro">
@@ -9,7 +9,7 @@
       <ul class="arguments">
         <li v-for="(arg, index) in argumentList" :key="'arg' + index">
           <span class="code-parameter">{{ arg.label }}: </span
-          ><span class="code-js-function">{{ arg.type }}</span>
+          ><span class="code-js-func">{{ arg.type }}</span>
         </li>
       </ul>
     </section>
@@ -76,7 +76,7 @@ export default {
   components: {},
   data() {
     return {
-      test: `tt.find(list, function(item) => item.role === "Great granddaughter", "children")`,
+      test: `tt.find(list, (item) => item.role === "Great granddaughter", "children")`,
     };
   },
   watch: {},
@@ -107,7 +107,7 @@ export default {
 .code-intro {
   font-size: 15px;
 }
-.code-function-name {
+.code-func-name {
   font-size: 24px;
   margin-bottom: 0.25em;
 }

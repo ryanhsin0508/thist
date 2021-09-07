@@ -120,12 +120,10 @@ String.prototype.withinIndexList = function (
             _endIndex = str.indexOf(endStr, _endIndex + 1);
             text = str.substring(endIndex, _endIndex);
             endIndex = _endIndex;
-            console.log(_endIndex);
           }
           if (until) {
             _hasMet = text.includes(until);
           }
-          console.log(_hasMet, text);
           if (forceend) {
             return;
           }
@@ -146,7 +144,6 @@ String.prototype.withinIndexList = function (
       if (trim) {
         let startChar = str[_startIndex];
         let endChar = str[_endIndex - 1];
-        console.log(endChar);
         while (startChar && startChar === " ") {
           _startIndex++;
           startChar = str[_startIndex];

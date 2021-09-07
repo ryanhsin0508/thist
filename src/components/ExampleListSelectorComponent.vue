@@ -8,7 +8,7 @@
     />
     <input type="text">
     <pre v-if="selected === 'family'">
-<span class="code-js-function">var</span> <span class="code-var">familyList</span> <span class="code-operator">=</span> [
+<span class="code-js-func">var</span> <span class="code-var">familyList</span> <span class="code-operator">=</span> [
   {
     role: <span class="code-string">"Son"</span>,
     name: <span class="code-string">"Ryan"</span>,
@@ -53,7 +53,7 @@
 ];
     </pre>
     <pre v-if="selected === 'business'">
-<span class="code-js-function">var</span> businessList <span class="code-operator">=</span> [
+<span class="code-js-func">var</span> businessList <span class="code-operator">=</span> [
   {
     name: <span class="code-string">"Happy Farm"</span>,
     role: <span class="code-string">"Headquarter"</span>,
