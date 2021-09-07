@@ -73,14 +73,12 @@ String.prototype.withinIndexList = function (
   endStr,
   isParentheses,
   offset,
-  skipList
+  skips,
+  trim
 ) {
   let str = this.toString();
   let _offset = offset ? offset : 0;
-  let _skipList = skipList ? skipList : []; // [")", null]
-  let skips = {
-    start:""
-  }
+  let _skips = skips ? skips : undefined;
   let startStrLen = startStr.length;
   let list = [];
   let startIndexList = str.allIndexOf(startStr, true);
@@ -106,36 +104,80 @@ String.prototype.withinIndexList = function (
     if (endIndex > 0) {
       let _startIndex = startIndex;
       let _endIndex = endIndex;
-      let text = str.substring(startIndex + _offset, endIndex + _offset);
-      if (_skipList.length) {
-        let index = 0;
-        let findOutside = function (value, findLeft, fromIndex) {
+      if (_skips) {
+        let text = str.substring(startIndex + _offset, endIndex + _offset);
+        let findOutside = function (skipData, findLeft, hasMet, forceend) {
+          let value = skipData.skipValue;
+          let until = skipData.untilMet;
+          let _hasMet = hasMet === undefined ? (until ? false : true) : hasMet;
           if (findLeft) {
             _startIndex =
               str.lastIndexOf(startStr, _startIndex - startStrLen - 1) +
               startStrLen;
             text = str.substring(_startIndex, startIndex);
-            startIndex = _startIndex
+            startIndex = _startIndex;
           } else {
             _endIndex = str.indexOf(endStr, _endIndex + 1);
             text = str.substring(endIndex, _endIndex);
             endIndex = _endIndex;
+            console.log(_endIndex);
           }
-          if (text.includes(value)) {
-            findOutside(value, findLeft);
+          if (until) {
+            _hasMet = text.includes(until);
+          }
+          console.log(_hasMet, text);
+          if (forceend) {
+            return;
+          }
+          if (
+            (text.includes(value) || !_hasMet) &&
+            startIndex >= 0 &&
+            endIndex >= 0
+          ) {
+            findOutside(skipData, findLeft, _hasMet);
           }
         };
-        skipList.forEach((value, index) => {
-          if (text.includes(value)) {
-            findOutside(value, index === 0);
+        for (let key in _skips) {
+          if (text.includes(_skips[key].skipValue)) {
+            findOutside(_skips[key], key === "left");
           }
-        });
+        }
+      }
+      if (trim) {
+        let startChar = str[_startIndex];
+        let endChar = str[_endIndex - 1];
+        console.log(endChar);
+        while (startChar && startChar === " ") {
+          _startIndex++;
+          startChar = str[_startIndex];
+        }
+        while (endChar === " ") {
+          _endIndex--;
+          endChar = [_endIndex - 1];
+        }
       }
       list.push([_startIndex + _offset, _endIndex + _offset]);
     }
     // findedStr = str.substring(startIndex, endIndex + 1);
   });
   return list;
+};
+String.prototype.nextChar = function (findValue, skip) {
+  let str = this.toString();
+  let len = findValue.length;
+  let startList = str.allIndexOf(findValue);
+  let nextChar = "";
+  startList.forEach(startIndex => {
+    let endIndex = startIndex + len;
+    nextChar = str[endIndex];
+    if (skip) {
+      while (nextChar === skip) {
+        endIndex++;
+        nextChar = str[endIndex];
+      }
+    }
+  });
+  return nextChar;
 };
 String.prototype.allWithinIndex = function (findValue) {
   let str = this.toString();
