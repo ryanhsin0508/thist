@@ -205,6 +205,7 @@ app.mixin({
             console.log(matchedIndexList);
           });
           // within Parentheses
+          return
           let withinParenthesesList = withinString
             .withinIndexList("(", ")", true)
             .reverse();
