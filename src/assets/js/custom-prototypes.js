@@ -77,7 +77,10 @@ String.prototype.withinIndexList = function (
 ) {
   let str = this.toString();
   let _offset = offset ? offset : 0;
-  let _skipList = skipList ? skipList : [];
+  let _skipList = skipList ? skipList : []; // [")", null]
+  let skips = {
+    start:""
+  }
   let startStrLen = startStr.length;
   let list = [];
   let startIndexList = str.allIndexOf(startStr, true);
@@ -87,11 +90,9 @@ String.prototype.withinIndexList = function (
     let startLen = findedStr.allIndexOf(startStr).length;
     let endLen = findedStr.allIndexOf(endStr).length;
     let done = startLen === endLen;
-    console.log(startIndex, endIndex);
     if (startLen > endLen && endIndex >= 0 && !done && isParentheses) {
       let index = 0;
       while (!done) {
-        console.log(endIndex, findedStr, str);
         endIndex = str.indexOf(endStr, endIndex + 1);
         findedStr = str.substring(startIndex, endIndex);
         startLen = findedStr.allIndexOf(startStr).length;
@@ -106,7 +107,6 @@ String.prototype.withinIndexList = function (
       let _startIndex = startIndex;
       let _endIndex = endIndex;
       let text = str.substring(startIndex + _offset, endIndex + _offset);
-      console.log(text);
       if (_skipList.length) {
         let index = 0;
         let findOutside = function (value, findLeft, fromIndex) {

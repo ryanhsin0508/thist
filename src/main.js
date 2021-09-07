@@ -71,14 +71,16 @@ app.mixin({
         val.includes("=>")
       );
 
-      window.str2 = `tt.find(familyList, (item, index) => aaa(item, index).bbb(item,index).role === "Great granddaughter", "children")`;
-      let b = str2.withinIndexList("(", "=>", true, null, [")", null]);
+      window.str2 = `tt.find(familyList, (item, index, qq) => aaa(item, index).bbb(item,index).role === "Great granddaughter", "children")`;
+      let b = str2.withinIndexList("=>", ",", true, null, [null, "("]);
       console.log(b);
       b.forEach(withinIndexList => {
         let start = withinIndexList[0];
         let end = withinIndexList[1];
-        console.log(str2.substring(start, end));
+        let withinString = str2.substring(start, end);
+        console.log(withinString);
       });
+      return;
       // console.log(functionPartialList)
 
       /* jsFunctionList.forEach(value => {
@@ -101,8 +103,8 @@ app.mixin({
         });
       }
       // renderFunctionNameColor(_code); //OOO
-      function renderArrowFunctionArgColor(str) {
-        let matchedIndexList = str.withinIndexList(",", "=>", true, null, [
+      function renderArrowFunctionArgColor() {
+        let matchedIndexList = _code.withinIndexList(",", "=>", true, null, [
           ")",
           null,
         ]);
@@ -110,30 +112,48 @@ app.mixin({
         matchedIndexList.forEach(withinIndexList => {
           let startIndex = withinIndexList[0];
           let endIndex = withinIndexList[1];
-          let withinString = str.substring(startIndex, endIndex);
+          let withinString = _code.substring(startIndex, endIndex);
           let argStr = withinString
             .replaceAll("(", "")
             .replaceAll(")", "")
             .replaceAll(" ", "");
-          argList = argStr.split(",")
-            console.log(argList);
+
+          argList = argStr.split(",");
+
           _code = _code.insert(endIndex, "</span>");
           _code = _code.insert(startIndex, '<span class="code-parameter">');
         });
-        console.log(matchedIndexList);
-        let _matchedIndexList = str.withinIndexList("=>", ",", true, null, [
+        // console.log(matchedIndexList);
+        let _matchedIndexList = _code.withinIndexList("=>", ",", true, null, [
           null,
           "(",
         ]);
+        //render args inside arrow function
         _matchedIndexList.forEach(withinIndexList => {
           let startIndex = withinIndexList[0];
           let endIndex = withinIndexList[1];
-          let withinString = str.substring(startIndex, endIndex);
-
+          let withinString = _code.substring(startIndex, endIndex);
           console.log(withinString);
+          let withinStartIndexList = withinString
+            .withinIndexList("(", ")", true)
+            .reverse();
+
+          // within Parentheses
+          withinStartIndexList.forEach(withinIndexList => {
+            console.log(withinStartIndexList);
+            let _startIndex = withinIndexList[0] + startIndex;
+            let _endIndex = withinIndexList[1] + startIndex;
+            console.log(_code.substring(_startIndex, _endIndex));
+            let _argList = _code.substring(_startIndex, _endIndex).split(",");
+            _argList.forEach(arg => {
+              console.log(argList.includes(arg.trim()));
+            });
+          });
+          // console.log(withinString.substring())
         });
       }
       renderArrowFunctionArgColor(_code);
+
       function renderFunctionArgColor(str) {
         let matchedIndexList = _code.withinIndexList("(", ")", true).reverse();
         matchedIndexList.forEach(withinIndexList => {
