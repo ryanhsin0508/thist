@@ -97,54 +97,76 @@ app.mixin({
       // console.log(functionPartialList)
 
       function renderArrowFunctionArgColor() {
+        let argList = [];
+        function renderArgs(matchedIndexList, definedArgList) {
+          matchedIndexList.forEach(withinIndexList => {
+            let startIndex = withinIndexList[0];
+            let endIndex = withinIndexList[1];
+            let withinString = _code.substring(startIndex, endIndex);
+            console.log(withinString);
 
-        function renderArgs(matchedIndexList, str, definedArgList){
+            let argStr = definedArgList
+              ? definedArgList
+              : withinString
+                  .replaceAll("(", "")
+                  .replaceAll(")", "")
+                  .replaceAll(" ", "");
 
+            argList = argStr.split(",").reverse();
+            argList.forEach(arg => {
+              let _arg = arg.trim();
+              let findedStartIndexList = withinString
+                .allIndexOf(_arg)
+                .reverse();
+              findedStartIndexList.forEach(_startIndex => {
+                let __endIndex = _startIndex + _arg.length;
+                _code = _code.insert(startIndex + __endIndex, "</span>");
+                _code = _code.insert(
+                  startIndex + _startIndex,
+                  '<span class="code-parameter">'
+                );
+              });
+            });
+            if (definedArgList) {
+              let withinParenthesesList = withinString
+                .withinIndexList("(", ")", true)
+                .reverse();
+              withinParenthesesList.forEach(withinIndexList => {
+                let _startIndex = withinIndexList[0] + startIndex;
+                let _endIndex = withinIndexList[1] + startIndex;
+                let _withinString = _code.substring(_startIndex, _endIndex);
+                let _argList = _code
+                  .substring(_startIndex, _endIndex)
+                  .split(",")
+                  .reverse();
+                _argList.forEach(arg => {
+                  let _arg = arg.trim();
+                  if (argList.includes(_arg)) {
+                    let findedStartIndexList = _withinString
+                      .allIndexOf(_arg)
+                      .reverse();
+                    findedStartIndexList.forEach(__startIndex => {
+                      let __endIndex = __startIndex + _arg.length;
+                      _code = _code.insert(_startIndex + __endIndex, "</span>");
+                      _code = _code.insert(
+                        _startIndex + __startIndex,
+                        '<span class="code-parameter">'
+                      );
+                    });
+                  }
+                });
+              });
+            }
+          });
         }
         //render defined args in arrow function
         let matchedIndexList = _code.withinIndexList(",", "=>", true, null, {
           left: { skipValue: ")", untilMet: "(" },
         });
-        let argList = [];
-        matchedIndexList.forEach(withinIndexList => {
-          let startIndex = withinIndexList[0];
-          let endIndex = withinIndexList[1];
-          let withinString = _code.substring(startIndex, endIndex);
-          let argStr = withinString
-          .replaceAll("(", "")
-          .replaceAll(")", "")
-          .replaceAll(" ", "");
-          
-          argList = argStr.split(",");
-          argList.forEach(arg => {
-            let _arg = arg.trim();
-            let findedStartIndexList = withinString.allIndexOf(_arg).reverse()
-            findedStartIndexList.forEach(_startIndex => {
-              let __endIndex = _startIndex + _arg.length;
-              _code = _code.insert(startIndex + __endIndex, "</span>");
-              _code = _code.insert(
-                startIndex + _startIndex,
-                '<span class="code-parameter">'
-              );
-            });
-          })
-          // _code = _code.insert(endIndex, "</span>");
-          // _code = _code.insert(startIndex, '<span class="code-parameter">');
-        });
-        
+        renderArgs(matchedIndexList);
         //render defined args in es5 function
-        matchedIndexList = _code.withinIndexList("function", "{")
-        matchedIndexList.forEach(withinIndexList => {
-          let startIndex = withinIndexList[0];
-          let endIndex = withinIndexList[1];
-          let withinString = _code.substring(startIndex, endIndex);
-          let argStr = withinString
-          .replaceAll("(", "")
-          .replaceAll(")", "")
-          .replaceAll(" ", "");
-          argList = argStr.split(",");
-          console.log(argStr)
-        })
+        matchedIndexList = _code.withinIndexList("function", "{");
+        renderArgs(matchedIndexList);
 
         //render args inside arrow function
         let _matchedIndexList = _code.withinIndexList(
@@ -157,14 +179,12 @@ app.mixin({
           },
           true
         );
-        
+
         _matchedIndexList.forEach(withinIndexList => {
           let startIndex = withinIndexList[0];
           let endIndex = withinIndexList[1];
           let withinString = _code.substring(startIndex, endIndex);
-          let withinParenthesesList = withinString
-            .withinIndexList("(", ")", true)
-            .reverse();
+          console.log(withinString);
 
           argList.forEach(arg => {
             let matchedIndexList = withinString.allIndexOf(arg).reverse();
@@ -184,6 +204,9 @@ app.mixin({
             console.log(matchedIndexList);
           });
           // within Parentheses
+          let withinParenthesesList = withinString
+            .withinIndexList("(", ")", true)
+            .reverse();
           withinParenthesesList.forEach(withinIndexList => {
             let _startIndex = withinIndexList[0] + startIndex;
             let _endIndex = withinIndexList[1] + startIndex;

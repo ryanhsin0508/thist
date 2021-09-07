@@ -106,7 +106,7 @@ String.prototype.withinIndexList = function (
       let _endIndex = endIndex;
       if (_skips) {
         let text = str.substring(startIndex + _offset, endIndex + _offset);
-        let findOutside = function (skipData, findLeft, hasMet, forceend) {
+        let findOutside = function (skipData, findLeft, hasMet) {
           let value = skipData.skipValue;
           let until = skipData.untilMet;
           let _hasMet = hasMet === undefined ? (until ? false : true) : hasMet;
@@ -124,9 +124,6 @@ String.prototype.withinIndexList = function (
           if (until) {
             _hasMet = text.includes(until);
           }
-          if (forceend) {
-            return;
-          }
           if (
             (text.includes(value) || !_hasMet) &&
             startIndex >= 0 &&
@@ -136,7 +133,8 @@ String.prototype.withinIndexList = function (
           }
         };
         for (let key in _skips) {
-          if (text.includes(_skips[key].skipValue)) {
+          console.log(text)
+          if (text.includes(_skips[key].skipValue) && !text.includes(_skips[key].untilMet)) {
             findOutside(_skips[key], key === "left");
           }
         }
