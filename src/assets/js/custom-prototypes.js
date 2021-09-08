@@ -122,10 +122,18 @@ String.prototype.withinIndexList = function (
       ) {
         return;
       }
-      list.push([_startIndex, endIndex]);
+      list.forEach(indexList => {
+        if (_startIndex > indexList[0] && _startIndex < indexList[1]) {
+          noData = true;
+        }
+        let a = indexList[0];
+      });
+      if (!noData) {
+        list.push([_startIndex, endIndex]);
+      }
     }
   });
-
+  console.log(str, list);
   return list;
   startIndexList.forEach(startIndex => {
     let endIndex = str.indexOf(endStr, startIndex);

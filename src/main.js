@@ -117,6 +117,7 @@ app.mixin({
               findedStartIndexList.forEach(_startIndex => {
                 let nextChar = withinString.nextChar(arg, " ");
                 let __endIndex = _startIndex + _arg.length;
+                
                 if (nextChar === ".") {
                   _code = _code.insert(startIndex + __endIndex, "</span>");
                   _code = _code.insert(
@@ -145,11 +146,11 @@ app.mixin({
                     .reverse();
                   findedStartIndexList.forEach(__startIndex => {
                     let __endIndex = __startIndex + _arg.length;
-                    _code = _code.insert(_startIndex + __endIndex, "</span>");
+                    /* _code = _code.insert(_startIndex + __endIndex, "</span>");
                     _code = _code.insert(
                       _startIndex + __startIndex,
                       '<span class="code-parameter">'
-                    );
+                    ); */
                   });
                 }
               });
@@ -157,7 +158,8 @@ app.mixin({
           });
         }
         //render defined args in arrow function
-        let matchedIndexList = _code.withinIndexList(",", "=>", true, null, ["(",")"]).reverse();
+        let matchedIndexList = _code.withinIndexList(",", ",", true, null, ["(",")"]).reverse();
+        console.log(matchedIndexList)
         renderArgs(matchedIndexList);
         //render defined args in es5 function
         // matchedIndexList = _code.withinIndexList("function", "{");
@@ -174,7 +176,6 @@ app.mixin({
         ); */
         // renderArgs(matchedIndexList, argList);
         // matchedIndexList = _code.withinIndexList("{", "}", true);
-        renderArgs(matchedIndexList, argList)
         matchedIndexList.forEach(withinIndexList => {
           // console.log(_code.substring(withinIndexList[0], withinIndexList[1]));
         });
