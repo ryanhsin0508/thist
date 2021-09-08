@@ -74,12 +74,11 @@ app.mixin({
       window.str2 = `tt.find(familyList, (item, index, qq) => aaa(item, index).bbb(item, index, qq).role === "Great granddaughter", "children")`;
       console.log("QQ");
       let b = str2.withinIndexList(
-        ",",
-        ",",
+        "(",
+        ")",
         true,
         null,
-        ["(",")"],
-        true
+        ["(",")"]
       );
       console.log(b);
       b.forEach(withinIndexList => {
@@ -100,7 +99,18 @@ app.mixin({
             let endIndex = withinIndexList[1];  
             let withinString = _code.substring(startIndex, endIndex);
             console.log(withinString);
+            //get argList
+            // withinString.withinIndexList("(")
 
+
+
+
+
+
+
+
+
+            return 
             let argStr = withinString
               .replaceAll("(", "")
               .replaceAll(")", "")
@@ -159,7 +169,6 @@ app.mixin({
         }
         //render defined args in arrow function
         let matchedIndexList = _code.withinIndexList(",", ",", true, null, ["(",")"]).reverse();
-        console.log(matchedIndexList)
         renderArgs(matchedIndexList);
         //render defined args in es5 function
         // matchedIndexList = _code.withinIndexList("function", "{");

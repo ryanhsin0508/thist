@@ -88,6 +88,7 @@ String.prototype.withinIndexList = function (
     let endIndex = str.indexOf(endStr, startIndex);
     if (_skipList && endIndex >= 0) {
       let noData = false;
+      let withinWrap = false;
       let text = str.substring(startIndex, endIndex);
       let index = 0;
 
@@ -124,11 +125,26 @@ String.prototype.withinIndexList = function (
       }
       list.forEach(indexList => {
         if (_startIndex > indexList[0] && _startIndex < indexList[1]) {
-          noData = true;
+          withinWrap = true;
         }
         let a = indexList[0];
       });
-      if (!noData) {
+      if (isParentheses) {
+        if (!withinWrap) {
+          list.push([_startIndex, endIndex]);
+        }
+        // list.push([_startIndex, endIndex]);
+      } else {
+        list.push([_startIndex, endIndex]);
+      }
+    } else if (endIndex > 0) {
+      if (isParentheses) {
+        let text = str.substring(_startIndex, endIndex)
+        if(!text.includes(startStr)){
+        list.push([_startIndex, endIndex]);
+          
+        }
+      } else {
         list.push([_startIndex, endIndex]);
       }
     }
