@@ -78,12 +78,7 @@ app.mixin({
         ",",
         true,
         null,
-        {
-          right: {
-            skipValue: "(",
-            untilMet: ")",
-          },
-        },
+        ["(",")"],
         true
       );
       console.log(b);
@@ -101,7 +96,7 @@ app.mixin({
         function renderArgs(matchedIndexList, definedArgList) {
           matchedIndexList.forEach(withinIndexList => {
             let startIndex = withinIndexList[0];
-            let endIndex = withinIndexList[1];
+            let endIndex = withinIndexList[1];  
             let withinString = _code.substring(startIndex, endIndex);
             console.log(withinString);
 
@@ -161,27 +156,30 @@ app.mixin({
           });
         }
         //render defined args in arrow function
-        let matchedIndexList = _code.withinIndexList(",", "=>", true, null, {
-          left: { skipValue: ")", untilMet: "(" },
-        });
+        let matchedIndexList = _code.withinIndexList(",", ",", true, null, ["(",")"]).reverse();
+        console.log(matchedIndexList)
         renderArgs(matchedIndexList);
         //render defined args in es5 function
-        matchedIndexList = _code.withinIndexList("function", "{");
-        renderArgs(matchedIndexList);
+        // matchedIndexList = _code.withinIndexList("function", "{");
+        // renderArgs(matchedIndexList);
 
         //render args inside arrow function
-        let _matchedIndexList = _code.withinIndexList(
+        /* matchedIndexList = _code.withinIndexList(
           "=>",
           ",",
           true,
           null,
-          {
-            right: { skipValue: "(", untilMet: ")" },
-          },
+          ["(",")"],
           true
-        );
-        renderArgs(_matchedIndexList, argList);
-        _matchedIndexList.forEach(withinIndexList => {
+        ); */
+        // renderArgs(matchedIndexList, argList);
+        // matchedIndexList = _code.withinIndexList("{", "}", true);
+        renderArgs(matchedIndexList, argList)
+        matchedIndexList.forEach(withinIndexList => {
+          // console.log(_code.substring(withinIndexList[0], withinIndexList[1]));
+        });
+        console.log();
+        /* _matchedIndexList.forEach(withinIndexList => {
           let startIndex = withinIndexList[0];
           let endIndex = withinIndexList[1];
           let withinString = _code.substring(startIndex, endIndex);
@@ -235,7 +233,7 @@ app.mixin({
             });
           });
           // console.log(withinString.substring())
-        });
+        }) */
       }
       renderArrowFunctionArgColor(_code);
       function renderFunctionNameColor(str) {
@@ -251,7 +249,7 @@ app.mixin({
           }
         });
       }
-      renderFunctionNameColor(_code); //OOO
+      // renderFunctionNameColor(_code); //OOO
       function renderFunctionArgColor(str) {
         let matchedIndexList = _code.withinIndexList("(", ")", true).reverse();
         matchedIndexList.forEach(withinIndexList => {

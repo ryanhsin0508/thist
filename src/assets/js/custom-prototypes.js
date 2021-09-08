@@ -73,15 +73,24 @@ String.prototype.withinIndexList = function (
   endStr,
   isParentheses,
   offset,
-  skips,
+  skipList,
   trim
 ) {
   let str = this.toString();
   let _offset = offset ? offset : 0;
-  let _skips = skips ? skips : undefined;
+  let _skipList = skipList ? skipList : undefined;
   let startStrLen = startStr.length;
   let list = [];
   let startIndexList = str.allIndexOf(startStr, true);
+  console.log(startIndexList);
+  startIndexList.forEach((startIndex, index) => {
+    if (_skipList && startIndexList[index + 1]) {
+      console.log(index)
+      console.log(str.substring(startIndex, startIndexList[index + 1]));
+    }
+  });
+
+  return [];
   startIndexList.forEach(startIndex => {
     let endIndex = str.indexOf(endStr, startIndex);
     let findedStr = str.substring(startIndex, endIndex);
@@ -133,8 +142,11 @@ String.prototype.withinIndexList = function (
           }
         };
         for (let key in _skips) {
-          console.log(text)
-          if (text.includes(_skips[key].skipValue) && !text.includes(_skips[key].untilMet)) {
+          console.log(text);
+          if (
+            text.includes(_skips[key].skipValue) &&
+            !text.includes(_skips[key].untilMet)
+          ) {
             findOutside(_skips[key], key === "left");
           }
         }
@@ -155,6 +167,9 @@ String.prototype.withinIndexList = function (
     }
     // findedStr = str.substring(startIndex, endIndex + 1);
   });
+  if (_skips) {
+    // list = [list[0]]
+  }
   return list;
 };
 String.prototype.nextChar = function (findValue, skip) {
