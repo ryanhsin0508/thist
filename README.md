@@ -1,4 +1,4 @@
-# thist.js
+# thists.js
 
 ## Project setup
 ```

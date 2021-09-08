@@ -80,17 +80,53 @@ String.prototype.withinIndexList = function (
   let _offset = offset ? offset : 0;
   let _skipList = skipList ? skipList : undefined;
   let startStrLen = startStr.length;
+  let endStrLen = endStr.length;
   let list = [];
   let startIndexList = str.allIndexOf(startStr, true);
-  console.log(startIndexList);
-  startIndexList.forEach((startIndex, index) => {
-    if (_skipList && startIndexList[index + 1]) {
-      console.log(index)
-      console.log(str.substring(startIndex, startIndexList[index + 1]));
+  startIndexList.forEach(startIndex => {
+    let _startIndex = startIndex;
+    let endIndex = str.indexOf(endStr, startIndex);
+    if (_skipList && endIndex >= 0) {
+      let noData = false;
+      let text = str.substring(startIndex, endIndex);
+      let index = 0;
+
+      while (
+        index < 22 &&
+        text.includes(skipList[1]) &&
+        !text.includes(skipList[0])
+      ) {
+        return;
+      }
+
+      while (
+        (index < 99 &&
+          text.includes(skipList[0]) &&
+          !text.includes(skipList[1])) ||
+        (text.allIndexOf(skipList[0]).length >
+          text.allIndexOf(skipList[1]).length &&
+          !noData)
+      ) {
+        index++;
+        endIndex = str.indexOf(endStr, endIndex + endStrLen);
+        if (endIndex < 0) {
+          console.log("ERR");
+          noData = true;
+        }
+        text = str.substring(startIndex, endIndex);
+      }
+      if (
+        text.includes(skipList[0]) &&
+        text.includes(skipList[1]) &&
+        text.indexOf(skipList[1]) < text.indexOf(skipList[0])
+      ) {
+        return;
+      }
+      list.push([_startIndex, endIndex]);
     }
   });
 
-  return [];
+  return list;
   startIndexList.forEach(startIndex => {
     let endIndex = str.indexOf(endStr, startIndex);
     let findedStr = str.substring(startIndex, endIndex);

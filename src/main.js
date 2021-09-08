@@ -11,7 +11,7 @@ import "@fortawesome/fontawesome-pro/css/all.css";
 import Common from "@/components/Common";
 import CodeExamples from "@/components/CodeExamples";
 import CodeIntroComponent from "@/components/CodeIntroComponent.vue";
-import "@/assets/js/thist.js";
+import "@/assets/js/thists.js";
 import "@/assets/js/custom-prototypes.js";
 const app = createApp(App);
 app.config.globalProperties.axios = axios;
@@ -71,10 +71,10 @@ app.mixin({
         val.includes("=>")
       );
 
-      window.str2 = `tt.find(familyList, (item, index, qq) => aaa(item, index).bbb(item,index,qq).role === "Great granddaughter", "children")`;
+      window.str2 = `tt.find(familyList, (item, index, qq) => aaa(item, index).bbb(item, index, qq).role === "Great granddaughter", "children")`;
       console.log("QQ");
       let b = str2.withinIndexList(
-        "=>",
+        ",",
         ",",
         true,
         null,
@@ -88,12 +88,13 @@ app.mixin({
         let withinString = str2.substring(start, end);
         console.log(withinString);
       });
-      // return;
+      // return _code;
       // console.log(functionPartialList)
 
       function renderArrowFunctionArgColor() {
         let argList = [];
         function renderArgs(matchedIndexList, definedArgList) {
+          console.log(matchedIndexList)
           matchedIndexList.forEach(withinIndexList => {
             let startIndex = withinIndexList[0];
             let endIndex = withinIndexList[1];  
@@ -156,8 +157,7 @@ app.mixin({
           });
         }
         //render defined args in arrow function
-        let matchedIndexList = _code.withinIndexList(",", ",", true, null, ["(",")"]).reverse();
-        console.log(matchedIndexList)
+        let matchedIndexList = _code.withinIndexList(",", "=>", true, null, ["(",")"]).reverse();
         renderArgs(matchedIndexList);
         //render defined args in es5 function
         // matchedIndexList = _code.withinIndexList("function", "{");

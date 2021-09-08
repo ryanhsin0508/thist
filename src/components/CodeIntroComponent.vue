@@ -76,7 +76,7 @@ export default {
   components: {},
   data() {
     return {
-      test: `tt.find(list, (item, index) => (item, index) === "Great granddaughter", "children", (item, index) => qq(item) === "qer")`,
+      test: `tt.find(familyList, (item, index, qq) => aaa(item, index).bbb(item, index, qq).role === "Great granddaughter", "children")`,
     };
   },
   watch: {},

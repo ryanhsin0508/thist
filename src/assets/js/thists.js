@@ -1,4 +1,4 @@
-class Thist {
+class Thists {
   find(list, findFunction, childrenKeyName) {
     let match = undefined;
     list.forEach(item => {
@@ -302,5 +302,5 @@ class Thist {
     return total;
   }
 }
-window.tt = new Thist();
+window.tt = new Thists();
 export default tt;

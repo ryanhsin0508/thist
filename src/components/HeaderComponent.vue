@@ -3,7 +3,7 @@
     <div class="container">
       <router-link to="/">
         <img alt="Vue logo" src="../assets/img/logo.svg" width="60" />
-        <h1 class="title">Thist.js</h1>
+        <h1 class="title">Thists.js</h1>
       </router-link>
       <nav>
         <router-link class="button flat no-border" :to="'/documentation'"
