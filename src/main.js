@@ -13,6 +13,7 @@ import CodeExamples from "@/components/CodeExamples";
 import CodeIntroComponent from "@/components/CodeIntroComponent.vue";
 import "@/assets/js/thists.js";
 import "@/assets/js/custom-prototypes.js";
+import { _ } from "core-js";
 const app = createApp(App);
 app.config.globalProperties.axios = axios;
 
@@ -61,37 +62,35 @@ app.mixin({
       if (skip) {
         return code;
       }
+      let a = "aaa , (item, index, qq) => aaa()";
+      let arr = a.withinIndexList(",", "=>", true, 0, ["(", ")"]);
+      arr.forEach(withinIndexList => {
+        let startIndex = withinIndexList[0];
+        let endIndex = withinIndexList[1];
+        let withinString = a.substring(startIndex, endIndex, true, 0, ["(",")"]);
+        console.log(withinString);
+      });
+
+      // return code;
       let operatorList = [
         "+",
         "=",
-        // "-",
-        // "*",
-        // "!",
-        // "/",
-        // ">",
-        // "<",
-        // "return",
-        // "if",
-        // "else",
+        "-",
+        "*",
+        "!",
+        "/",
+        ">",
+        "<",
+        "return",
+        "if",
+        "else",
       ];
-      let seperatorList = [":", ",", ".", "(", ")"];
+      let seperatorList = [":", ",", ".", "(", ")", "{", "}"];
       let reservedList = ["=>", "function"];
       let _seperatorList = [...seperatorList, ...operatorList, ...reservedList];
       let _code = code;
       let stringPartialList = _code.split(",");
 
-      window.str2 = `tt.find(familyList, (item, index, qq) => aaa(item, index).bbb(item, index, qq).role === "Great granddaughter", "children")`;
-      console.log("QQ");
-      let b = str2.withinIndexList("(", ")", true, null, ["(", ")"]);
-      console.log(b);
-      b.forEach(withinIndexList => {
-        let start = withinIndexList[0];
-        let end = withinIndexList[1];
-        let withinString = str2.substring(start, end);
-        console.log(withinString);
-      });
-      // return _code;
-      // console.log(functionPartialList)
       function renderStringColor(str) {
         let matchedIndexList = str.allIndexOf('"');
         const chunk = (arr, size) =>
@@ -105,8 +104,8 @@ app.mixin({
           let isClassName =
             _code.substring(start - 6, end).indexOf('class="code') >= 0;
           if (!isClassName && _code.substring(end + 1, end + 2) !== ":") {
-            _code = _code.insert(end + 1, `</span>`);
-            _code = _code.insert(start, `<span class="code-string">`);
+            _code = _code.insert(end + 1, `</&nbsp;span>&nbsp;`);
+            _code = _code.insert(start, `&nbsp;<span class="code-string">`);
           }
         });
       }
@@ -142,6 +141,11 @@ app.mixin({
               null,
               true
             );
+            let test = withinString.withinIndexList(",", "=>", true, startIndex, ["(",")"]);
+              console.log(withinString)
+              if(test.length){
+              console.log(test)
+            }
             argTextIndexList.forEach(withinIndexList => {
               let startIndex = withinIndexList[0];
               let endIndex = withinIndexList[1];
@@ -166,16 +170,18 @@ app.mixin({
                     !_code[__startIndex + _startIndex + argLen].match(regEx)
                   ) {
                     let __endIndex = __startIndex + arg.length;
-                    _code = _code.insert(_startIndex + __endIndex, "</span>");
+                    _code = _code.insert(
+                      _startIndex + __endIndex,
+                      "</&nbsp;span>&nbsp;"
+                    );
                     _code = _code.insert(
                       _startIndex + __startIndex,
-                      '<span class="code-parameter">'
+                      '&nbsp;<span class="code-parameter">'
                     );
                   }
                 });
               });
             }
-            console.log(withinString);
 
             let withinParenthesesList = withinString
               .withinIndexList("(", ")", true)
@@ -184,7 +190,6 @@ app.mixin({
               let _startIndex = withinIndexList[0] + startIndex;
               let _endIndex = withinIndexList[1] + startIndex;
               let _withinString = _code.substring(_startIndex, _endIndex);
-              console.log(_withinString);
 
               reversedArgList.forEach(arg => {
                 let findedStartIndexList = _withinString
@@ -192,10 +197,13 @@ app.mixin({
                   .reverse();
                 findedStartIndexList.forEach(__startIndex => {
                   let __endIndex = __startIndex + arg.length;
-                  _code = _code.insert(_startIndex + __endIndex, "</span>");
+                  _code = _code.insert(
+                    _startIndex + __endIndex,
+                    "</&nbsp;span>&nbsp;"
+                  );
                   _code = _code.insert(
                     _startIndex + __startIndex,
-                    '<span class="code-parameter">'
+                    '&nbsp;<span class="code-parameter">'
                   );
                 });
               });
@@ -222,10 +230,6 @@ app.mixin({
           true
         );
         renderArgs(matchedIndexList, argList);
-        // matchedIndexList = _code.withinIndexList("{", "}", true);
-        matchedIndexList.forEach(withinIndexList => {
-          // console.log(_code.substring(withinIndexList[0], withinIndexList[1]));
-        });
       }
       renderArrowFunctionArgColor(_code);
       function renderFunctionNameColor(str) {
@@ -233,9 +237,9 @@ app.mixin({
         matchedIndexList.reverse().forEach(matchedIndex => {
           let _endIndex = matchedIndex;
           let _startIndex = matchedIndex;
-
+          let untilList = [" ", ..._seperatorList];
           console.log(_code[_startIndex - 1]);
-          while (!_seperatorList.includes(_code[_startIndex - 1])) {
+          while (!untilList.includes(_code[_startIndex - 1])) {
             _startIndex--;
           }
           while (_code[_startIndex] === " ") {
@@ -246,12 +250,15 @@ app.mixin({
           if (reservedList.includes(_withinString)) {
             return;
           }
-          _code = _code.insert(_endIndex, `</span>`);
-          _code = _code.insert(_startIndex, `<span class="code-function">`);
+          _code = _code.insert(_endIndex, `</&nbsp;span>&nbsp;`);
+          _code = _code.insert(
+            _startIndex,
+            `&nbsp;<span class="code-function">`
+          );
         });
         return;
       }
-      renderFunctionNameColor(_code); //OOO
+      renderFunctionNameColor(_code);
 
       function renderNumericColor(str) {
         let regEx = /\d/g;
@@ -269,10 +276,17 @@ app.mixin({
             endIndex++;
           }
           if (
-            !isWithinStringByIndex(startIndex, 'class="code-string"', "</span>")
+            !isWithinStringByIndex(
+              startIndex,
+              'class="code-string"',
+              "</&nbsp;span>&nbsp;"
+            )
           ) {
-            _code = _code.insert(endIndex, `</span>`);
-            _code = _code.insert(startIndex, `<span class="code-number">`);
+            _code = _code.insert(endIndex, `</&nbsp;span>&nbsp;`);
+            _code = _code.insert(
+              startIndex,
+              `&nbsp;<span class="code-number">`
+            );
           }
         });
       }
@@ -285,47 +299,59 @@ app.mixin({
           .bubbleSort();
       });
       seperatorIndexList.reverse().forEach(index => {
-        _code = _code.insert(index + 1, `</span>`);
-        _code = _code.insert(index, `<span class="code-seperator">`);
+        _code = _code.insert(index + 1, `</&nbsp;span>&nbsp;`);
+        _code = _code.insert(index, `&nbsp;<span class="code-seperator">`);
       });
 
-      let operatorIndexList = [];
-      operatorList.forEach(op => {
-        operatorIndexList = _code.allIndexOf(op);
-        operatorIndexList.reverse().forEach(index => {
-          let skip = false;
-          if (op === "=") {
-            if (_code[index + 1] === ">") {
-              console.log(op);
-              skip = true;
-            }
-          }
-          console.log(op);
-          console.log(skip);
-          if (
-            !skip &&
-            !isWithinStringByIndex(index, "<span class", "</span>") &&
-            !isWithinStringByIndex(index, "class", "code")
-          ) {
-            console.log(op);
-
-            _code = _code.insert(index + 1, `</span>`);
-            _code = _code.insert(index, `<span class="code-operator">`);
-          }
-        });
-      });
       let reservedIndexList = [];
       let reservedData = {};
       reservedList.forEach(word => {
         let wordLen = word.length;
         reservedIndexList = _code.allIndexOf(word);
         reservedIndexList.reverse().forEach(index => {
-          if (!isWithinStringByIndex(index, "<span class", "</span>")) {
-            _code = _code.insert(index + wordLen, `</span>`);
-            _code = _code.insert(index, `<span class="code-reserved">`);
+          if (
+            !isWithinStringByIndex(index, "<span class", "</&nbsp;span>&nbsp;")
+          ) {
+            _code = _code.insert(index + wordLen, `</&nbsp;span>&nbsp;`);
+            _code = _code.insert(index, `&nbsp;<span class="code-reserved">`);
           }
         });
       });
+      let operatorIndexList = [];
+      operatorList.forEach(op => {
+        let opLen = op.length;
+        operatorIndexList = _code.allIndexOf(op);
+        operatorIndexList.reverse().forEach(index => {
+          let skip = false;
+          if (op === "=") {
+            if (_code[index + 1] === ">") {
+              skip = true;
+            }
+          }
+          if (op === "/") {
+            console.log(_code.substring(index, index + 6));
+            // return
+          }
+          if (
+            !skip &&
+            !isWithinStringByIndex(
+              index,
+              "&nbsp;<span class",
+              "</&nbsp;span>&nbsp;"
+            ) &&
+            !isWithinStringByIndex(index, "class", "code") &&
+            _code.substring(index - 6, index) !== "&nbsp;" &&
+            _code.substring(index, index + 6) !== ">&nbsp" &&
+            _code.substring(index, index + 6) !== "/&nbsp"
+          ) {
+            console.log(op);
+
+            _code = _code.insert(index + opLen, `</&nbsp;span>&nbsp;`);
+            _code = _code.insert(index, `&nbsp;<span class="code-operator">`);
+          }
+        });
+      });
+      _code = _code.replaceAll("&nbsp;", "");
       return _code;
     },
     looseJsonParse(obj) {

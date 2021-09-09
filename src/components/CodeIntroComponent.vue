@@ -31,15 +31,7 @@
             "
           ></div>
           <div class="test" v-html="codeColorize(test)"></div>
-          <pre
-            v-if="false"
-            v-html="
-              codeColorize(
-                JSON.stringify(selectedExampleList, null, '  '),
-                true
-              )
-            "
-          ></pre>
+          
 
           <div class="result" v-if="usg.code">
             <span style="margin-right: 1em">// => </span>
@@ -76,7 +68,11 @@ export default {
   components: {},
   data() {
     return {
-      test: `tt.find(familyList, (item, index, qq) => item.role === "Great granddaughter" && item - qq < 5, "ch1ildren", function(){})`,
+      test: `tt.find(familyList, (item, index, qq) => item.role === "Great granddaughter" && item - qq < 5, "ch1ildren", function(bbb){
+
+        var a = "QQQ"
+       return bbb
+      })`,
     };
   },
   watch: {},

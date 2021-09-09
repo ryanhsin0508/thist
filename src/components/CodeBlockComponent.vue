@@ -28,10 +28,7 @@ export default {
   watch: {},
   computed: {},
   methods: {},
-  mounted() {
-
-
-  },
+  mounted() {},
 };
 </script>
 
@@ -50,6 +47,7 @@ aside {
   padding: 0 20px;
   border-right: 1px solid rgba(255, 255, 255, 0.75);
   width: 360px;
+  flex-shrink: 0;
   @media (max-width: 800px) {
     width: 100%;
     border-right: none;
@@ -62,9 +60,8 @@ main {
   overflow: auto;
   flex-grow: 1;
   padding: 0 20px;
-    @media (max-width: 800px) {
-      padding: 20px 0;
+  @media (max-width: 800px) {
+    padding: 20px 0;
   }
-
 }
 </style>

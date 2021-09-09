@@ -6,150 +6,11 @@
       :placeholder="'Please select an example'"
       @change="updateSelected"
     />
-    <input type="text">
-    <pre v-if="selected === 'family'">
-<span class="code-js-func">var</span> <span class="code-var">familyList</span> <span class="code-operator">=</span> [
-  {
-    role: <span class="code-string">"Son"</span>,
-    name: <span class="code-string">"Ryan"</span>,
-    age: <span class="code-number">55</span>,
-    children: [
-      {
-        role: <span class="code-string">"Grandson"</span>,
-        name: <span class="code-string">"Peter"</span>,
-        age: <span class="code-number">32</span>,
-        children: [
-          {
-            role: <span class="code-string">"Great granddaughter"</span>,
-            name: <span class="code-string">"Lisa"</span>,
-            age: <span class="code-number">4</span>,
-          },
-          {
-            role: <span class="code-string">"Great grandson"</span>,
-            name: <span class="code-string">"Jack"</span>,
-            age: <span class="code-number">2</span>,
-          },
-        ],
-      },
-      {
-        role: <span class="code-string">"Granddaughter"</span>,
-        name: <span class="code-string">"Jane"</span>,
-        age: <span class="code-number">31</span>,
-      },
-    ],
-  },
-  {
-    role: <span class="code-string">"Daughter"</span>,
-    name: <span class="code-string">"Mary"</span>,
-    age: <span class="code-number">53</span>,
-    children: [
-      {
-        role: <span class="code-string">"Granddauhter"</span>,
-        name: <span class="code-string">"Cindy"</span>,
-        age: <span class="code-number">31</span>,
-      },
-    ],
-  },
-];
-    </pre>
-    <pre v-if="selected === 'business'">
-<span class="code-js-func">var</span> businessList <span class="code-operator">=</span> [
-  {
-    name: <span class="code-string">"Happy Farm"</span>,
-    role: <span class="code-string">"Headquarter"</span>,
-    inventoryContent: [
-      {
-        productName: <span class="code-string">"milk"</span>,
-        count: <span class="code-number">20000</span>,
-      },
-      {
-        productName: <span class="code-string">"egg"</span>,
-        count: <span class="code-number">100000</span>,
-      },
-    ],
-    subBusinessList: [
-      {
-        name: <span class="code-string">"Healthy-Foods"</span>,
-        role: <span class="code-string">"Dealer"</span>,
-        inventoryContent: [
-          {
-            productName: <span class="code-string">"milk"</span>,
-            count: <span class="code-number">300</span>,
-          },
-          {
-            productName: <span class="code-string">"egg"</span>,
-            count: <span class="code-number">10000</span>,
-          },
-        ],
-        subBusinessList: [
-          {
-            name: <span class="code-string">"Twelve-Eight"</span>,
-            role: <span class="code-string">"Store"</span>,
-            inventoryContent: [
-              {
-                productName: <span class="code-string">"milk"</span>,
-                count: <span class="code-number">50</span>,
-              },
-            ],
-          },
-          {
-            name: <span class="code-string">"Nutritious Life"</span>,
-            role: <span class="code-string">"Store"</span>,
-            inventoryContent: [
-              {
-                productName: <span class="code-string">"milk"</span>,
-                count: <span class="code-number">40</span>,
-              },
-              {
-                productName: <span class="code-string">"egg"</span>,
-                count: <span class="code-number">120</span>,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        name: <span class="code-string">"Daily Energy"</span>,
-        role: <span class="code-string">"Dealer"</span>,
-        inventoryContent: [
-          {
-            productName: <span class="code-string">"milk"</span>,
-            count: <span class="code-number">900</span>,
-          },
-          {
-            productName: <span class="code-string">"egg"</span>,
-            count: <span class="code-number">20000</span>,
-          },
-        ],
-        subBusinessList: [
-          {
-            name: <span class="code-string">"Twelve-Eight"</span>,
-            role: <span class="code-string">"Store"</span>,
-            inventoryContent: {
-              productName: <span class="code-string">"egg"</span>,
-              count: <span class="code-number">100</span>,
-            },
-          },
-          {
-            name: <span class="code-string">"Urban24"</span>,
-            role: <span class="code-string">"Store"</span>,
-            inventoryContent: [
-              {
-                productName: <span class="code-string">"egg"</span>,
-                count: <span class="code-number">75</span>,
-              },
-              {
-                productName: <span class="code-string">"egg"</span>,
-                count: <span class="code-number">112</span>,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-];
-    </pre>
+    <input type="text" />
+    <pre
+      v-html="codeColorize(JSON.stringify(selectedExampleList, null, '  '))"
+    ></pre>
+    
   </div>
 </template>
 
@@ -194,7 +55,7 @@ export default {
     updateSelected() {},
   },
   async mounted() {
-    if(this.optionList){
+    if (this.optionList) {
       this.selected = this.optionList[0].value;
     }
     if (this.dataX.selectedExampleName) {
