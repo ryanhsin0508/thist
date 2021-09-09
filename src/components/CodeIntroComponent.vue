@@ -76,7 +76,7 @@ export default {
   components: {},
   data() {
     return {
-      test: `tt.find(familyList, (item, index, qq) => item.role === "Great granddaughter", "ch1ildren", function(){})`,
+      test: `tt.find(familyList, (item, index, qq) => item.role === "Great granddaughter" && item - qq < 5, "ch1ildren", function(){})`,
     };
   },
   watch: {},

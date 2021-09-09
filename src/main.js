@@ -79,9 +79,6 @@ app.mixin({
       let _seperatorList = [...seperatorList, ...operatorList, ...reservedList];
       let _code = code;
       let stringPartialList = _code.split(",");
-      let functionPartialList = stringPartialList.filter(val =>
-        val.includes("=>")
-      );
 
       window.str2 = `tt.find(familyList, (item, index, qq) => aaa(item, index).bbb(item, index, qq).role === "Great granddaughter", "children")`;
       console.log("QQ");
