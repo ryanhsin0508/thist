@@ -72,7 +72,7 @@ export default {
 
         var a = "QQQ"
        return bbb
-      })`,
+      }),`,
     };
   },
   watch: {},

@@ -14,6 +14,22 @@ Array.prototype.bubbleSort = function () {
   }
   return arr;
 };
+Array.prototype.bubbleSortFromLastIndex = function () {
+  let arr = this;
+  let toIndex = arr.length;
+
+  while (toIndex > 1) {
+    toIndex--;
+    for (let i = 0; i < toIndex; i++) {
+      if (arr[i][arr[i].length - 1] > arr[i + 1][arr[i].length - 1]) {
+        let tempValue = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = tempValue;
+      }
+    }
+  }
+  return arr;
+};
 String.prototype.allIndexOf = function (findValue, withStr) {
   let str = this.toString();
   let list = [];
