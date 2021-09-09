@@ -5,7 +5,6 @@ Array.prototype.bubbleSort = function () {
   while (toIndex > 1) {
     toIndex--;
     for (let i = 0; i < toIndex; i++) {
-      // 如果前面的元素比後面的元素要大，則交換元素位置
       if (arr[i] > arr[i + 1]) {
         let tempValue = arr[i];
         arr[i] = arr[i + 1];
@@ -131,105 +130,35 @@ String.prototype.withinIndexList = function (
       });
       if (isParentheses) {
         if (!withinWrap) {
-          list.push([_startIndex, endIndex]);
+          list.push([_startIndex + _offset, endIndex + _offset]);
         }
         // list.push([_startIndex, endIndex]);
       } else {
-        list.push([_startIndex, endIndex]);
+        list.push([_startIndex + _offset, endIndex + _offset]);
       }
     } else if (endIndex > 0) {
       if (isParentheses) {
-        let text = str.substring(_startIndex, endIndex)
-        if(!text.includes(startStr)){
-        list.push([_startIndex, endIndex]);
-          
+        let text = str.substring(_startIndex, endIndex);
+        if (trim) {
+          let startChar = str[_startIndex];
+          let endChar = str[endIndex - 1];
+          while (startChar && startChar === " ") {
+            _startIndex++;
+            startChar = str[_startIndex];
+          }
+          while (endChar === " ") {
+            endIndex--;
+            endChar = [endIndex - 1];
+          }
+        }
+        if (!text.includes(startStr)) {
+          list.push([_startIndex + _offset, endIndex + _offset]);
         }
       } else {
-        list.push([_startIndex, endIndex]);
+        list.push([_startIndex + _offset, endIndex + _offset]);
       }
     }
   });
-  console.log(str, list);
-  return list;
-  startIndexList.forEach(startIndex => {
-    let endIndex = str.indexOf(endStr, startIndex);
-    let findedStr = str.substring(startIndex, endIndex);
-    let startLen = findedStr.allIndexOf(startStr).length;
-    let endLen = findedStr.allIndexOf(endStr).length;
-    let done = startLen === endLen;
-    if (startLen > endLen && endIndex >= 0 && !done && isParentheses) {
-      let index = 0;
-      while (!done) {
-        endIndex = str.indexOf(endStr, endIndex + 1);
-        findedStr = str.substring(startIndex, endIndex);
-        startLen = findedStr.allIndexOf(startStr).length;
-        endLen = findedStr.allIndexOf(endStr).length;
-        if (startLen === endLen || endIndex < 0) {
-          done = true;
-        }
-        index++;
-      }
-    }
-    if (endIndex > 0) {
-      let _startIndex = startIndex;
-      let _endIndex = endIndex;
-      if (_skips) {
-        let text = str.substring(startIndex + _offset, endIndex + _offset);
-        let findOutside = function (skipData, findLeft, hasMet) {
-          let value = skipData.skipValue;
-          let until = skipData.untilMet;
-          let _hasMet = hasMet === undefined ? (until ? false : true) : hasMet;
-          if (findLeft) {
-            _startIndex =
-              str.lastIndexOf(startStr, _startIndex - startStrLen - 1) +
-              startStrLen;
-            text = str.substring(_startIndex, startIndex);
-            startIndex = _startIndex;
-          } else {
-            _endIndex = str.indexOf(endStr, _endIndex + 1);
-            text = str.substring(endIndex, _endIndex);
-            endIndex = _endIndex;
-          }
-          if (until) {
-            _hasMet = text.includes(until);
-          }
-          if (
-            (text.includes(value) || !_hasMet) &&
-            startIndex >= 0 &&
-            endIndex >= 0
-          ) {
-            findOutside(skipData, findLeft, _hasMet);
-          }
-        };
-        for (let key in _skips) {
-          console.log(text);
-          if (
-            text.includes(_skips[key].skipValue) &&
-            !text.includes(_skips[key].untilMet)
-          ) {
-            findOutside(_skips[key], key === "left");
-          }
-        }
-      }
-      if (trim) {
-        let startChar = str[_startIndex];
-        let endChar = str[_endIndex - 1];
-        while (startChar && startChar === " ") {
-          _startIndex++;
-          startChar = str[_startIndex];
-        }
-        while (endChar === " ") {
-          _endIndex--;
-          endChar = [_endIndex - 1];
-        }
-      }
-      list.push([_startIndex + _offset, _endIndex + _offset]);
-    }
-    // findedStr = str.substring(startIndex, endIndex + 1);
-  });
-  if (_skips) {
-    // list = [list[0]]
-  }
   return list;
 };
 String.prototype.nextChar = function (findValue, skip) {

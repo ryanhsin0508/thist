@@ -225,6 +225,9 @@ main {
   }
   .code-string {
     color: #c3c6f3;
+    .code-number {
+      color: #c3c6f3;
+    }
   }
   .code-parameter {
     color: #ffc000;
@@ -232,10 +235,10 @@ main {
   .code-number {
     color: #ff8efc;
   }
-  .code-func-name {
+  .code-function {
     color: #46eeff;
   }
-  .code-js-func {
+  .code-reserved {
     //let
     color: #ffbbd1;
   }

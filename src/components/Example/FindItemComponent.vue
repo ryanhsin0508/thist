@@ -7,7 +7,7 @@
       :usageList="usageList"
     >
       <template v-slot:code>
-        tt.<span class="code-func-name">findItem</span>(familyList, "role",
+        tt.<span class="code-function">findItem</span>(familyList, "role",
         "Great granddaughter", "children")
       </template>
     </CodeIntroComponent>

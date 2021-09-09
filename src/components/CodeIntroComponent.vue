@@ -42,7 +42,7 @@
           ></pre>
 
           <div class="result" v-if="usg.code">
-            <span style="margin-right:1em;">// => </span>
+            <span style="margin-right: 1em">// => </span>
             <pre
               >{{
                 JSON.stringify(
@@ -76,7 +76,7 @@ export default {
   components: {},
   data() {
     return {
-      test: `tt.find(familyList, (item, index, qq) => aaa(item, index).bbb(item, index, aa).role === "Great granddaughter", "children")`,
+      test: `tt.find(familyList, (item, index, qq) => item.role === "Great granddaughter", "ch1ildren", function(){})`,
     };
   },
   watch: {},

@@ -61,10 +61,22 @@ app.mixin({
       if (skip) {
         return code;
       }
-      let operatorList = ["+", "=", "-", "*", "!", "/", "return", "if", "else"];
+      let operatorList = [
+        "+",
+        "=",
+        // "-",
+        // "*",
+        // "!",
+        // "/",
+        // ">",
+        // "<",
+        // "return",
+        // "if",
+        // "else",
+      ];
       let seperatorList = [":", ",", ".", "(", ")"];
-      let _seperatorList = [...seperatorList, ...operatorList];
-      let jsFunctionList = ["=>", "function"];
+      let reservedList = ["=>", "function"];
+      let _seperatorList = [...seperatorList, ...operatorList, ...reservedList];
       let _code = code;
       let stringPartialList = _code.split(",");
       let functionPartialList = stringPartialList.filter(val =>
@@ -73,13 +85,7 @@ app.mixin({
 
       window.str2 = `tt.find(familyList, (item, index, qq) => aaa(item, index).bbb(item, index, qq).role === "Great granddaughter", "children")`;
       console.log("QQ");
-      let b = str2.withinIndexList(
-        "(",
-        ")",
-        true,
-        null,
-        ["(",")"]
-      );
+      let b = str2.withinIndexList("(", ")", true, null, ["(", ")"]);
       console.log(b);
       b.forEach(withinIndexList => {
         let start = withinIndexList[0];
@@ -89,195 +95,6 @@ app.mixin({
       });
       // return _code;
       // console.log(functionPartialList)
-
-      function renderArrowFunctionArgColor() {
-        let argList = [];
-        function renderArgs(matchedIndexList, definedArgList) {
-          console.log(matchedIndexList)
-          matchedIndexList.forEach(withinIndexList => {
-            let startIndex = withinIndexList[0];
-            let endIndex = withinIndexList[1];  
-            let withinString = _code.substring(startIndex, endIndex);
-            console.log(withinString);
-            //get argList
-            // withinString.withinIndexList("(")
-
-
-
-
-
-
-
-
-
-            return 
-            let argStr = withinString
-              .replaceAll("(", "")
-              .replaceAll(")", "")
-              .replaceAll(" ", "");
-
-            argList = definedArgList
-              ? definedArgList
-              : argStr.split(",").reverse();
-            argList.forEach(arg => {
-              let _arg = arg.trim();
-              let findedStartIndexList = withinString
-                .allIndexOf(_arg)
-                .reverse();
-              findedStartIndexList.forEach(_startIndex => {
-                let nextChar = withinString.nextChar(arg, " ");
-                let __endIndex = _startIndex + _arg.length;
-                
-                if (nextChar === ".") {
-                  _code = _code.insert(startIndex + __endIndex, "</span>");
-                  _code = _code.insert(
-                    startIndex + _startIndex,
-                    '<span class="code-parameter">'
-                  );
-                }
-              });
-            });
-            let withinParenthesesList = withinString
-              .withinIndexList("(", ")", true)
-              .reverse();
-            withinParenthesesList.forEach(withinIndexList => {
-              let _startIndex = withinIndexList[0] + startIndex;
-              let _endIndex = withinIndexList[1] + startIndex;
-              let _withinString = _code.substring(_startIndex, _endIndex);
-              let _argList = _code
-                .substring(_startIndex, _endIndex)
-                .split(",")
-                .reverse();
-              _argList.forEach(arg => {
-                let _arg = arg.trim();
-                if (argList.includes(_arg)) {
-                  let findedStartIndexList = _withinString
-                    .allIndexOf(_arg)
-                    .reverse();
-                  findedStartIndexList.forEach(__startIndex => {
-                    let __endIndex = __startIndex + _arg.length;
-                    /* _code = _code.insert(_startIndex + __endIndex, "</span>");
-                    _code = _code.insert(
-                      _startIndex + __startIndex,
-                      '<span class="code-parameter">'
-                    ); */
-                  });
-                }
-              });
-            });
-          });
-        }
-        //render defined args in arrow function
-        let matchedIndexList = _code.withinIndexList(",", ",", true, null, ["(",")"]).reverse();
-        renderArgs(matchedIndexList);
-        //render defined args in es5 function
-        // matchedIndexList = _code.withinIndexList("function", "{");
-        // renderArgs(matchedIndexList);
-
-        //render args inside arrow function
-        /* matchedIndexList = _code.withinIndexList(
-          "=>",
-          ",",
-          true,
-          null,
-          ["(",")"],
-          true
-        ); */
-        // renderArgs(matchedIndexList, argList);
-        // matchedIndexList = _code.withinIndexList("{", "}", true);
-        matchedIndexList.forEach(withinIndexList => {
-          // console.log(_code.substring(withinIndexList[0], withinIndexList[1]));
-        });
-        console.log();
-        /* _matchedIndexList.forEach(withinIndexList => {
-          let startIndex = withinIndexList[0];
-          let endIndex = withinIndexList[1];
-          let withinString = _code.substring(startIndex, endIndex);
-          console.log(withinString);
-
-          argList.forEach(arg => {
-            let matchedIndexList = withinString.allIndexOf(arg).reverse();
-            matchedIndexList.forEach(_startIndex => {
-              //_startIndex === 0;
-              let nextChar = withinString.nextChar(arg, " ");
-              console.log(_startIndex);
-              let _endIndex = _startIndex + startIndex + arg.length;
-              if (nextChar === ".") {
-                _code = _code.insert(_endIndex, "</span>");
-                _code = _code.insert(
-                  _startIndex + startIndex,
-                  '<span class="code-parameter">'
-                );
-              }
-            });
-            console.log(matchedIndexList);
-          });
-          // within Parentheses
-          return
-          let withinParenthesesList = withinString
-            .withinIndexList("(", ")", true)
-            .reverse();
-          withinParenthesesList.forEach(withinIndexList => {
-            let _startIndex = withinIndexList[0] + startIndex;
-            let _endIndex = withinIndexList[1] + startIndex;
-            let _withinString = _code.substring(_startIndex, _endIndex);
-            let _argList = _code
-              .substring(_startIndex, _endIndex)
-              .split(",")
-              .reverse();
-            _argList.forEach(arg => {
-              let _arg = arg.trim();
-              if (argList.includes(_arg)) {
-                let findedStartIndexList = _withinString
-                  .allIndexOf(_arg)
-                  .reverse();
-                findedStartIndexList.forEach(__startIndex => {
-                  let __endIndex = __startIndex + _arg.length;
-                  _code = _code.insert(_startIndex + __endIndex, "</span>");
-                  _code = _code.insert(
-                    _startIndex + __startIndex,
-                    '<span class="code-parameter">'
-                  );
-                });
-              }
-            });
-          });
-          // console.log(withinString.substring())
-        }) */
-      }
-      renderArrowFunctionArgColor(_code);
-      function renderFunctionNameColor(str) {
-        let matchedIndexList = _code.withinIndexList(".", "(", false).reverse();
-        matchedIndexList.forEach(withinIndexList => {
-          let start = withinIndexList[0];
-          let end = withinIndexList[1];
-          let isClassName =
-            _code.substring(start - 6, end).indexOf('class="code') >= 0;
-          if (!isClassName && _code.substring(end + 1, end + 2) !== ":") {
-            _code = _code.insert(end, `</span>`);
-            _code = _code.insert(start, `<span class="code-func-name">`);
-          }
-        });
-      }
-      // renderFunctionNameColor(_code); //OOO
-      function renderFunctionArgColor(str) {
-        let matchedIndexList = _code.withinIndexList("(", ")", true).reverse();
-        matchedIndexList.forEach(withinIndexList => {
-          let startIndex = withinIndexList[0];
-          let endIndex = withinIndexList[1];
-          // console.log(str.substring(startIndex,endIndex))
-          let nextSeperatorIndex = -1;
-          for (let i = endIndex; i < str.length; i++) {
-            // console.log(i)
-          }
-        });
-      }
-      renderFunctionArgColor(_code);
-      function renderNumericColor(str) {
-        _seperatorList.forEach(seperator => {
-          // let nextSpeprator =
-        });
-      }
       function renderStringColor(str) {
         let matchedIndexList = str.allIndexOf('"');
         const chunk = (arr, size) =>
@@ -298,6 +115,172 @@ app.mixin({
       }
       renderStringColor(_code);
 
+      function isWithinStringByIndex(index, startString, endString) {
+        let withinStringList = _code.withinIndexList(
+          startString,
+          endString,
+          true
+        );
+        let _boolean = false;
+        withinStringList.forEach(indexList => {
+          if (index >= indexList[0] && index <= indexList[1]) {
+            _boolean = true;
+          }
+        });
+        return _boolean;
+      }
+      function renderArrowFunctionArgColor() {
+        let argList = [];
+        function renderArgs(matchedIndexList, definedArgList) {
+          matchedIndexList.forEach(withinIndexList => {
+            let startIndex = withinIndexList[0];
+            let endIndex = withinIndexList[1];
+            let withinString = _code.substring(startIndex, endIndex);
+            //get argList
+            let argTextIndexList = withinString.withinIndexList(
+              "(",
+              "=>",
+              true,
+              startIndex,
+              null,
+              true
+            );
+            argTextIndexList.forEach(withinIndexList => {
+              let startIndex = withinIndexList[0];
+              let endIndex = withinIndexList[1];
+              let _withinString = _code.substring(startIndex, endIndex);
+              let argStr = _withinString.replaceAll(/[ )]/g, "");
+              argList = definedArgList ? definedArgList : argStr.split(",");
+            });
+            let reversedArgList = argList.reverse();
+            //after arrow
+            let afterArrowIndex = withinString.indexOf("=>");
+            if (afterArrowIndex >= 0) {
+              let _startIndex = afterArrowIndex + 2 + startIndex;
+              let codeAfterArrow = _code.substring(_startIndex, endIndex);
+              reversedArgList.forEach(arg => {
+                let argLen = arg.length;
+                let findedStartIndexList = codeAfterArrow
+                  .allIndexOf(arg)
+                  .reverse();
+                findedStartIndexList.forEach(__startIndex => {
+                  let regEx = /[A-Za-z]/;
+                  if (
+                    !_code[__startIndex + _startIndex + argLen].match(regEx)
+                  ) {
+                    let __endIndex = __startIndex + arg.length;
+                    _code = _code.insert(_startIndex + __endIndex, "</span>");
+                    _code = _code.insert(
+                      _startIndex + __startIndex,
+                      '<span class="code-parameter">'
+                    );
+                  }
+                });
+              });
+            }
+            console.log(withinString);
+
+            let withinParenthesesList = withinString
+              .withinIndexList("(", ")", true)
+              .reverse();
+            withinParenthesesList.forEach(withinIndexList => {
+              let _startIndex = withinIndexList[0] + startIndex;
+              let _endIndex = withinIndexList[1] + startIndex;
+              let _withinString = _code.substring(_startIndex, _endIndex);
+              console.log(_withinString);
+
+              reversedArgList.forEach(arg => {
+                let findedStartIndexList = _withinString
+                  .allIndexOf(arg)
+                  .reverse();
+                findedStartIndexList.forEach(__startIndex => {
+                  let __endIndex = __startIndex + arg.length;
+                  _code = _code.insert(_startIndex + __endIndex, "</span>");
+                  _code = _code.insert(
+                    _startIndex + __startIndex,
+                    '<span class="code-parameter">'
+                  );
+                });
+              });
+            });
+            return;
+          });
+        }
+        //render defined args in arrow function
+        let matchedIndexList = _code
+          .withinIndexList(",", ",", true, null, ["(", ")"])
+          .reverse();
+        renderArgs(matchedIndexList);
+        //render defined args in es5 function
+        matchedIndexList = _code.withinIndexList("function", "{");
+        renderArgs(matchedIndexList);
+
+        //render args inside arrow function
+        matchedIndexList = _code.withinIndexList(
+          "=>",
+          ",",
+          true,
+          null,
+          ["(", ")"],
+          true
+        );
+        renderArgs(matchedIndexList, argList);
+        // matchedIndexList = _code.withinIndexList("{", "}", true);
+        matchedIndexList.forEach(withinIndexList => {
+          // console.log(_code.substring(withinIndexList[0], withinIndexList[1]));
+        });
+      }
+      renderArrowFunctionArgColor(_code);
+      function renderFunctionNameColor(str) {
+        let matchedIndexList = _code.allIndexOf("(");
+        matchedIndexList.reverse().forEach(matchedIndex => {
+          let _endIndex = matchedIndex;
+          let _startIndex = matchedIndex;
+
+          console.log(_code[_startIndex - 1]);
+          while (!_seperatorList.includes(_code[_startIndex - 1])) {
+            _startIndex--;
+          }
+          while (_code[_startIndex] === " ") {
+            _startIndex++;
+          }
+          let _withinString = _code.substring(_startIndex, _endIndex);
+          console.log(_withinString);
+          if (reservedList.includes(_withinString)) {
+            return;
+          }
+          _code = _code.insert(_endIndex, `</span>`);
+          _code = _code.insert(_startIndex, `<span class="code-function">`);
+        });
+        return;
+      }
+      renderFunctionNameColor(_code); //OOO
+
+      function renderNumericColor(str) {
+        let regEx = /\d/g;
+        let array;
+        let numberIndexList = [];
+        while ((array = regEx.exec(_code)) !== null) {
+          numberIndexList.push(regEx.lastIndex - 1);
+        }
+        numberIndexList.reverse().forEach(startIndex => {
+          if (_code[startIndex - 1].match(regEx)) {
+            return;
+          }
+          let endIndex = startIndex;
+          while (_code[endIndex].match(regEx)) {
+            endIndex++;
+          }
+          if (
+            !isWithinStringByIndex(startIndex, 'class="code-string"', "</span>")
+          ) {
+            _code = _code.insert(endIndex, `</span>`);
+            _code = _code.insert(startIndex, `<span class="code-number">`);
+          }
+        });
+      }
+      renderNumericColor();
+
       let seperatorIndexList = [];
       seperatorList.forEach(key => {
         seperatorIndexList = seperatorIndexList
@@ -308,11 +291,43 @@ app.mixin({
         _code = _code.insert(index + 1, `</span>`);
         _code = _code.insert(index, `<span class="code-seperator">`);
       });
-      jsFunctionList.forEach(value => {
-        _code = _code.replaceAll(
-          value,
-          `<span class="code-js-func">${value}</span>`
-        );
+
+      let operatorIndexList = [];
+      operatorList.forEach(op => {
+        operatorIndexList = _code.allIndexOf(op);
+        operatorIndexList.reverse().forEach(index => {
+          let skip = false;
+          if (op === "=") {
+            if (_code[index + 1] === ">") {
+              console.log(op);
+              skip = true;
+            }
+          }
+          console.log(op);
+          console.log(skip);
+          if (
+            !skip &&
+            !isWithinStringByIndex(index, "<span class", "</span>") &&
+            !isWithinStringByIndex(index, "class", "code")
+          ) {
+            console.log(op);
+
+            _code = _code.insert(index + 1, `</span>`);
+            _code = _code.insert(index, `<span class="code-operator">`);
+          }
+        });
+      });
+      let reservedIndexList = [];
+      let reservedData = {};
+      reservedList.forEach(word => {
+        let wordLen = word.length;
+        reservedIndexList = _code.allIndexOf(word);
+        reservedIndexList.reverse().forEach(index => {
+          if (!isWithinStringByIndex(index, "<span class", "</span>")) {
+            _code = _code.insert(index + wordLen, `</span>`);
+            _code = _code.insert(index, `<span class="code-reserved">`);
+          }
+        });
       });
       return _code;
     },
