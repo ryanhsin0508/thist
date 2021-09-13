@@ -30,11 +30,12 @@ Array.prototype.bubbleSortFromLastIndex = function () {
   }
   return arr;
 };
-String.prototype.allIndexOf = function (findValue, withStr) {
+String.prototype.allIndexOf = function (findValue, withStr, override) {
   let str = this.toString();
   let list = [];
   let index = str.indexOf(findValue);
-  while (index >= 0) {
+
+  while (override ? index > 0 : index >= 0) {
     list.push(withStr ? index + findValue.length : index);
     index = str.indexOf(findValue, index + 1);
   }
@@ -58,30 +59,11 @@ String.prototype.within = function (start, end, isParentheses) {
 // tt.find(list, (item, index) => item.role() === "Great granddaughter", "children")
 String.prototype.withins = function (startStr, endStr, isParentheses) {
   let str = this.toString();
-  let list = [];
-  let startIndexList = str.allIndexOf(startStr);
-  startIndexList.forEach(startIndex => {
-    let endIndex = str.indexOf(endStr, startIndex);
-    let findedStr = str.substring(startIndex + 1, endIndex);
-    let startLen = findedStr.allIndexOf(startStr).length;
-    let endLen = findedStr.allIndexOf(endStr).length;
-    let done = startLen === endLen;
-    let index = 0;
-    if (startLen > endLen && isParentheses) {
-      while (!done) {
-        endIndex = str.indexOf(endStr, endIndex + 1);
-        findedStr = str.substring(startIndex + 1, endIndex);
-        let startLen = findedStr.allIndexOf(startStr).length;
-        let endLen = findedStr.allIndexOf(endStr).length;
-        if (startLen === endLen || endLen < 0) {
-          done = true;
-        }
-      }
-    }
-    list.push(findedStr);
-    // findedStr = str.substring(startIndex, endIndex + 1);
-  });
-  return list;
+  let startStrLen = startStr.length;
+  let startIndex = str.indexOf(startStr);
+  let endIndex = str.indexOf(endStr);
+  let withinString = str.substring(startIndex, endIndex);
+  return withinString;
 };
 String.prototype.withinIndexList = function (
   startStr,
@@ -119,7 +101,7 @@ String.prototype.withinIndexList = function (
         (index < 99 &&
           text.includes(skipList[0]) &&
           !text.includes(skipList[1])) ||
-        (text.allIndexOf(skipList[0]).length >
+        (text.allIndexOf(skipList[0]).length - 1 >
           text.allIndexOf(skipList[1]).length &&
           !noData)
       ) {
@@ -153,6 +135,7 @@ String.prototype.withinIndexList = function (
         list.push([_startIndex + _offset, endIndex + _offset]);
       }
     } else if (endIndex > 0) {
+      //no skipList
       if (isParentheses) {
         let text = str.substring(_startIndex, endIndex);
         if (trim) {

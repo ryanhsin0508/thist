@@ -1,40 +1,74 @@
+import { _ } from "core-js";
+import { checkType } from "./custom-functions.js";
 class Thists {
   find(list, findFunction, childrenKeyName) {
-    let match = undefined;
-    list.forEach(item => {
-      if (findFunction(item)) {
-        match = item;
-      } else if (!match && childrenKeyName) {
-        let hasChildren = item[childrenKeyName] && item[childrenKeyName].length;
-        if (hasChildren) {
-          match = this.find(
-            item[childrenKeyName],
-            findFunction,
-            childrenKeyName
-          );
+    let _childrenKeyName =
+      typeof childrenKeyName === "string" ? [childrenKeyName] : childrenKeyName;
+    function find(list, parent) {
+      let _match = undefined;
+      let _parent = parent ? parent : {};
+      list.forEach((item, index) => {
+        if (!_match && findFunction(item, index, list, _parent)) {
+          _match = item;
+        } else if (!_match) {
+          if (!childrenKeyName) {
+            _childrenKeyName = [];
+            for (let key in item) {
+              if (checkType(item[key]) === "array" && item[key].length)
+                _childrenKeyName.push(key);
+            }
+          }
+          _childrenKeyName.forEach(_childrenKeyName => {
+            let hasChildren =
+              item[_childrenKeyName] && item[_childrenKeyName].length;
+            if (hasChildren) {
+              _match = _match ? _match : find(item[_childrenKeyName], item);
+            }
+          });
+          // let hasChildren = item[childrenKeyName] && item[childrenKeyName].length;
         }
-      }
-    });
-    return match
+      });
+      return _match;
+    }
+    return find(list);
   }
-  findItem(list, findKeyName, findValue, childrenKeyName) {
-    let match = undefined;
-    list.forEach(item => {
-      if (item[findKeyName] === findValue) {
-        match = item;
-      } else if (!match && childrenKeyName) {
-        let hasChildren = item[childrenKeyName] && item[childrenKeyName].length;
-        if (hasChildren) {
-          match = this.findItem(
-            item[childrenKeyName],
-            findKeyName,
-            findValue,
-            childrenKeyName
-          );
-        }
+  findItems(list, findFunction, childrenKeyName, matchList) {
+    let _matchList = matchList ? matchList : [];
+    let _subList =
+      typeof childrenKeyName === "string" ? [childrenKeyName] : childrenKeyName;
+    list.forEach((item, index) => {
+      if (findFunction(item, index, list)) {
+        let _item = { ...item };
+        delete _item[childrenKeyName];
+        _matchList.push(_item);
+      }
+      let hasChildren = item[childrenKeyName] && item[childrenKeyName].length;
+      if (hasChildren) {
+        this.findItems(
+          item[childrenKeyName],
+          findFunction,
+          childrenKeyName,
+          _matchList
+        );
       }
     });
-    return match;
+    return _matchList;
+  }
+
+  totalLevel(list, nextListKeyName) {
+    let totalLevel = 0;
+
+    function checkLevel(list, level) {
+      list.forEach(item => {
+        let nextList = item[nextListKeyName] && item[nextListKeyName].length;
+        if (nextList) {
+          totalLevel = totalLevel > level + 1 ? totalLevel : level + 1;
+          checkLevel(item[nextListKeyName], totalLevel);
+        }
+      });
+    }
+    checkLevel(list, 0);
+    return totalLevel;
   }
   combineNestedListByIndexList(list, childrenKeyName, indexList) {
     let findedList = [];
@@ -55,32 +89,54 @@ class Thists {
     let combinedList = this.regroupToNestedList(findedList, childrenKeyName);
     return combinedList;
   }
-  createId(list, nextListKey, newList, parentItem) {
-    let _newList = newList ? newList : [];
-    list.forEach((item, index) => {
-      let nextList =
-        item[nextListKey] && item[nextListKey].length
-          ? item[nextListKey]
-          : false;
-      let nestedListId = parentItem
-        ? parentItem.nestedListId + "_" + index
-        : index.toString();
-      _newList[index] = {
-        ...item,
-        nestedListId,
-      };
-      if (nextList) {
-        _newList[index][nextListKey] = this.createId(
-          item[nextListKey],
-          nextListKey,
-          _newList[index][nextListKey],
-          _newList[index]
-        );
+  createAllId(list) {
+    let _list = JSON.parse(JSON.stringify(list));
+    let index = 0;
+    let __list = this.renderItems(_list, item => {
+      item.nestedListId = index;
+      index++;
+      return item;
+    });
+    console.log(__list);
+    return __list;
+  }
+  createId(list, childrenKeyName, parentIndex, modifier) {
+    let _list =
+      parentIndex !== undefined ? list : JSON.parse(JSON.stringify(list));
+    _list.forEach((item, index) => {
+      for (let key in item) {
+        let _modifier;
+        if (key !== childrenKeyName) {
+          _modifier = key;
+        }
+        let _index =
+          parentIndex !== undefined ? parentIndex + "_" + index : index + "";
+        _index = modifier ? _index + `_${modifier}` : _index;
+        item.nestedListId = _index;
+        if (checkType(item[key]) === "array" && item[key].length) {
+          item[key] = this.createId(
+            item[key],
+            childrenKeyName,
+            _index,
+            _modifier
+          );
+        }
       }
     });
-    return _newList;
+    return _list;
   }
-
+  renderItems(list, renderFunction) {
+    let _list = list;
+    _list.forEach((item, index) => {
+      let _item = renderFunction(item, index);
+      for (let key in item) {
+        if (checkType(item[key]) === "array" && item[key].length) {
+          item[key] = this.renderItems(item[key], renderFunction);
+        }
+      }
+    });
+    return _list;
+  }
   findNestedListItemWithParent(list, childrenKeyName, findKeyName, findValue) {
     let clonedList = _.cloneDeep(list);
     let _list = this.createId(clonedList, childrenKeyName);
@@ -131,11 +187,10 @@ class Thists {
   getMaxByKey(list, keyName, childrenKeyName, max) {
     let _max = max ? max : list[0][keyName];
     list.forEach(item => {
-      
       if (item[keyName] > _max) {
         _max = item[keyName];
       }
-      console.log(_max, max, item.name)
+      console.log(_max, max, item.name);
       if (this.hasChildren(item, childrenKeyName)) {
         _max = this.getMaxByKey(
           item[childrenKeyName],
@@ -150,11 +205,10 @@ class Thists {
   getMinByKey(list, keyName, childrenKeyName, min) {
     let _min = min ? min : list[0][keyName];
     list.forEach(item => {
-      
       if (item[keyName] < _min) {
         _min = item[keyName];
       }
-      console.log(_min, min, item.name)
+      console.log(_min, min, item.name);
       if (this.hasChildren(item, childrenKeyName)) {
         _min = this.getMinByKey(
           item[childrenKeyName],
@@ -166,6 +220,7 @@ class Thists {
     });
     return _min;
   }
+  //getValueListByKey
   getValueListByKey(list, findKeyName, childrenKeyName, valueList) {
     let _valueList = valueList ? valueList : [];
     list.forEach(item => {
@@ -248,9 +303,10 @@ class Thists {
       list.forEach(item => {
         let _item = renderFunction(item);
         if (_item && _item[childrenKeyName]) {
-          delete _item[childrenKeyName];
+          // delete _item[childrenKeyName];
         }
         renderedList.push(_item);
+        console.log(renderedList);
         if (childrenKeyName && that.hasChildren(item, childrenKeyName)) {
           renderedList[renderedList.length - 1][childrenKeyName] = renderList(
             item[childrenKeyName]

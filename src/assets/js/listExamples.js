@@ -1,11 +1,5 @@
 export default {
   family: {
-    availableFor: [
-      "find",
-      "createId",
-      "findNestedListItemWithParent",
-      "flattenNestedList",
-    ],
     list: [
       {
         role: "Son",

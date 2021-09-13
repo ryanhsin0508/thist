@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="container">
+    
       <router-link to="/">
         <img alt="Vue logo" src="../assets/img/logo.svg" width="60" />
         <h1 class="title">Thists.js</h1>
@@ -10,7 +10,7 @@
           >Documentation</router-link
         >
       </nav>
-    </div>
+    
   </header>
 </template>
 

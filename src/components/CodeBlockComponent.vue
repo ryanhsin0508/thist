@@ -1,21 +1,21 @@
 <template>
   <div
-    class="code-block code-block-component"
-    :style="{ maxHeight: windowWidth > 800 ? maxHeight : '' }"
+    class="code-section code-section-component"
+    :style="{ maxHeight: windowWidth > 800 ? maxHeight : maxHeight }"
+    ref="component"
   >
-    <div class="container flex">
+    
       <aside>
         <slot name="aside"></slot>
       </aside>
-      <main>
+      <main :style="{}">
         <slot name="main"></slot>
       </main>
-    </div>
+    
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
 export default {
   name: "CodeBlockComponent",
   props: {
@@ -34,7 +34,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.code-block {
+.code-section {
   display: flex;
   .container {
     @media (max-width: 800px) {

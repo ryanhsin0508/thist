@@ -404,6 +404,7 @@ export default {
   }
   .options {
     position: fixed;
+    z-index: 9;
   }
   .option-content {
     display: flex;

@@ -9,28 +9,49 @@ import "@/assets/scss/reset.css";
 import "@/assets/scss/main.scss";
 import "@fortawesome/fontawesome-pro/css/all.css";
 import Common from "@/components/Common";
-import CodeExamples from "@/components/CodeExamples";
 import CodeIntroComponent from "@/components/CodeIntroComponent.vue";
-import "@/assets/js/thists.js";
 import "@/assets/js/custom-prototypes.js";
+import * as ttFn from "@/assets/js/custom-functions.js";
+import "@/assets/js/thists.js";
 import { _ } from "core-js";
 const app = createApp(App);
 app.config.globalProperties.axios = axios;
-
+app.config.globalProperties.ttFn = ttFn;
 for (let component in Common) {
   app.component(component, Common[component]);
-}
-for (let component in CodeExamples) {
-  app.component(component, CodeExamples[component]);
 }
 app.mixin({
   components: { CodeIntroComponent },
   data() {
     return {
-      windowWidth: undefined,
+      windowInfo: {
+        windowWidth: undefined,
+        scrollTop: 0,
+        componentOffsetTop: 0,
+      },
     };
   },
   methods: {
+    isRealFalse(data) {
+      let isRealFalse = false;
+      if (typeof data === "boolean") {
+        return !data;
+      }
+      if (data === null) {
+        return true;
+      }
+      if (typeof data === "object") {
+        isRealFalse = Object.keys(data).length === 0;
+      } else if (typeof data === "string") {
+        isRealFalse = data === "";
+      } else {
+        isRealFalse = data === undefined || data === null || isNaN(data);
+      }
+      return isRealFalse;
+    },
+    isRealTrue(data) {
+      return !this.isRealFalse(data);
+    },
     capitalize(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
@@ -59,11 +80,17 @@ app.mixin({
       return code;
     },
     codeColorize(code, skip) {
+      if(!code){
+        return
+      }
       if (skip) {
         return code;
       }
-      let a = "aaa , (item, index, qq) => aaa()";
-      let arr = a.withinIndexList(",", "=>", true, 0, ["(", ")"]);
+      let a = `tt.find(familyList, (item, index, qq) => item.role === "Great granddaughter" && item - qq < 5, "ch1ildren", function(bbb){
+        { var a = "QQQ" }
+       return bbb
+      }),`;
+      let arr = a.withinIndexList("function", "}", true, 0, ["{", "}"]);
       arr.forEach(withinIndexList => {
         let startIndex = withinIndexList[0];
         let endIndex = withinIndexList[1];
@@ -71,11 +98,12 @@ app.mixin({
           "(",
           ")",
         ]);
-        console.log(withinString);
       });
 
       // return code;
       let operatorList = [
+        ">=",
+        "<=",
         "+",
         "=",
         "-",
@@ -88,14 +116,14 @@ app.mixin({
         "if",
         "else",
       ];
-      let seperatorList = [":", ",", ".", "(", ")", "{", "}"];
-      let reservedList = ["=>", "function"];
+      let seperatorList = [":", ",", ".", "(", ")", "{", "}", "[", "]"];
+      let reservedList = ["=>", "function", "var", "let"];
       let _seperatorList = [...seperatorList, ...operatorList, ...reservedList];
       let _code = code;
       let stringPartialList = _code.split(",");
 
-      function renderStringColor(str) {
-        let matchedIndexList = str.allIndexOf('"');
+      function renderStringColor(str, quote) {
+        let matchedIndexList = str.allIndexOf(quote);
         const chunk = (arr, size) =>
           Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
             arr.slice(i * size, i * size + size)
@@ -106,13 +134,14 @@ app.mixin({
           let end = withinIndexList[1];
           let isClassName =
             _code.substring(start - 6, end).indexOf('class="code') >= 0;
-          if (!isClassName && _code.substring(end + 1, end + 2) !== ":") {
+          if (!isClassName && _code[end + 1] !== ":") {
             _code = _code.insert(end + 1, `</&nbsp;span>&nbsp;`);
             _code = _code.insert(start, `&nbsp;<span class="code-string">`);
           }
         });
       }
-      renderStringColor(_code);
+      renderStringColor(_code, '"');
+      renderStringColor(_code, "'");
 
       function isWithinStringByIndex(index, startString, endString) {
         let withinStringList = _code.withinIndexList(
@@ -128,37 +157,31 @@ app.mixin({
         });
         return _boolean;
       }
-      function renderArrowFunctionArgColor() {
+      function renderFunctionArgColor() {
         let argList = [];
-        function renderArgs(matchedIndexList, definedArgList) {
+        function renderArgs(matchedIndexList) {
           matchedIndexList.forEach(withinIndexList => {
-            let startIndex = withinIndexList[0] - 1;
+            let startIndex = withinIndexList[0];
             let endIndex = withinIndexList[1];
             let withinString = _code.substring(startIndex, endIndex);
             //get argList
-            let argTextIndexList = withinString.withinIndexList(
-              ",",
-              "=>",
-              true,
-              startIndex,
-              ["(", ")"],
-              true
-            );
-            argTextIndexList.forEach(withinIndexList => {
-              let startIndex = withinIndexList[0];
-              let endIndex = withinIndexList[1];
-              let _withinString = _code.substring(startIndex, endIndex);
-              let argStr = _withinString.replaceAll(/[ ()=>]/g, "");
-              argList = definedArgList ? definedArgList : argStr.split(",");
-              console.log(argList);
-            });
+            let arrowIndex =
+              withinString.indexOf("=>") >= 0
+                ? withinString.indexOf("=>")
+                : withinString.indexOf("{");
+            if (arrowIndex > 0) {
+              let codeBeforeArrow = withinString.substring(0, arrowIndex);
+              let argStr = codeBeforeArrow.replaceAll(/[\n ()=>]/g, "");
+              argList = argStr.split(",");
+            }
             let reversedArgList = argList.reverse();
             let argIndexList = [];
             reversedArgList.forEach(arg => {
-              let findedStartIndexList = withinString.allIndexOf(arg).reverse();
+              let findedStartIndexList = withinString
+                .allIndexOf(arg, null, true)
+                .reverse();
               findedStartIndexList.forEach((_startIndex, _index) => {
                 argIndexList.push([_startIndex, _startIndex + arg.length]);
-                console.log(arg, findedStartIndexList);
                 let __endIndex = _startIndex + arg.length;
                 /* _code = _code.insert(startIndex + __endIndex, "</span>");
                 _code = _code.insert(
@@ -169,7 +192,6 @@ app.mixin({
             });
             argIndexList = argIndexList.bubbleSortFromLastIndex();
             argIndexList.reverse().forEach(indexList => {
-              console.log(indexList);
               _code = _code.insert(
                 indexList[1] + startIndex,
                 "</&nbsp;span>&nbsp;"
@@ -185,27 +207,26 @@ app.mixin({
         let matchedIndexList = _code
           .withinIndexList(",", ",", true, null, ["(", ")"])
           .reverse();
+
         renderArgs(matchedIndexList);
+
+        matchedIndexList = _code.withinIndexList("function", "}", true, 0, [
+          "{",
+          "}",
+        ]);
+
+        renderArgs(matchedIndexList);
+
         //render defined args in es5 function
-        matchedIndexList = _code.withinIndexList(",", ")", true, null, [
-          "(",
-          ")",
-        ]);
-        renderArgs(matchedIndexList);
-        matchedIndexList = _code.withinIndexList("function", "}", true, null, [
-          "(",
-          ")",
-        ]);
-        renderArgs(matchedIndexList);
       }
-      renderArrowFunctionArgColor(_code);
+      renderFunctionArgColor(_code);
+
       function renderFunctionNameColor(str) {
         let matchedIndexList = _code.allIndexOf("(");
         matchedIndexList.reverse().forEach(matchedIndex => {
           let _endIndex = matchedIndex;
           let _startIndex = matchedIndex;
           let untilList = [" ", ..._seperatorList];
-          console.log(_code[_startIndex - 1]);
           while (!untilList.includes(_code[_startIndex - 1])) {
             _startIndex--;
           }
@@ -213,8 +234,10 @@ app.mixin({
             _startIndex++;
           }
           let _withinString = _code.substring(_startIndex, _endIndex);
-          console.log(_withinString);
-          if (reservedList.includes(_withinString)) {
+          if (
+            reservedList.includes(_withinString) ||
+            operatorList.includes(_withinString)
+          ) {
             return;
           }
           _code = _code.insert(_endIndex, `</&nbsp;span>&nbsp;`);
@@ -302,8 +325,10 @@ app.mixin({
             }
           }
           if (op === "/") {
-            // console.log(_code.substring(index, index + 6));
             // return
+          }
+          if (op === "return") {
+            //
           }
           if (
             !skip &&
@@ -322,8 +347,6 @@ app.mixin({
             _code.substring(index, index + 6) !== ">&nbsp" &&
             _code.substring(index, index + 6) !== "/&nbsp"
           ) {
-            console.log(op);
-
             _code = _code.insert(index + opLen, `</&nbsp;span>&nbsp;`);
             _code = _code.insert(index, `&nbsp;<span class="code-operator">`);
           }
@@ -332,16 +355,22 @@ app.mixin({
       _code = _code.replaceAll("&nbsp;", "");
       return _code;
     },
-    looseJsonParse(obj) {
-      return Function('"use strict";return (' + obj + ")")();
+    looseJsonParse(obj, codeName) {
+      console.time(codeName);
+      let a = Function('"use strict";return (' + obj + ")")();
+      console.timeEnd(codeName);
+      return a;
     },
     onWindowResize() {
-      this.windowWidth = window.innerWidth;
+      this.windowInfo.windowWidth = window.innerWidth;
+    },
+    onWindowScroll() {
+      this.windowInfo.scrollTop = window.scrollY;
     },
   },
   computed: {
     ...mapState(["dataX"]),
-    ...mapGetters(["selectedExampleList"]),
+    ...mapGetters(["selectedExampleList", "childrenKeyName"]),
     tt() {
       return tt;
     },
@@ -349,9 +378,17 @@ app.mixin({
   mounted() {
     this.windowWidth = window.innerWidth;
     window.addEventListener("resize", this.onWindowResize);
+    window.addEventListener("scroll", this.onWindowScroll);
+    this.$nextTick(() => {
+      if (this.$refs.component){
+        console.log(this.$refs.component,this.$refs.component.offsetTop)
+        this.windowInfo.componentOffsetTop = this.$refs.component.offsetTop;
+      }
+    });
   },
   unmounted() {
     window.removeEventListener("resize", this.onWindowResize);
+    window.removeEventListener("scroll", this.onWindowScroll);
   },
 });
 app.use(store).use(router).mount("#app");

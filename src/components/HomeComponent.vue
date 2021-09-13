@@ -22,7 +22,7 @@
         <div class="intro-text">
           <div class="text">
             <div class="title">Thists</div>
-            <p>Easily handle data in <strong>Nested Lists</strong></p>
+            <p>Easily handle data in <strong>Nested List</strong></p>
           </div>
           <nav>
             <button class="button flat no-border">Get Started</button>
@@ -33,16 +33,19 @@
     <main>
       <h2>What is Thists.js?</h2>
       <p>
-        <strong>Thists.js</strong> is a Javascript library that can help you
-        easily control your nested list.
+        <strong>Thists</strong> <span>(pronounced like lists)</span> is a
+        Javascript library that can help you easily control your nested list.
       </p>
       <h2>Quick Look Example</h2>
-      <CodeBlockComponent :maxHeight="'550px'">
+      <CodeBlockComponent :maxHeight="'50vh'">
         <template v-slot:aside>
           <ExampleListSelectorComponent :codeName="'find'" />
         </template>
         <template v-slot:main>
-          <FindComponent :codeName="'find'" />
+          <CodeIntroComponent
+            :codeName="'find'"
+          >
+          </CodeIntroComponent>
         </template>
       </CodeBlockComponent>
     </main>
@@ -50,16 +53,15 @@
 </template>
 
 <script>
-import CodeBlockComponent from "./CodeBlockComponent.vue";
-import ExampleListSelectorComponent from "./ExampleListSelectorComponent.vue";
-import FindComponent from "./Example/FindComponent.vue";
+import CodeBlockComponent from "@/components/CodeBlockComponent.vue";
+import ExampleListSelectorComponent from "@/components/ExampleListSelectorComponent.vue";
+import codeExamples from "@/assets/js/codeExamples";
 export default {
   name: "IntroComponent",
   props: {},
   components: {
     CodeBlockComponent,
     ExampleListSelectorComponent,
-    FindComponent,
   },
   data() {
     return {};
@@ -67,8 +69,12 @@ export default {
   watch: {},
   computed: {},
   methods: {},
-  mounted() {
+  async beforeCreate() {
+    this.$store.commit("SET_DATA", {
+      codeExamples
+    });
   },
+  mounted() {},
 };
 </script>
 

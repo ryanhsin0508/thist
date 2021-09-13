@@ -8,17 +8,17 @@
 </template>
 <script>
 import HeaderComponent from "@/components/HeaderComponent.vue";
-import codeExamples from "@/assets/js/codeExamples";
-import listExamples from "@/assets/js/listExamples";
 export default {
   name: "App",
   components: { HeaderComponent },
-  async mounted() {
-    console.log(listExamples)
+  async beforeCreate(){
+    let res = await this.$store.dispatch("getExamples");
     this.$store.commit("SET_DATA", {
-      listExamples,
-      codeExamples,
+      listExamples: res.data,
     });
+  },
+  async mounted() {
+    
   },
 };
 </script>
@@ -29,6 +29,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  min-height: 100vh;
 }
 
 #nav {

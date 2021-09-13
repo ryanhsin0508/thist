@@ -8,7 +8,10 @@ import CustomSelectComponent from "./Form/CustomSelectComponent";
 // import CustomTimeComponent from "./Form/CustomTimeComponent";
 // import CustomUploaderComponent from "./Form/CustomUploaderComponent";
 // import CustomSwitcherComponent from "./Form/CustomSwitcherComponent";
-
+import NestedListComponent from "./NestedList/NestedListComponent";
+import NestedListUlComponent from "./NestedList/NestedListUlComponent";
+import NestedListLiComponent from "./NestedList/NestedListLiComponent";
+import TableComponent from "./Table/TableComponent";
 export default {
   // CustomRadioComponent,
   // CustomRadioItemComponent,
@@ -20,4 +23,8 @@ export default {
   // CustomTimeComponent,
   // CustomUploaderComponent,
   // CustomSwitcherComponent,
+  NestedListComponent,
+  NestedListUlComponent,
+  NestedListLiComponent,
+  TableComponent
 };

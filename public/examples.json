@@ -1,48 +1,71 @@
 {
   "family": {
-    "availableFor": [
-      "find",
-      "createId",
-      "findNestedListItemWithParent",
-      "flattenNestedList"
-    ],
     "list": [
       {
-        "role": "Son",
+        "role": "son",
+        "name": "Jack",
+        "age": 55,
+        "children": [
+          {
+            "role": "son",
+            "name": "John",
+            "age": 32,
+            "children": [
+              {
+                "role": "daughter",
+                "name": "Annie",
+                "age": 4
+              }
+            ]
+          },
+          {
+            "role": "daughter",
+            "name": "Phebe",
+            "age": 29,
+            "children":[{
+              "role": "daughter",
+              "name": "Linda",
+              "age": 3
+            }]
+          }
+        ]
+      } ,
+      {
+        "role": "son",
         "name": "Ryan",
         "age": 55,
         "children": [
           {
-            "role": "Grandson",
+            "role": "son",
             "name": "Peter",
             "age": 32,
             "children": [
               {
-                "role": "Great granddaughter",
+                "role": "daughter",
                 "name": "Lisa",
                 "age": 4
               },
               {
-                "role": "Great grandson",
-                "name": "Jack",
+                "role": "son",
+                "name": "Sean",
                 "age": 2
               }
             ]
           },
           {
-            "role": "Granddaughter",
+            "role": "daughter",
             "name": "Jane",
             "age": 31
           }
         ]
       },
       {
-        "role": "Daughter",
+        "role": "daughter",
         "name": "Mary",
         "age": 53,
         "children": [
           {
-            "role": "Grandson",
+            "role": "daughter",
             "name": "Cindy",
             "age": 31
           }
@@ -51,7 +74,6 @@
     ]
   },
   "business": {
-    "availableFor": ["find"],
     "list": [
       {
         "name": "Happy Farm",
@@ -124,10 +146,10 @@
               {
                 "name": "Twelve-Eight",
                 "role": "Store",
-                "inventoryContent": {
-                  "productName": "egg",
-                  "count": 100
-                }
+                "inventoryContent": [
+                  {"productName": "egg",
+                  "count": 100}
+                ]
               },
               {
                 "name": "Urban24",
