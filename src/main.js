@@ -80,8 +80,8 @@ app.mixin({
       return code;
     },
     codeColorize(code, skip) {
-      if(!code){
-        return
+      if (!code) {
+        return;
       }
       if (skip) {
         return code;
@@ -115,6 +115,7 @@ app.mixin({
         "return",
         "if",
         "else",
+        "&",
       ];
       let seperatorList = [":", ",", ".", "(", ")", "{", "}", "[", "]"];
       let reservedList = ["=>", "function", "var", "let"];
@@ -324,6 +325,12 @@ app.mixin({
               skip = true;
             }
           }
+          if (op === "&") {
+            console.log(_code.substr(index, 6));
+            if (_code.substr(index, 6).includes("&nbsp") && !_code.substr(index, 6).includes("&&")) {
+              return;
+            }
+          }
           if (op === "/") {
             // return
           }
@@ -380,8 +387,8 @@ app.mixin({
     window.addEventListener("resize", this.onWindowResize);
     window.addEventListener("scroll", this.onWindowScroll);
     this.$nextTick(() => {
-      if (this.$refs.component){
-        console.log(this.$refs.component,this.$refs.component.offsetTop)
+      if (this.$refs.component) {
+        console.log(this.$refs.component, this.$refs.component.offsetTop);
         this.windowInfo.componentOffsetTop = this.$refs.component.offsetTop;
       }
     });

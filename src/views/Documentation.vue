@@ -3,7 +3,7 @@
     <sidebar-component />
     <main>
       <starting-component />
-      <CodeBlockComponent :maxHeight="'100vh'">
+      <CodeSectionComponent :maxHeight="'100vh'">
         <template v-slot:aside>
           <ExampleListSelectorComponent :codeName="'find'" />
         </template>
@@ -14,14 +14,14 @@
             :key="code.title"
           />
         </template>
-      </CodeBlockComponent>
+      </CodeSectionComponent>
     </main>
   </div>
 </template>
 
 <script>
 import ExampleListSelectorComponent from "@/components/ExampleListSelectorComponent.vue";
-import CodeBlockComponent from "@/components/CodeBlockComponent.vue";
+import CodeSectionComponent from "@/components/CodeSectionComponent.vue";
 import SidebarComponent from "../components/SidebarComponent.vue";
 import StartingComponent from "../components/StartingComponent.vue";
 import codeExamples from "@/assets/js/codeExamples";
@@ -30,7 +30,7 @@ export default {
   name: "Documentation",
   components: {
     ExampleListSelectorComponent,
-    CodeBlockComponent,
+    CodeSectionComponent,
     SidebarComponent,
     StartingComponent,
   },

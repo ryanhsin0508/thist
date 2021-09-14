@@ -59,7 +59,7 @@ export default {
     level: { default: 0 },
     list: { default: () => [] },
     listHeight: { default: 16 },
-    fontSize: { default: 12 },
+    fontSize: { default: 14 },
     nextListKey: { default: "children" },
     isShowControl: { default: false },
     isShowDebug: { default: false },

@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "CodeBlockComponent",
+  name: "CodeSectionComponent",
   props: {
     maxHeight: { default: "none" },
   },

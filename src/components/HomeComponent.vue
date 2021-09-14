@@ -37,7 +37,7 @@
         Javascript library that can help you easily control your nested list.
       </p>
       <h2>Quick Look Example</h2>
-      <CodeBlockComponent :maxHeight="'50vh'">
+      <CodeSectionComponent :maxHeight="'50vh'">
         <template v-slot:aside>
           <ExampleListSelectorComponent :codeName="'find'" />
         </template>
@@ -47,20 +47,20 @@
           >
           </CodeIntroComponent>
         </template>
-      </CodeBlockComponent>
+      </CodeSectionComponent>
     </main>
   </div>
 </template>
 
 <script>
-import CodeBlockComponent from "@/components/CodeBlockComponent.vue";
+import CodeSectionComponent from "@/components/CodeSectionComponent.vue";
 import ExampleListSelectorComponent from "@/components/ExampleListSelectorComponent.vue";
 import codeExamples from "@/assets/js/codeExamples";
 export default {
   name: "IntroComponent",
   props: {},
   components: {
-    CodeBlockComponent,
+    CodeSectionComponent,
     ExampleListSelectorComponent,
   },
   data() {

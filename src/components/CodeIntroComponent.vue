@@ -116,7 +116,6 @@ export default {
   color: #ddd;
 }
 .code-title {
-  background-color: #505050;
   position: sticky;
   top: -1px;
   margin-bottom: 1em;

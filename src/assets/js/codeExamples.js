@@ -17,7 +17,7 @@ export default [
       {
         argument: "childrenKeyName",
         type: "String or Array",
-        desc: "Indicate which array in the list you want to search. If not given, it will search whole existed array in the list, which may cause performance issue",
+        desc: "Indicate which array in the list you want to deep search. If not given, it will search whole existed array in the list, which may cause performance issue",
       },
     ],
     argumentNote: "",
@@ -29,9 +29,10 @@ export default [
         },
         {
           desc: "Get child whose age is under 5 and father is Peter",
-          code: `tt.find($exampleList, 
+          code: `tt.find(
+  $exampleList, 
   (item, index, list, parent) => {
-    return parent.name === 'Peter'
+    return item.age < 5 && parent.name === 'Peter'
   },
   'children'
 )`,
@@ -61,16 +62,17 @@ export default [
       {
         argument: "list",
         type: "Array",
-        desc: "",
+        desc: "The list to process",
       },
       {
         argument: "callback",
         type: "Function",
-        note: "Object in list that matches",
+        desc: "Object in list that matches condition",
       },
       {
         argument: "childrenKeyName",
         type: "String or Array",
+        desc: "Indicate which array in the list you want to deep search. If not given, it will search whole existed array in the list, which may cause performance issue",
       },
     ],
     argumentNote: "",

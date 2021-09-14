@@ -77,7 +77,7 @@
       >
         <ul>
           <li>
-            <span class="debug-key">nestedListId:</span
+            <span class="debug-key">nestedListId(ThistId):</span
             ><span>{{ item.nestedListId }}</span>
           </li>
           <li>
@@ -234,6 +234,8 @@ li {
 .debug {
   li {
     position: relative;
+    font-size: 12px;
+    line-height: 1.33em;
     .parent-visible-control {
       color: #fff;
       position: absolute;

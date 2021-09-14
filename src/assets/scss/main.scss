@@ -255,6 +255,8 @@ code {
   background-color: #505050;
   color: #ffffff;
   padding: 24px 16px;
+  margin-right: 5%;
+  max-width: 1280px;
 }
 .code-key,
 .code-var {
@@ -285,7 +287,7 @@ code {
   color: #fff;
 }
 pre {
-  font-size: 12px;
+  font-size: 13px;
   font-family: "consolas";
 }
 .popup-tip {

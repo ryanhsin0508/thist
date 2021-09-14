@@ -76,6 +76,8 @@ export default {
 .starting {
   text-align: left;
   padding: 24px 16px;
+  max-width: 1280px;
+  margin-right: 5%;
   li {
     color: #dddddd;
   }
