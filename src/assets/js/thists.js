@@ -32,7 +32,7 @@ class Thists {
     }
     return find(list);
   }
-  findItems(list, findFunction, childrenKeyName, matchList) {
+  filter(list, findFunction, childrenKeyName, matchList) {
     let _childrenList =
       typeof childrenKeyName === "string" ? [childrenKeyName] : childrenKeyName;
     let _matchList = [];
@@ -317,20 +317,6 @@ class Thists {
   removeListItem(list, childrenKeyName, renderedList) {
     list.forEach((item, index) => {});
     return;
-  }
-  filter(list, childrenKeyName, filterFunc) {
-    let _list = JSON.parse(JSON.stringify(list));
-    let filteredList = _list.filter(item => filterFunc(item));
-    _list.forEach((item, index) => {
-      if (childrenKeyName && this.hasChildren(item, childrenKeyName)) {
-        item[childrenKeyName] = this.filter(
-          item[childrenKeyName],
-          childrenKeyName,
-          filterFunc
-        );
-      }
-    });
-    return filteredList;
   }
   renderListItem(list, renderFunction, childrenKeyName) {
     let that = this;

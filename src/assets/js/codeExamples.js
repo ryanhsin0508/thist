@@ -55,7 +55,7 @@ export default [
     },
   },
   {
-    title: "findItems",
+    title: "filter",
     desc: "Returns a array that includes all finded items",
     note: "",
     argumentList: [
@@ -80,7 +80,7 @@ export default [
       family: [
         {
           desc: "Get all of members whose age is under 30",
-          code: `tt.findItems($exampleList, item => item.age < 30, 'children')
+          code: `tt.filter($exampleList, item => item.age < 30, 'children')
 `,
           note: {
             desc: "From this part, we don't know relative relationships from the result. For further usage, please reference $ref",
@@ -89,7 +89,7 @@ export default [
         },
         {
           desc: "Get member who has more than 2 siblings",
-          code: `tt.findItems($exampleList,
+          code: `tt.filter($exampleList,
   (item, index, list) => {
     return list.length > 2
   },
