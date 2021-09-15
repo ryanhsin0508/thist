@@ -2,7 +2,7 @@
   <header>
     
       <router-link to="/">
-        <img alt="Vue logo" src="../assets/img/logo.svg" width="60" />
+        <img alt="Vue logo" src="../assets/img/logo.svg" width="40" />
         <h1 class="title">Thists.js</h1>
       </router-link>
       <nav>

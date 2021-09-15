@@ -2,7 +2,7 @@ import { _ } from "core-js";
 import { checkType } from "./custom-functions.js";
 class Thists {
   find(list, findFunction, childrenKeyName) {
-    let _childrenKeyName =
+    let _childrenList =
       typeof childrenKeyName === "string" ? [childrenKeyName] : childrenKeyName;
     function find(list, parent) {
       let _match = undefined;
@@ -12,13 +12,13 @@ class Thists {
           _match = item;
         } else if (!_match) {
           if (!childrenKeyName) {
-            _childrenKeyName = [];
+            _childrenList = [];
             for (let key in item) {
               if (checkType(item[key]) === "array" && item[key].length)
-                _childrenKeyName.push(key);
+                _childrenList.push(key);
             }
           }
-          _childrenKeyName.forEach(_childrenKeyName => {
+          _childrenList.forEach(_childrenKeyName => {
             let hasChildren =
               item[_childrenKeyName] && item[_childrenKeyName].length;
             if (hasChildren) {
@@ -33,26 +33,37 @@ class Thists {
     return find(list);
   }
   findItems(list, findFunction, childrenKeyName, matchList) {
-    let _matchList = matchList ? matchList : [];
-    let _subList =
+    let _childrenList =
       typeof childrenKeyName === "string" ? [childrenKeyName] : childrenKeyName;
-    list.forEach((item, index) => {
-      if (findFunction(item, index, list)) {
-        let _item = { ...item };
-        delete _item[childrenKeyName];
-        _matchList.push(_item);
-      }
-      let hasChildren = item[childrenKeyName] && item[childrenKeyName].length;
-      if (hasChildren) {
-        this.findItems(
-          item[childrenKeyName],
-          findFunction,
-          childrenKeyName,
-          _matchList
-        );
-      }
-    });
-    return _matchList;
+    let _matchList = [];
+    function find(list, parent) {
+      let _parent = parent ? parent : {};
+      list.forEach((item, index) => {
+        if (findFunction(item, index, list, _parent)) {
+          let _item = { ...item };
+          delete _item[childrenKeyName];
+          _matchList.push(_item);
+        }
+        if (!childrenKeyName) {
+          _childrenList = [];
+          for (let key in item) {
+            if (checkType(item[key]) === "array" && item[key].length)
+              _childrenList.push(key);
+          }
+        }
+        _childrenList.forEach(_childrenKeyName => {
+          let hasChildren =
+            item[_childrenKeyName] && item[_childrenKeyName].length;
+          if (hasChildren) {
+            find(item[_childrenKeyName], item);
+          }
+        });
+        // let hasChildren = item[childrenKeyName] && item[childrenKeyName].length;
+      });
+      return _matchList;
+    }
+
+    return find(list);
   }
 
   totalLevel(list, nextListKeyName) {
@@ -100,12 +111,39 @@ class Thists {
     console.log(__list);
     return __list;
   }
+  createThistId(list, childrenKeyName) {
+    let _list = JSON.parse(JSON.stringify(list));
+    function createId(list, parentIndex, modifier) {
+      list.forEach((item, index) => {
+        for (let key in item) {
+          let _modifier;
+          if (key !== childrenKeyName) {
+            _modifier = key;
+          }
+          let _index =
+            parentIndex !== undefined ? parentIndex + "_" + index : index + "";
+          _index = modifier ? `${parentIndex}_${modifier}_${index}` : _index;
+          console.log(_index, _modifier)
+          item.nestedListId = _index;
+          if (checkType(item[key]) === "array" && item[key].length) {
+            item[key] = createId(
+              item[key],
+              _index,
+              _modifier
+            );
+          }
+        }
+      });
+      return list
+    }
+    return createId(_list)
+  }
   createId(list, childrenKeyName, parentIndex, modifier) {
     let _list =
       parentIndex !== undefined ? list : JSON.parse(JSON.stringify(list));
     _list.forEach((item, index) => {
       for (let key in item) {
-        let _modifier;
+        let _modifier = undefined;
         if (key !== childrenKeyName) {
           _modifier = key;
         }

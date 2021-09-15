@@ -90,11 +90,15 @@
             <span
               class="parent-visible-control"
               @click="isShowParent = !isShowParent"
-              ><i :class="`far fa-eye${isShowParent ? '' : '-slash'}`"></i
-            ></span>
+            >
+              <i
+                :class="`far fa-eye${isShowParent ? '' : '-slash'}`"
+                v-if="parentItem"
+              />
+            </span>
             <span class="debug-key">parent:</span>
             <pre
-              v-if="isShowParent"
+              v-if="isShowParent || !parentItem"
               v-html="
                 parentItem ? JSON.stringify(parentItem, null, '  ') : 'null'
               "
@@ -166,7 +170,6 @@ export default {
     },
     createParentForChildren(item) {
       let _item = JSON.parse(JSON.stringify(item));
-      delete _item[this.nextListKey];
       return _item;
     },
   },

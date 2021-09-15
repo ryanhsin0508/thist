@@ -1,10 +1,6 @@
 <template>
   <div
     class="sidebar sidebar-component"
-    :style="{
-      top: windowInfo.scrollTop > 80 ? `${windowInfo.scrollTop - 80}px` : 0,
-      height: windowInfo.scrollTop > 80 ? '100vh' : ''
-    }"
   >
     <ul>
       <li>Basic Introduction</li>
@@ -43,7 +39,7 @@ export default {
 <style scoped lang="scss">
 .sidebar {
   position: relative;
-  width: 240px;
+  width: 320px;
   color: #000;
   background-color: #fff;
   box-shadow: 3px 0 5px rgba(0, 0, 0, 0.5);

@@ -1,9 +1,12 @@
 <template>
   <div id="page-documentation" class="documentation" ref="component">
     <sidebar-component />
-    <main>
+    <main ref="main">
       <starting-component />
-      <CodeSectionComponent :maxHeight="'100vh'">
+      <CodeSectionComponent
+        :maxHeight="'calc(100vh - 60px)'"
+        @onMainScroll="onCodeSectionScroll"
+      >
         <template v-slot:aside>
           <ExampleListSelectorComponent :codeName="'find'" />
         </template>
@@ -34,11 +37,25 @@ export default {
     SidebarComponent,
     StartingComponent,
   },
+  methods: {
+    onCodeSectionScroll() {
+      console.log("QQQ");
+      this.$refs.main.scrollTop = 3000
+    },
+    onMainScroll() {},
+  },
   async beforeCreate() {
     this.$store.commit("SET_DATA", {
-      codeExamples
+      codeExamples,
     });
   },
+  mounted() {
+    this.$refs.main.addEventListener("scroll", this.onMainScroll);
+  },
+  beforeUnmounted(){
+    this.$refs.main.removeEventListener("scroll", this.onMainScroll);
+
+  }
 };
 </script>
 <style scoped lang="scss">
@@ -48,7 +65,6 @@ export default {
     flex-grow: 1;
     color: #fff;
     background-color: #505050;
-    max-width: calc(100% - 240px);
   }
 }
 </style>

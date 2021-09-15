@@ -24,11 +24,11 @@ export default [
     usages: {
       family: [
         {
-          desc: "Get child whose age is under 35",
+          desc: "Get first finded child whose age is under 35",
           code: "tt.find($exampleList, item => item.age < 30, 'children')",
         },
         {
-          desc: "Get child whose age is under 5 and father is Peter",
+          desc: "Get first finded child whose age is under 5 and father is Peter",
           code: `tt.find(
   $exampleList, 
   (item, index, list, parent) => {
@@ -88,10 +88,10 @@ export default [
           },
         },
         {
-          desc: "Get member who has sibling",
+          desc: "Get member who has more than 2 siblings",
           code: `tt.findItems($exampleList,
   (item, index, list) => {
-    return item.age < 35
+    return list.length > 2
   },
   'children'
 )

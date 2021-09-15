@@ -326,7 +326,6 @@ app.mixin({
             }
           }
           if (op === "&") {
-            console.log(_code.substr(index, 6));
             if (_code.substr(index, 6).includes("&nbsp") && !_code.substr(index, 6).includes("&&")) {
               return;
             }
@@ -388,7 +387,6 @@ app.mixin({
     window.addEventListener("scroll", this.onWindowScroll);
     this.$nextTick(() => {
       if (this.$refs.component) {
-        console.log(this.$refs.component, this.$refs.component.offsetTop);
         this.windowInfo.componentOffsetTop = this.$refs.component.offsetTop;
       }
     });

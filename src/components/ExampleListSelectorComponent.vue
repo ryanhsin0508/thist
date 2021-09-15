@@ -23,7 +23,7 @@
         :isShowControl="true"
       />
     </div>
-    <button class="button flat no-border" @click="copyText">Copy Array</button>
+    <button class="button flat no-border" @click="copyText">Copy Data</button>
     <transition name="fade">
       <span class="popup-tip" v-if="showTip">Copied</span>
     </transition>

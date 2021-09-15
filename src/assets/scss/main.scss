@@ -58,6 +58,11 @@ strong {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
+  padding-left: 40px;
+  padding-right: 40px;
+  >section{
+    margin-bottom: 20px;
+  }
 }
 table {
   tr {
@@ -99,7 +104,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: 60px;
   border-bottom: 1px solid $gray3;
   padding: 10px 24px;
   background-color: #fff;
@@ -236,8 +241,13 @@ header {
 main {
   .title {
     font-size: 24px;
-    margin-bottom: 0.25em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #a7a7a7;
   }
+}
+p{
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
 }
 code {
   background-color: transparent;
@@ -255,8 +265,7 @@ code {
   background-color: #505050;
   color: #ffffff;
   padding: 24px 16px;
-  margin-right: 5%;
-  max-width: 1280px;
+  
 }
 .code-key,
 .code-var {

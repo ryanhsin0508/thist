@@ -90,7 +90,8 @@ export default {
       return tt.totalLevel(this.list, this.nextListKey);
     },
     renderedList() {
-      let renderedList = tt.createId(this.list, this.nextListKey);
+      let renderedList = tt.createThistId(this.list, this.nextListKey);
+      console.log(renderedList)
       return renderedList;
     },
   },

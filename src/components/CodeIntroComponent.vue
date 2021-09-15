@@ -117,9 +117,10 @@ export default {
 }
 .code-title {
   position: sticky;
-  top: -1px;
+  top: 0px;
   margin-bottom: 1em;
   border-bottom: 1px solid #a7a7a7;
+  background-color: #505050;
   .desc {
     letter-spacing: 1px;
   }
@@ -162,6 +163,7 @@ export default {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 0.5em;
+  border: none;
 }
 .usage {
   margin-bottom: 2em;
@@ -169,6 +171,7 @@ export default {
     border: 1px solid #a7a7a7;
     border-radius: 5px;
     margin-bottom: 0.5em;
+    overflow: hidden;
     > pre {
       white-space: pre-wrap;
       font-size: 16px;

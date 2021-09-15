@@ -4,14 +4,14 @@
     :style="{ maxHeight: windowWidth > 800 ? maxHeight : maxHeight }"
     ref="component"
   >
-    
+    <div class="container flex">
       <aside>
         <slot name="aside"></slot>
       </aside>
-      <main :style="{}">
+      <main :style="{}" ref="main">
         <slot name="main"></slot>
       </main>
-    
+    </div>
   </div>
 </template>
 
@@ -27,8 +27,14 @@ export default {
   },
   watch: {},
   computed: {},
-  methods: {},
-  mounted() {},
+  methods: {
+    onMainScroll() {
+      this.$emit("onMainScroll");
+    },
+  },
+  mounted() {
+    this.$refs.main.addEventListener("scroll", this.onMainScroll);
+  },
 };
 </script>
 
