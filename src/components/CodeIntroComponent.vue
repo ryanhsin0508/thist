@@ -119,7 +119,6 @@ export default {
   position: sticky;
   top: 0px;
   margin-bottom: 1em;
-  border-bottom: 1px solid #a7a7a7;
   background-color: #505050;
   .desc {
     letter-spacing: 1px;
@@ -172,6 +171,7 @@ export default {
     border-radius: 5px;
     margin-bottom: 0.5em;
     overflow: hidden;
+    width: 80%;
     > pre {
       white-space: pre-wrap;
       font-size: 16px;

@@ -17,8 +17,10 @@ code {
   line-height: 1.5;
 }
 h2 {
-  margin-top: 1.5em;
   font-size: 24px;
+}
+h3{
+  font-size: 18px;
 }
 main {
   h1,
@@ -35,14 +37,14 @@ strong {
 .debug {
   display: block !important;
   color: #46eeff !important;
-  div{
+  div {
     display: flex;
   }
-  &-key{
+  &-key {
     margin-right: 10px;
   }
 }
-.color-block{
+.color-block {
   display: block;
   width: 12px;
   height: 12px;
@@ -60,7 +62,7 @@ strong {
   margin: 0 auto;
   padding-left: 40px;
   padding-right: 40px;
-  >section{
+  > section {
     margin-bottom: 20px;
   }
 }
@@ -73,7 +75,7 @@ table {
     }
   }
 }
-#app {
+#app .content {
   *::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -238,14 +240,67 @@ header {
     }
   }
 }
-main {
+.content {
+  line-height: 2;
+  letter-spacing: .5px;
   .title {
     font-size: 24px;
+    font-weight: bold;    
     margin-bottom: 0.5em;
-    border-bottom: 1px solid #a7a7a7;
+    // border-bottom: 1px solid #cfcfcf;
+  }
+  > section {
+    margin-bottom: 20px;
+    .text{
+      width: 480px;
+      flex-shrink: 0;
+      margin-right: 24px;
+    }
   }
 }
-p{
+.starting {
+  text-align: left;
+  padding: 24px;
+  .container{
+  }
+  .code-section {
+    max-width: 100%;
+    li{
+      letter-spacing: 0;
+    }
+  }
+  .intro-text {
+    display: flex;
+    align-items: flex-start;
+    img {
+      margin-right: 20px;
+    }
+  }
+  li {
+    // color: #333;
+  }
+  .code-explaination {
+    line-height: 1;
+    margin-bottom: 8px;
+    ul {
+      display: flex;
+      li {
+        font-size: 12px;
+        margin-right: 10px;
+        span {
+          margin-right: 4px;
+        }
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+  .json {
+    height: 480px;
+    overflow: auto;
+  }
+}
+p {
   margin-top: 0.25em;
   margin-bottom: 0.25em;
 }
@@ -260,12 +315,46 @@ code {
     margin-bottom: 16px;
   }
 }
+.sidebar {
+  position: relative;
+  width: 18%;
+  min-width: 320px;
+  color: #000;
+  background-color: #efefef;
+  border-right: 1px solid #e7e7e8;
+  min-height: calc(100vh - 80px);
+  flex-shrink: 0;
+  text-align: left;
+  padding-left: 20px;
+  padding-top: 16px;
+  h2 {
+    font-size: 18px;
+  }
+  ul {
+    margin-bottom: 1em;
+    li {
+      font-size: 16px;
+      font-family: consolas;
+      cursor: pointer;
+      line-height: 2;
+    }
+  }
+}
 .code-section {
   text-align: left;
   background-color: #505050;
   color: #ffffff;
-  padding: 24px 16px;
-  
+  padding: 16px;
+  border-radius: 5px;
+  font-family: consolas;
+}
+.code-examples {
+  width: 100%;
+  display: flex;
+  text-align: left;
+  padding: 16px;
+  background-color: #505050;
+  color: #fff;
 }
 .code-key,
 .code-var {

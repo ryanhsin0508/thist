@@ -1,9 +1,12 @@
 <template>
-  <div
-    class="sidebar sidebar-component"
-  >
+  <div class="sidebar sidebar-component">
+    <h2>Starting</h2>
     <ul>
+      <li>Installation</li>
       <li>Basic Introduction</li>
+    </ul>
+    <h2>Code Examples</h2>
+    <ul>
       <li v-for="code in dataX.codeExamples" :key="code.title">
         tt.{{ code.title }}
       </li>
@@ -36,23 +39,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-.sidebar {
-  position: relative;
-  width: 320px;
-  color: #000;
-  background-color: #fff;
-  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.5);
-  min-height: calc(100vh - 80px);
-  flex-shrink: 0;
-  text-align: left;
-  padding-left: 20px;
-  padding-top: 16px;
-  li {
-    font-size: 16px;
-    font-family: consolas;
-    cursor: pointer;
-    line-height: 2;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

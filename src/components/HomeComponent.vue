@@ -87,11 +87,12 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 48px 24px;
-  background-color: #244b71;
+  background-color: #418fd9;
   color: #ffffff;
   height: 180px;
   box-sizing: content-box;
   letter-spacing: 3px;
+  margin-bottom: 24px;
   .title {
     font-size: 36px;
     font-weight: bold;

@@ -1,10 +1,10 @@
 <template>
   <div
-    class="code-section code-section-component"
+    class="code-examples code-examples-component"
     :style="{ maxHeight: windowWidth > 800 ? maxHeight : maxHeight }"
     ref="component"
   >
-    <div class="container flex">
+    <div class="content flex">
       <aside>
         <slot name="aside"></slot>
       </aside>
@@ -50,9 +50,10 @@ export default {
 }
 aside {
   display: flex;
-  padding: 0 20px;
+  padding: 0 24px;
   border-right: 1px solid rgba(255, 255, 255, 0.75);
   width: 360px;
+  box-sizing: content-box;
   flex-shrink: 0;
   @media (max-width: 800px) {
     width: 100%;

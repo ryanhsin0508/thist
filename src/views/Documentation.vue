@@ -40,7 +40,11 @@ export default {
   methods: {
     onCodeSectionScroll() {
       console.log("QQQ");
-      this.$refs.main.scrollTop = 3000
+      this.$refs.main.scrollTo({
+        top: 3000,
+        left: 0,
+        behavior: "smooth",
+      });
     },
     onMainScroll() {},
   },
@@ -52,10 +56,9 @@ export default {
   mounted() {
     this.$refs.main.addEventListener("scroll", this.onMainScroll);
   },
-  beforeUnmounted(){
+  beforeUnmounted() {
     this.$refs.main.removeEventListener("scroll", this.onMainScroll);
-
-  }
+  },
 };
 </script>
 <style scoped lang="scss">
@@ -63,8 +66,6 @@ export default {
   display: flex;
   main {
     flex-grow: 1;
-    color: #fff;
-    background-color: #505050;
   }
 }
 </style>
