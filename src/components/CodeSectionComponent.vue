@@ -3,18 +3,19 @@
     class="code-examples code-examples-component"
     :style="{ maxHeight: windowWidth > 800 ? maxHeight : maxHeight }"
     ref="component"
-  ><div class="container flex">
-    
+  >
+    <div class="container flex">
       <div class="content flex">
-        <aside>
-          <slot name="aside"></slot>
-        </aside>
+        
         <main :style="{}" ref="main">
           <slot name="main"></slot>
         </main>
+        <aside ref="aside">
+          <slot name="aside"></slot>
+        </aside>
       </div>
-    
-  </div></div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -25,7 +26,9 @@ export default {
   },
   components: {},
   data() {
-    return {};
+    return {
+      isShowAside:false
+    };
   },
   watch: {},
   computed: {},
@@ -36,6 +39,7 @@ export default {
   },
   mounted() {
     this.$refs.main.addEventListener("scroll", this.onMainScroll);
+    
   },
 };
 </script>
@@ -52,7 +56,6 @@ export default {
 }
 aside {
   display: flex;
-  padding: 0 20px 0 0;
   border-right: 1px solid rgba(255, 255, 255, 0.75);
   width: 360px;
   box-sizing: content-box;
@@ -66,9 +69,9 @@ aside {
   }
 }
 main {
-  overflow: auto;
+  overflow: unset!important;
   flex-grow: 1;
-  padding: 0 20px;
+  padding: 0 20px 0 0;
   @media (max-width: 800px) {
     padding: 20px 0;
   }

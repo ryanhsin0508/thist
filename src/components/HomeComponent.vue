@@ -87,7 +87,7 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 48px 24px;
-  background-color: #418fd9;
+  background-color: #3676b3;
   color: #ffffff;
   height: 180px;
   box-sizing: content-box;

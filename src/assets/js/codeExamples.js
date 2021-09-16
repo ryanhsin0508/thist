@@ -25,14 +25,19 @@ export default [
       family: [
         {
           desc: "Get first finded child whose age is under 35",
-          code: "tt.find($exampleList, item => item.age < 30, 'children')",
+          code: `tt.find(
+  $exampleList,
+  item => item.age < 30,
+  'children'
+)`,
         },
         {
           desc: "Get first finded child whose age is under 5 and father is Peter",
           code: `tt.find(
   $exampleList, 
   (item, index, list, parent) => {
-    return item.age < 5 && parent.name === 'Peter'
+    return item.age < 5 && 
+    parent.name === 'Peter'
   },
   'children'
 )`,

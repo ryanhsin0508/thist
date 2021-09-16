@@ -1,5 +1,9 @@
 <template>
-  <div class="example-selector example-selector-component" ref="component">
+  <div
+    class="example-selector example-selector-component"
+    :style="{ top: componentTop + 'px' }"
+    ref="component"
+  >
     <CustomSelectComponent
       :list="optionList"
       v-model:selected="selected"
@@ -50,6 +54,8 @@ export default {
       examples: {},
       showTip: false,
       componentOffsetTop: 0,
+      componentTop: 0,
+      offsetTop: 0,
     };
   },
   watch: {
@@ -61,6 +67,17 @@ export default {
     },
     selected(value) {
       this.$store.commit("SET_DATA", { selectedExampleType: value });
+    },
+    "windowInfo.scrollTop"(scrollTop) {
+      let componentHeight = this.$refs.component.getBoundingClientRect().height;
+      let minusNumber = window.innerHeight / 2 - componentHeight / 2;
+      let offsetY = this.offsetTop - minusNumber;
+      if (scrollTop - offsetY > 0) {
+        this.componentTop = scrollTop - offsetY + 30;
+        //
+      } else {
+        this.componentTop = 0;
+      }
     },
   },
   computed: {
@@ -89,37 +106,42 @@ export default {
       }, 1000);
       /* Alert the copied text */
     },
+    onMouseWheel(e){
+      console.log("QQQ")
+    }
   },
   async mounted() {
+    this.offsetTop = this.$refs.component.offsetTop;
     if (this.isRealTrue(this.optionList) && !this.dataX.selectedExampleType) {
       this.selected = this.optionList[0].value;
     }
     if (this.dataX.selectedExampleType) {
       this.selected = this.dataX.selectedExampleType;
     }
-    
+    this.$refs.component.addEventListener("onmousewheel", this.onMouseOver)
+    /* let thresholdArr = [];
+    for (let i = 0; i < 100; i++) {
+      thresholdArr.push(i / 100);
+    }
+    let observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          console.log(entry.intersectionRatio);
+        });
+      },
+      { root: null, rootMargin: "0px", threshold: thresholdArr }
+    );
+    observer.observe(this.$refs.component); */
     /* console.log(this.$store.state)
     let res = await this.$store.dispatch("getCodeData")
     console.log(res.data) */
   },
+  beforeUnmount(){
+    this.$refs.component.removeEventListener("onmousewheel", this.onMouseOver)
+
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-.example-selector {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow: auto;
-  background-color: #505050;
-  padding: 10px;
-  border-radius: 10px;
-  color: #ffffff;
-  .json {
-    overflow: auto;
-    margin-bottom: 20px;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-content">
     <HeaderComponent />
     <main class="main">
       <router-view />
@@ -41,11 +41,10 @@ export default {
     max-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: auto;
   }
-  main {
-    max-height: calc(100vh - 60px);
-    overflow: auto;
+  main.main {
+    padding-top: 60px;
+    // max-height: calc(100vh - 60px);
   }
 }
 

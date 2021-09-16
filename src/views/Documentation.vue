@@ -1,7 +1,7 @@
 <template>
   <div id="page-documentation" class="documentation" ref="component">
     <sidebar-component />
-    <main ref="main">
+    <main class="page-main" ref="main">
       <starting-component />
       <CodeSectionComponent
         :maxHeight="'calc(100vh - 60px)'"

@@ -147,7 +147,7 @@ export default {
   z-index: 1;
   margin-bottom: 4px;
   padding-bottom: 4px;
-  background-color: #505050;
+  background-color: #606060;
   button {
     font-size: 12px;
     margin-right: 10px;

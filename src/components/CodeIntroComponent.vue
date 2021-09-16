@@ -189,7 +189,9 @@ export default {
       white-space: pre-wrap;
       font-size: 16px;
       padding: 4px 8px;
-      background-color: #505050;
+      background-color: #606060;
+      width: 60%;
+      flex-shrink: 0;
     }
   }
   .note {
@@ -209,6 +211,7 @@ li {
   padding: 8px;
   overflow: auto;
   max-height: 360px;
+  flex-grow: 1;
   pre {
   }
 }

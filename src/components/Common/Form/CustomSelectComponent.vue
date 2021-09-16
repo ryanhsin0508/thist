@@ -393,11 +393,11 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 0 10px;
-    background-color: #505050;
+    background-color: #606060;
   }
   .title,
   .options {
-    background-color: #505050;
+    background-color: #606060;
     color: #fff;
     border: 1px solid gray;
     border-radius: 5px;

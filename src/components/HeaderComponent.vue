@@ -1,16 +1,15 @@
 <template>
   <header>
-    
-      <router-link to="/">
-        <img alt="Vue logo" src="../assets/img/logo.svg" width="40" />
-        <h1 class="title">Thists.js</h1>
+    <button class="flat no-border menu" v-if="windowInfo.windowWidth <= 1536"><i class="far fa-bars"></i></button>
+    <router-link to="/">
+      <img alt="Vue logo" src="../assets/img/logo.svg" width="40" />
+      <h1 class="title">Thists.js</h1>
+    </router-link>
+    <nav>
+      <router-link class="button flat no-border" :to="'/documentation'">
+        <i class="text-icon far fa-file-alt" /> <span v-if="windowInfo.windowWidth > 640">Documentation</span>
       </router-link>
-      <nav>
-        <router-link class="button flat no-border" :to="'/documentation'"
-          >Documentation</router-link
-        >
-      </nav>
-    
+    </nav>
   </header>
 </template>
 
