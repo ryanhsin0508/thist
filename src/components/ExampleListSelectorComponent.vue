@@ -113,6 +113,10 @@ export default {
   flex-direction: column;
   width: 100%;
   overflow: auto;
+  background-color: #505050;
+  padding: 10px;
+  border-radius: 10px;
+  color: #ffffff;
   .json {
     overflow: auto;
     margin-bottom: 20px;

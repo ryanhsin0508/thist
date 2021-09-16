@@ -71,7 +71,7 @@ table {
     th,
     td {
       padding: 2px 8px;
-      border: 1px solid #717171;
+      border: 1px solid #dcdcdc;
     }
   }
 }
@@ -353,8 +353,6 @@ code {
   display: flex;
   text-align: left;
   padding: 16px;
-  background-color: #505050;
-  color: #fff;
 }
 .code-key,
 .code-var {
@@ -368,12 +366,16 @@ code {
 }
 .code-parameter {
   color: #ffc000;
+  &-dark{
+    color: #ffa600;
+  }
 }
 .code-number {
   color: #fff700;
 }
 .code-function {
   color: #46eeff;
+  
 }
 .code-reserved {
   color: #70ffd7;

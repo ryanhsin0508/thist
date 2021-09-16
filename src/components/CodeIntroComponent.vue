@@ -18,7 +18,15 @@
           :key="'argg' + index"
         >
           <td v-for="(data, key) in argData" :key="'arg' + index + key">
-            <p :class="[key, { 'code-parameter': key === 'argument', 'code-reserved': key === 'type' }]">
+            <p
+              :class="[
+                key,
+                {
+                  'code-parameter': key === 'argument',
+                  'code-reserved': key === 'type',
+                },
+              ]"
+            >
               {{ data }}
             </p>
           </td>
@@ -34,7 +42,7 @@
       >
         <p class="desc">{{ usg.desc }}</p>
         <!-- <pre v-html="codeColorize(test)"></pre> -->
-        <div class="code">
+        <div class="code code-section">
           <pre
             v-if="usg.code"
             v-html="
@@ -68,7 +76,10 @@
             ></pre>
           </div>
         </div>
-        <p class="note" v-if="usg.note">{{usg.note.desc.replace("$ref", "")}}<a href="#">{{usg.note.ref}}</a></p>
+        <p class="note" v-if="usg.note">
+          {{ usg.note.desc.replace("$ref", "")
+          }}<a href="#">{{ usg.note.ref }}</a>
+        </p>
       </div>
     </section>
   </div>
@@ -112,14 +123,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.desc{
-  color: #ddd;
+.desc {
+  color: #666666;
 }
 .code-title {
   position: sticky;
   top: 0px;
   margin-bottom: 1em;
-  background-color: #505050;
+  background-color: #ffffff;
   .desc {
     letter-spacing: 1px;
   }
@@ -152,6 +163,7 @@ export default {
 .code-function {
   font-size: 24px;
   margin-bottom: 0.25em;
+  color: #55a4ec;
 }
 
 .note {
@@ -167,11 +179,12 @@ export default {
 .usage {
   margin-bottom: 2em;
   > .code {
+    display: flex;
     border: 1px solid #a7a7a7;
     border-radius: 5px;
     margin-bottom: 0.5em;
     overflow: hidden;
-    width: 80%;
+    width: 100%;
     > pre {
       white-space: pre-wrap;
       font-size: 16px;
@@ -179,7 +192,7 @@ export default {
       background-color: #505050;
     }
   }
-  .note{
+  .note {
     font-size: 12px;
   }
 }
@@ -195,6 +208,7 @@ li {
   color: #ccc;
   padding: 8px;
   overflow: auto;
+  max-height: 360px;
   pre {
   }
 }

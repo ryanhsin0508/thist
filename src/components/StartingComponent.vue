@@ -18,20 +18,20 @@
             <p>All callback functions are composed of following arguments:</p>
             <ul>
               <li>
-                <span class="code-parameter">item</span>: Each object being
+                <span class="code-parameter-dark">item</span>: Each object being
                 processed in nested list
               </li>
               <li>
-                <span class="code-parameter">index</span>: Object index in each
+                <span class="code-parameter-dark">index</span>: Object index in each
                 level
                 <span class="question"></span>
               </li>
               <li>
-                <span class="code-parameter">list</span>: Each object in
+                <span class="code-parameter-dark">list</span>: Each object in
                 processing nested list
               </li>
               <li>
-                <span class="code-parameter">parent</span>: Parent of processing
+                <span class="code-parameter-dark">parent</span>: Parent of processing
                 nested list item
               </li>
             </ul>

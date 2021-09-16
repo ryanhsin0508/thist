@@ -33,7 +33,7 @@
     <main>
       <h2>What is Thists.js?</h2>
       <p>
-        <strong>Thists</strong> <span>(pronounced like lists)</span> is a
+        <strong>Thist</strong> <span>(pronounced like list)</span> is a
         Javascript library that can help you easily control your nested list.
       </p>
       <h2>Quick Look Example</h2>

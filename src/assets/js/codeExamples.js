@@ -107,7 +107,8 @@ export default [
           desc: "Find business that eggs' count is below 150",
           code: `tt.find(
   $exampleList, 
-  item => item.productName === 'egg' && item.count < 150 , 
+  item => item.productName === 'egg' &&
+  item.count < 150 , 
   ['subBusinessList', 'inventoryContent']
 )`,
         },
