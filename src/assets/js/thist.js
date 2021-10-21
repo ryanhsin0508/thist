@@ -2,8 +2,13 @@ import { _ } from "core-js";
 import { checkType } from "./custom-functions.js";
 class Thist {
   find(list, findFunction, childrenKeyName, isFindDeep) {
-    let _childrenList =
-      typeof childrenKeyName === "string" ? [childrenKeyName] : childrenKeyName;
+    let _childrenList = [];
+    if (childrenKeyName) {
+      _childrenList =
+        typeof childrenKeyName === "string"
+          ? [childrenKeyName]
+          : childrenKeyName;
+    }
     function find(list, parent, level) {
       let _match = undefined;
       let _childrenKeyName = _childrenList[level];
@@ -25,12 +30,27 @@ class Thist {
           }
         }
         if (!_match) {
-          let hasChildren =
-            item[_childrenKeyName] && item[_childrenKeyName].length;
-          if (hasChildren) {
-            _match = _match
-              ? _match
-              : find(item[_childrenKeyName], item, level);
+          if (!_childrenKeyName) {
+            for (let key in item) {
+              if (
+                checkType(item[key]) === "array" &&
+                item[key].length &&
+                key !== _childrenKeyName
+              ) {
+                let findedItem = find(item[key], item, level);
+                if (findedItem) {
+                  _match = findedItem;
+                }
+              }
+            }
+          } else {
+            let hasChildren =
+              item[_childrenKeyName] && item[_childrenKeyName].length;
+            if (hasChildren) {
+              _match = _match
+                ? _match
+                : find(item[_childrenKeyName], item, level);
+            }
           }
           // let hasChildren = item[childrenKeyName] && item[childrenKeyName].length;
         }
@@ -86,7 +106,7 @@ class Thist {
 
     function checkLevel(list, level) {
       list.forEach(item => {
-        totalLevel = totalLevel > level ? totalLevel : level
+        totalLevel = totalLevel > level ? totalLevel : level;
         let hasNextList = item[nextListKeyName] && item[nextListKeyName].length;
         if (hasNextList) {
           checkLevel(item[nextListKeyName], level + 1);
@@ -130,17 +150,22 @@ class Thist {
     let _list = JSON.parse(JSON.stringify(list));
     function createId(list, parentIndex, modifier) {
       list.forEach((item, index) => {
-        for (let key in item) {
-          let _modifier;
-          if (key !== childrenKeyName) {
-            _modifier = key;
-          }
-          let _index =
-            parentIndex !== undefined ? parentIndex + "_" + index : index + "";
-          _index = modifier ? `${parentIndex}_${modifier}_${index}` : _index;
-          item.nestedListId = _index;
-          if (checkType(item[key]) === "array" && item[key].length) {
-            item[key] = createId(item[key], _index, _modifier);
+        console.log(item, checkType(item))
+        if (checkType(item) === "object") {
+          for (let key in item) {
+            let _modifier;
+            if (key !== childrenKeyName) {
+              _modifier = key;
+            }
+            let _index =
+              parentIndex !== undefined
+                ? parentIndex + "_" + index
+                : index + "";
+            _index = modifier ? `${parentIndex}_${modifier}_${index}` : _index;
+            item.nestedListId = _index;
+            if (checkType(item[key]) === "array" && item[key].length) {
+              item[key] = createId(item[key], _index, _modifier);
+            }
           }
         }
       });

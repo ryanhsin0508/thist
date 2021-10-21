@@ -1,121 +1,124 @@
 <template>
   <li :style="{ fontSize: fontSize + 'px' }">
-    <div class="start">
-      <span class="open-bracket" v-if="level === 0 && listIndex === 0">[</span>
-      <span class="open-brace">{</span>
-    </div>
-    <div class="content">
-      <div
-        :style="{ marginLeft: `${indent}px` }"
-        v-for="(value, key, index) in renderedItem"
-        :key="'content' + index"
-      >
-        <span
-          class="expand-handle"
-          :style="{
-            left: `-${indent}px`,
-            width: `${listHeight}px`,
-            height: `${listHeight}px`,
-          }"
-          @click="toggleExpand(`${item.nestedListId}_${key}`)"
-          v-if="ttFn.checkType(item[key]) === 'array'"
+    <template v-if="ttFn.checkType(renderedItem) !== 'string'">
+      <div class="start">
+        <span class="open-bracket" v-if="level === 0 && listIndex === 0"
+          >[</span
         >
-          <i
-            :class="
-              expandList.includes(item.nestedListId + '_' + key)
-                ? 'far fa-minus-square'
-                : 'far fa-plus-square'
-            "
-          />
-        </span>
-
+        <span class="open-brace">{</span>
+      </div>
+      <div class="content">
         <div
-          class="list-content"
-          :style="{
-            //height: `${listHeight}px`,
-          }"
+          :style="{ marginLeft: `${indent}px` }"
+          v-for="(value, key, index) in renderedItem"
+          :key="'content' + index"
         >
-          <span class="key">"{{ key }}": </span>
           <span
-            :class="['value', `code-${ttFn.checkType(value)}`]"
-            v-if="value"
-          >
-            {{ value }}
-          </span>
-        </div>
-        <template v-if="ttFn.checkType(item[key]) === 'array'">
-          <span class="open-bracket">[</span>
-
-          <NestedListUlComponent
-            :list="item[key]"
-            :test="'aa'"
-            v-bind="{
-              ...$props,
-              level: level + 1,
-              parentItem: createParentForChildren(item),
+            class="expand-handle"
+            :style="{
+              left: `-${indent}px`,
+              width: `${listHeight}px`,
+              height: `${listHeight}px`,
             }"
-            v-if="expandList.includes(item.nestedListId + '_' + key)"
-            @toggleExpand="toggleExpand"
-          />
-          <span
-            class="spread"
-            :style="{ marginLeft: `${indent / 2}px` }"
-            v-if="!expandList.includes(item.nestedListId + '_' + key)"
             @click="toggleExpand(`${item.nestedListId}_${key}`)"
-            >...</span
+            v-if="ttFn.checkType(item[key]) === 'array'"
           >
-          <span class="close-bracket">]</span>
-        </template>
-      </div>
-      <div
-        class="debug"
-        :style="{
-          marginLeft: `${indent}px`,
-          order: isInvertDebug ? 0 : -1,
-        }"
-        v-if="isShowDebug"
-      >
-        <ul>
-          <li>
-            <span class="debug-key">nestedListId(ThistId):</span
-            ><span>{{ item.nestedListId }}</span>
-          </li>
-          <li>
-            <span class="debug-key">index:</span><span>{{ listIndex }}</span>
-          </li>
-          <li>
-            <span class="debug-key">level:</span><span>{{ level }}</span>
-          </li>
-          <li>
-            <span
-              class="parent-visible-control"
-              @click="isShowParent = !isShowParent"
-            >
-              <i
-                :class="`far fa-eye${isShowParent ? '' : '-slash'}`"
-                v-if="parentItem"
-              />
-            </span>
-            <span class="debug-key">parent:</span>
-            <pre
-              v-if="isShowParent || !parentItem"
-              v-html="
-                parentItem ? JSON.stringify(parentItem, null, '  ') : 'null'
+            <i
+              :class="
+                expandList.includes(item.nestedListId + '_' + key)
+                  ? 'far fa-minus-square'
+                  : 'far fa-plus-square'
               "
-            ></pre>
-          </li>
-        </ul>
+            />
+          </span>
+          <div
+            class="list-content"
+            :style="{
+              //height: `${listHeight}px`,
+            }"
+          >
+            <span class="key">"{{ key }}": </span>
+            <span
+              :class="['value', `code-${ttFn.checkType(value)}`]"
+              v-if="value"
+            >
+              {{ value }}
+            </span>
+          </div>
+          <template v-if="ttFn.checkType(item[key]) === 'array'">
+            <span class="open-bracket">[</span>
+            <NestedListUlComponent
+              :list="item[key]"
+              :test="'aa'"
+              v-bind="{
+                ...$props,
+                level: level + 1,
+                parentItem: createParentForChildren(item),
+              }"
+              v-if="expandList.includes(item.nestedListId + '_' + key)"
+              @toggleExpand="toggleExpand"
+            />
+            <span
+              class="spread"
+              :style="{ marginLeft: `${indent / 2}px` }"
+              v-if="!expandList.includes(item.nestedListId + '_' + key)"
+              @click="toggleExpand(`${item.nestedListId}_${key}`)"
+              >...</span
+            >
+            <span class="close-bracket">]</span>
+          </template>
+        </div>
+        <div
+          class="debug"
+          :style="{
+            marginLeft: `${indent}px`,
+            order: isInvertDebug ? 0 : -1,
+          }"
+          v-if="isShowDebug"
+        >
+          <ul>
+            <li>
+              <span class="debug-key">nestedListId(ThistId):</span
+              ><span>{{ item.nestedListId }}</span>
+            </li>
+            <li>
+              <span class="debug-key">index:</span><span>{{ listIndex }}</span>
+            </li>
+            <li>
+              <span class="debug-key">level:</span><span>{{ level }}</span>
+            </li>
+            <li>
+              <span
+                class="parent-visible-control"
+                @click="isShowParent = !isShowParent"
+              >
+                <i
+                  :class="`far fa-eye${isShowParent ? '' : '-slash'}`"
+                  v-if="parentItem"
+                />
+              </span>
+              <span class="debug-key">parent:</span>
+              <pre
+                v-if="isShowParent || !parentItem"
+                v-html="
+                  parentItem ? JSON.stringify(parentItem, null, '  ') : 'null'
+                "
+              ></pre>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="end">
-      <span class="close-brace">}</span>
-      <span class="comma" v-if="listLength - 1 !== listIndex">,</span>
-      <span
-        class="close-bracket"
-        v-if="level === 0 && listLength - 1 === listIndex"
-        >]</span
-      >
-    </div>
+      <div class="end">
+        <span class="close-brace">}</span>
+        <span class="comma" v-if="listLength - 1 !== listIndex">,</span>
+        <span
+          class="close-bracket"
+          v-if="level === 0 && listLength - 1 === listIndex"
+          >]</span
+        >
+      </div>
+    </template>
+    <template v-else>"{{renderedItem}}"<span class="comma" v-if="listLength - 1 !== listIndex">,</span></template>
   </li>
 </template>
 

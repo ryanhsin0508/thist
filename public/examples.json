@@ -87,7 +87,7 @@
       {
         "name": "Happy Farm",
         "role": "headquarter",
-        "income":20000,
+        "income": 20000,
         "inventory": [
           {
             "productName": "milk",
@@ -133,7 +133,7 @@
               {
                 "name": "Twelve-Eight",
                 "role": "store",
-                "income":5500,
+                "income": 5500,
                 "inventory": [
                   {
                     "productName": "milk",
@@ -149,7 +149,7 @@
               {
                 "name": "Nutritious Life",
                 "role": "store",
-                "income":6500,
+                "income": 6500,
                 "inventory": [
                   {
                     "productName": "milk",
@@ -181,7 +181,7 @@
               {
                 "name": "Tusco",
                 "role": "store",
-                "income":5000,
+                "income": 5000,
                 "inventory": [
                   {
                     "productName": "milk",
@@ -208,7 +208,7 @@
               {
                 "name": "Urban24",
                 "role": "store",
-                "income":4000,
+                "income": 4000,
                 "inventory": [
                   {
                     "productName": "milk",
@@ -231,7 +231,8 @@
     "list": [
       {
         "name": "Asia",
-        "type": "region"
+        "type": "region",
+        "landmark": ["China Great Wall", "Tokyo Tower", "Skytree"]
       },
       {
         "name": "Australia",
