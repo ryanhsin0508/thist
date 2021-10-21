@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="example-selector example-selector-component"
-    :style="{ top: componentTop + 'px' }"
-    ref="component"
-  >
+  <div class="example-selector example-selector-component" ref="component">
     <CustomSelectComponent
       :list="optionList"
       v-model:selected="selected"
@@ -25,6 +21,7 @@
         :list="selectedExampleList"
         :nextListKey="childrenKeyName"
         :isShowControl="true"
+        :isShowDebug="false"
       />
     </div>
     <button class="button flat no-border" @click="copyText">Copy Data</button>
@@ -66,17 +63,19 @@ export default {
       }
     },
     selected(value) {
+      console.log("QQQW");
       this.$store.commit("SET_DATA", { selectedExampleType: value });
+      localStorage.setItem("thistSelectedExample", value);
     },
     "windowInfo.scrollTop"(scrollTop) {
       let componentHeight = this.$refs.component.getBoundingClientRect().height;
-      let minusNumber = window.innerHeight / 2 - componentHeight / 2;
-      let offsetY = this.offsetTop - minusNumber;
+      let distance = window.innerHeight / 2 - componentHeight / 2;
+      let offsetY = this.offsetTop - distance;
       if (scrollTop - offsetY > 0) {
-        this.componentTop = scrollTop - offsetY + 30;
+        // this.componentTop = scrollTop - offsetY + 30;
         //
       } else {
-        this.componentTop = 0;
+        // this.componentTop = 0;
       }
     },
   },
@@ -84,7 +83,7 @@ export default {
     optionList() {
       let list = [];
       for (let key in this.dataX.listExamples) {
-        list.push({ label: this.capitalize(key), value: key });
+        list.push({ label: this.dataX.listExamples[key].title, value: key });
       }
       return list;
     },
@@ -106,19 +105,22 @@ export default {
       }, 1000);
       /* Alert the copied text */
     },
-    onMouseWheel(e){
-      console.log("QQQ")
-    }
+    onMouseWheel(e) {
+      console.log("QQQ");
+    },
   },
   async mounted() {
     this.offsetTop = this.$refs.component.offsetTop;
     if (this.isRealTrue(this.optionList) && !this.dataX.selectedExampleType) {
-      this.selected = this.optionList[0].value;
+      if (localStorage.getItem("thistSelectedExample")) {
+        this.selected = localStorage.getItem("thistSelectedExample");
+      } else {
+        this.selected = this.optionList[0].value;
+      }
     }
     if (this.dataX.selectedExampleType) {
       this.selected = this.dataX.selectedExampleType;
     }
-    this.$refs.component.addEventListener("onmousewheel", this.onMouseOver)
     /* let thresholdArr = [];
     for (let i = 0; i < 100; i++) {
       thresholdArr.push(i / 100);
@@ -136,10 +138,9 @@ export default {
     let res = await this.$store.dispatch("getCodeData")
     console.log(res.data) */
   },
-  beforeUnmount(){
-    this.$refs.component.removeEventListener("onmousewheel", this.onMouseOver)
-
-  }
+  beforeUnmount() {
+    this.$refs.component.removeEventListener("onmousewheel", this.onMouseOver);
+  },
 };
 </script>
 

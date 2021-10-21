@@ -76,7 +76,10 @@ table {
     th,
     td {
       padding: 2px 8px;
-      border: 1px solid #dcdcdc;
+      border: 1px solid #eaeaea;
+    }
+    th{
+      font-weight: bold;
     }
   }
 }
@@ -131,7 +134,7 @@ button {
   background-color: transparent;
   cursor: pointer;
   padding: 5px;
-  &.menu{
+  &.menu {
     width: 50px;
     height: 50px;
     font-size: 24px;
@@ -162,7 +165,7 @@ button {
     &:hover {
     }
   }
-  
+
   &.control {
     color: #ccc;
     border-color: #ccc;
@@ -261,7 +264,6 @@ button {
   }
 }
 .content {
-  line-height: 2;
   letter-spacing: 0.5px;
   .title {
     font-size: 24px;
@@ -270,17 +272,20 @@ button {
     // border-bottom: 1px solid #cfcfcf;
   }
   > section {
-    margin-bottom: 20px;
-    .text {
-      width: 480px;
-      flex-shrink: 0;
+    margin-bottom: 32px;
+    .text{
+      flex-grow: 1;
       margin-right: 24px;
+    }
+    .code {
+      width: 540px;
+      flex-shrink: 0;
     }
   }
 }
 .starting {
   text-align: left;
-  padding: 24px;
+  padding: 16px;
   .container {
   }
   .code-section {
@@ -302,6 +307,7 @@ button {
   .code-explaination {
     line-height: 1;
     margin-bottom: 8px;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
     ul {
       display: flex;
       li {
@@ -335,9 +341,9 @@ code {
     margin-bottom: 16px;
   }
 }
-.page-main{
+.page-main {
   padding-left: 320px;
-  @media (max-width:1536px){
+  @media (max-width: 1440px) {
     padding-left: 0;
   }
 }
@@ -353,9 +359,8 @@ code {
   text-align: left;
   padding-left: 20px;
   padding-top: 16px;
-  @media(max-width: 1536px){
-    position: absolute;
-    top: 60px;
+  transition: all 0.25s;
+  @media (max-width: 1440px) {
     left: 0;
     z-index: 99;
   }
@@ -372,36 +377,43 @@ code {
     }
   }
 }
-.example-selector {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow: auto;
-  background-color: #606060;
-  padding: 10px;
-  border-radius: 10px;
-  color: #ffffff;
-  max-height: 720px;
-  transition: all .1s;
-  .json {
-    overflow: auto;
-    margin-bottom: 20px;
-  }
-}
+
 .code-section {
   text-align: left;
   background-color: #606060;
   color: #ffffff;
-  padding: 16px;
+  padding: 10px;
   border-radius: 5px;
   font-family: consolas;
+  * {
+    line-height: 16px;
+  }
 }
 .code-examples {
   width: 100%;
   display: flex;
   text-align: left;
   padding: 16px;
+  aside {
+    position: relative;
+    height: 720px;
+    transition: all 0.1s;
+    max-height: calc(100vh - 80px);
+  }
+  .example-selector {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: auto;
+    background-color: #606060;
+    padding: 10px;
+    border-radius: 10px;
+    color: #ffffff;
+    .json {
+      overflow: auto;
+      margin-bottom: 20px;
+    }
+  }
 }
 .code-key,
 .code-var {
@@ -437,6 +449,9 @@ code {
 pre {
   font-size: 13px;
   font-family: "consolas";
+  letter-spacing: 0;
+  * {
+  }
 }
 .popup-tip {
   position: absolute;

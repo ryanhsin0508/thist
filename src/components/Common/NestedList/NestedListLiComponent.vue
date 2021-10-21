@@ -32,7 +32,7 @@
         <div
           class="list-content"
           :style="{
-            height: `${listHeight}px`,
+            //height: `${listHeight}px`,
           }"
         >
           <span class="key">"{{ key }}": </span>
@@ -219,7 +219,7 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 2px;
+  top: 0;
   color: #afafaf;
   cursor: pointer;
   // border: 1px solid white;

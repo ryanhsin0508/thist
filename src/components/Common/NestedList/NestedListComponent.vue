@@ -22,7 +22,9 @@
           @click="isInvertDebug = !isInvertDebug"
           v-if="isInnerShowDebug"
         >
-          <i :class="`far fa-arrow-circle-${isInvertDebug?'up':'down'}`"> </i>Invert Thist Code
+          <i :class="`far fa-arrow-circle-${isInvertDebug ? 'up' : 'down'}`">
+          </i
+          >Invert Thist Code
         </button>
         <button
           class="button mini control"
@@ -91,7 +93,7 @@ export default {
     },
     renderedList() {
       let renderedList = tt.createThistId(this.list, this.nextListKey);
-      console.log(renderedList)
+      console.log(renderedList);
       return renderedList;
     },
   },
@@ -138,6 +140,10 @@ export default {
 .nested-list {
   outline: none;
   // font-family: consolas;
+  line-height: 1.33;
+  /deep/ * {
+    letter-spacing: 0;
+  }
 }
 .control-buttons {
   position: sticky;

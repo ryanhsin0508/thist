@@ -17,7 +17,12 @@ export default [
       {
         argument: "childrenKeyName",
         type: "String or Array",
-        desc: "Indicate which array in the list you want to deep search. If not given, it will search whole existed array in the list, which may cause performance issue",
+        desc: "Indicate where next level's list is under.",
+      },
+      {
+        argument: "findDeep",
+        type: "Boolean",
+        desc: "Set true if find condition is under array of the item",
       },
     ],
     argumentNote: "",
@@ -36,26 +41,45 @@ export default [
           code: `tt.find(
   $exampleList, 
   (item, index, list, parent) => {
-    return item.age < 5 && 
-    parent.name === 'Peter'
+    return (
+      item.age < 5 && 
+      parent.name === 'Peter'
+    )
   },
   'children'
 )`,
         },
       ],
-      business: [
+      productLine: [
         {
-          desc: "Get Nutritious Life's data",
-          code: "tt.find($exampleList, item => item.name === 'Nutritious Life', 'subBusinessList')",
+          desc: "Get Urban24's data",
+          code: `tt.find(
+  $exampleList,
+  item => item.name === 'Urban24',
+  'subBusinessList'
+)`,
         },
         {
           desc: "Find business that eggs' count is below 150",
           code: `tt.find(
   $exampleList, 
-  item => item.productName === 'egg' && item.count < 150 , 
-  ['subBusinessList', 'inventoryContent']
+  item => item.inventory.find(
+    _item => _item.productName === 'egg' && 
+    _item.count < 150
+  ), 
+  'subBusinessList'
 )`,
         },
+        {
+          desc: `Or if you don't know the item you want to find is under "inventory", you can use "findDeep" option.`,
+          code: `tt.find(
+  $exampleList, 
+  item => item.productName === 'egg' &&
+  item.count < 150, 
+  'subBusinessList',
+  true
+)`
+        }
       ],
     },
   },
@@ -84,11 +108,15 @@ export default [
     usages: {
       family: [
         {
-          desc: "Get all of members whose age is under 30",
-          code: `tt.filter($exampleList, item => item.age < 30, 'children')
+          desc: "Get all of members whose ages are under 30",
+          code: `tt.filter(
+  $exampleList,
+  item => item.age < 30,
+  'children'
+)
 `,
           note: {
-            desc: "From this part, we don't know relative relationships from the result. For further usage, please reference $ref",
+            desc: "From this part, we don't know the relative relationships from the result. For further usage, please reference",
             ref: "renderItems",
           },
         },
@@ -103,21 +131,140 @@ export default [
   `,
         },
       ],
-      business: [
+      productLine: [
         {
-          desc: "Get Nutritious Life's data",
-          code: "tt.find($exampleList, item => item.name === 'Nutritious Life', 'subBusinessList')",
+          desc: "Get All Dealers' Data",
+          code: `tt.filter(
+  $exampleList,
+  item => item.role === 'dealer',
+  'subBusinessList' 
+)`,
         },
         {
-          desc: "Find business that eggs' count is below 150",
-          code: `tt.find(
+          desc: `Filter "stores" that milks' count is below 500`,
+          code: `tt.filter(
   $exampleList, 
-  item => item.productName === 'egg' &&
-  item.count < 150 , 
-  ['subBusinessList', 'inventoryContent']
+  (item, index, list, parent) => 
+  item.productName === 'milk' &&
+  item.count < 500 &&
+  parent.role === 'store',
+  'subBusinessList',
+  true
 )`,
         },
       ],
     },
   },
+  {
+    title: "totalLevel",
+    desc: "Get total level of nested list",
+    note: "",
+    argumentList: [
+      {
+        argument: "list",
+        type: "Array",
+        desc: "The list to process",
+      },
+      {
+        argument: "childrenKeyName",
+        type: "String",
+        desc: "Indicate where next level's list is under.",
+      },
+    ],
+    argumentNote: "",
+    usages: {
+      family: [
+        {
+          desc: "",
+          code: `tt.totalLevel(
+  $exampleList,
+  'children'
+)`,
+        },
+      ],
+      productLine: [
+        {
+          desc: `Get total level of nested list`,
+          code: `tt.totalLevel(
+  $exampleList,
+  'subBusinessList'
+)`
+        }
+      ],
+    },
+  },{
+    title: "length",
+    desc: "Get all nested list length",
+    note: "",
+    argumentList: [
+      {
+        argument: "list",
+        type: "Array",
+        desc: "The list to process",
+      },
+      {
+        argument: "childrenKeyName",
+        type: "String",
+        desc: "Indicate where next level's list is under.",
+      },
+    ],
+    argumentNote: "",
+    usages: {
+      family: [
+        {
+          desc: "",
+          code: `tt.length(
+  $exampleList,
+  'children'
+)`,
+        },
+      ],
+      productLine: [
+        {
+          desc: `Get all nested list length`,
+          code: `tt.length(
+  $exampleList,
+  'subBusinessList'
+)`
+        }
+      ],
+    },
+  },{
+    title: "renderItems",
+    desc: "Get all nested list length",
+    note: "",
+    argumentList: [
+      {
+        argument: "list",
+        type: "Array",
+        desc: "The list to process",
+      },
+      {
+        argument: "childrenKeyName",
+        type: "String",
+        desc: "Indicate where next level's list is under.",
+      },
+    ],
+    argumentNote: "",
+    usages: {
+      family: [
+        {
+          desc: "",
+          code: `tt.length(
+  $exampleList,
+  'children'
+)`,
+        },
+      ],
+      productLine: [
+        {
+          desc: `Get all nested list length`,
+          code: `tt.length(
+  $exampleList,
+  'subBusinessList'
+)`
+        }
+      ],
+    },
+  }
 ];

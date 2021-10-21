@@ -1,69 +1,84 @@
 import { _ } from "core-js";
 import { checkType } from "./custom-functions.js";
-class Thists {
-  find(list, findFunction, childrenKeyName) {
+class Thist {
+  find(list, findFunction, childrenKeyName, isFindDeep) {
     let _childrenList =
       typeof childrenKeyName === "string" ? [childrenKeyName] : childrenKeyName;
-    function find(list, parent) {
+    function find(list, parent, level) {
       let _match = undefined;
+      let _childrenKeyName = _childrenList[level];
       let _parent = parent ? parent : {};
       list.forEach((item, index) => {
-        if (!_match && findFunction(item, index, list, _parent)) {
+        if (findFunction(item, index, list, _parent)) {
           _match = item;
-        } else if (!_match) {
-          if (!childrenKeyName) {
-            _childrenList = [];
-            for (let key in item) {
-              if (checkType(item[key]) === "array" && item[key].length)
-                _childrenList.push(key);
+        } else if (isFindDeep) {
+          for (let key in item) {
+            if (
+              checkType(item[key]) === "array" &&
+              item[key].length &&
+              key !== _childrenKeyName
+            ) {
+              if (find(item[key], item, level)) {
+                _match = item;
+              }
             }
           }
-          _childrenList.forEach(_childrenKeyName => {
-            let hasChildren =
-              item[_childrenKeyName] && item[_childrenKeyName].length;
-            if (hasChildren) {
-              _match = _match ? _match : find(item[_childrenKeyName], item);
-            }
-          });
+        }
+        if (!_match) {
+          let hasChildren =
+            item[_childrenKeyName] && item[_childrenKeyName].length;
+          if (hasChildren) {
+            _match = _match
+              ? _match
+              : find(item[_childrenKeyName], item, level);
+          }
           // let hasChildren = item[childrenKeyName] && item[childrenKeyName].length;
         }
       });
       return _match;
     }
-    return find(list);
+    return find(list, null, 0);
   }
-  filter(list, findFunction, childrenKeyName, matchList) {
+  filter(list, findFunction, childrenKeyName, isFindDeep) {
     let _childrenList =
       typeof childrenKeyName === "string" ? [childrenKeyName] : childrenKeyName;
     let _matchList = [];
-    function find(list, parent) {
+    function find(list, parent, level, isDeep) {
+      let _childrenKeyName = _childrenList[level];
+      let _match = undefined;
       let _parent = parent ? parent : {};
       list.forEach((item, index) => {
         if (findFunction(item, index, list, _parent)) {
           let _item = { ...item };
           delete _item[childrenKeyName];
-          _matchList.push(_item);
-        }
-        if (!childrenKeyName) {
-          _childrenList = [];
+          _match = item;
+          if (!isDeep) {
+            _matchList.push(_item);
+          }
+        } else if (isFindDeep) {
           for (let key in item) {
-            if (checkType(item[key]) === "array" && item[key].length)
-              _childrenList.push(key);
+            if (
+              checkType(item[key]) === "array" &&
+              item[key].length &&
+              key !== _childrenKeyName
+            ) {
+              if (find(item[key], item, level, true)) {
+                _matchList.push(item);
+              }
+            }
           }
         }
-        _childrenList.forEach(_childrenKeyName => {
-          let hasChildren =
-            item[_childrenKeyName] && item[_childrenKeyName].length;
-          if (hasChildren) {
-            find(item[_childrenKeyName], item);
-          }
-        });
+        let hasChildren =
+          item[_childrenKeyName] && item[_childrenKeyName].length;
+        if (hasChildren) {
+          find(item[_childrenKeyName], item, level);
+        }
         // let hasChildren = item[childrenKeyName] && item[childrenKeyName].length;
       });
-      return _matchList;
+      return _match;
     }
-
-    return find(list);
+    find(list, null, 0);
+    return _matchList;
   }
 
   totalLevel(list, nextListKeyName) {
@@ -71,10 +86,10 @@ class Thists {
 
     function checkLevel(list, level) {
       list.forEach(item => {
-        let nextList = item[nextListKeyName] && item[nextListKeyName].length;
-        if (nextList) {
-          totalLevel = totalLevel > level + 1 ? totalLevel : level + 1;
-          checkLevel(item[nextListKeyName], totalLevel);
+        totalLevel = totalLevel > level ? totalLevel : level
+        let hasNextList = item[nextListKeyName] && item[nextListKeyName].length;
+        if (hasNextList) {
+          checkLevel(item[nextListKeyName], level + 1);
         }
       });
     }
@@ -123,20 +138,15 @@ class Thists {
           let _index =
             parentIndex !== undefined ? parentIndex + "_" + index : index + "";
           _index = modifier ? `${parentIndex}_${modifier}_${index}` : _index;
-          console.log(_index, _modifier)
           item.nestedListId = _index;
           if (checkType(item[key]) === "array" && item[key].length) {
-            item[key] = createId(
-              item[key],
-              _index,
-              _modifier
-            );
+            item[key] = createId(item[key], _index, _modifier);
           }
         }
       });
-      return list
+      return list;
     }
-    return createId(_list)
+    return createId(_list);
   }
   createId(list, childrenKeyName, parentIndex, modifier) {
     let _list =
@@ -195,7 +205,8 @@ class Thists {
     );
     return nestedList;
   }
-  flattenNestedList(list, childrenKeyName, flattenList) {
+  //flattenNestedList
+  flatten(list, childrenKeyName, flattenList) {
     let flattenNestedList = [];
     this.renderListItem(
       list,
@@ -209,7 +220,8 @@ class Thists {
     );
     return flattenNestedList;
   }
-  getAllNestedListLength(list, childrenKeyName) {
+  //getAllNestedListLength
+  length(list, childrenKeyName) {
     let length = 0;
     function sumList(list) {
       list.forEach(item => {
@@ -382,5 +394,5 @@ class Thists {
     return total;
   }
 }
-window.tt = new Thists();
+window.tt = new Thist();
 export default tt;

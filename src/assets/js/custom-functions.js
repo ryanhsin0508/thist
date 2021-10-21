@@ -20,3 +20,6 @@ export function checkType(data) {
   }
   return type;
 }
+export function createFormData(){
+  return "AAA"
+}

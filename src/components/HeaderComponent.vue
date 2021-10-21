@@ -1,13 +1,20 @@
 <template>
   <header>
-    <button class="flat no-border menu" v-if="windowInfo.windowWidth <= 1536"><i class="far fa-bars"></i></button>
+    <button
+      class="flat no-border menu"
+      v-if="windowInfo.windowWidth <= 1536"
+      @click="toggleSidebar"
+    >
+      <i class="far fa-bars"></i>
+    </button>
     <router-link to="/">
       <img alt="Vue logo" src="../assets/img/logo.svg" width="40" />
-      <h1 class="title">Thists.js</h1>
+      <h1 class="title">Thist.js</h1>
     </router-link>
     <nav>
       <router-link class="button flat no-border" :to="'/documentation'">
-        <i class="text-icon far fa-file-alt" /> <span v-if="windowInfo.windowWidth > 640">Documentation</span>
+        <i class="text-icon far fa-file-alt" />
+        <span v-if="windowInfo.windowWidth > 640">Documentation</span>
       </router-link>
     </nav>
   </header>
@@ -23,7 +30,13 @@ export default {
   },
   watch: {},
   computed: {},
-  methods: {},
+  methods: {
+    toggleSidebar() {
+      this.$store.commit("SET_DATA", {
+        isShowSidebar: !this.dataX.isShowSidebar,
+      });
+    },
+  },
   mounted() {},
 };
 </script>

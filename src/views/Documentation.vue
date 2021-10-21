@@ -1,15 +1,9 @@
 <template>
   <div id="page-documentation" class="documentation" ref="component">
-    <sidebar-component />
+    <SidebarComponent />
     <main class="page-main" ref="main">
       <starting-component />
-      <CodeSectionComponent
-        :maxHeight="'calc(100vh - 60px)'"
-        @onMainScroll="onCodeSectionScroll"
-      >
-        <template v-slot:aside>
-          <ExampleListSelectorComponent :codeName="'find'" />
-        </template>
+      <CodeSectionComponent @onMainScroll="onCodeSectionScroll">
         <template v-slot:main>
           <CodeIntroComponent
             :codeName="code.title"
@@ -47,6 +41,18 @@ export default {
       });
     },
     onMainScroll() {},
+  },
+  watch: {
+    $route(to, from) {
+      if(!to.hash){
+        return
+      }
+      let $target = document.getElementById(
+        `code-example-${to.hash.substring(1)}`
+      );
+      let offsetTop = $target.offsetTop - 60;
+      window.scrollTo({ top: offsetTop, behavior: "smooth" });
+    },
   },
   async beforeCreate() {
     this.$store.commit("SET_DATA", {

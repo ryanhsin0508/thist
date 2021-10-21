@@ -8,6 +8,7 @@ let defaultState = () => ({
     selectedCodeName: "",
     selectedExampleType: "",
     codeData: {},
+    isShowSidebar:false
   },
 });
 export default createStore({

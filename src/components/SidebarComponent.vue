@@ -1,5 +1,13 @@
 <template>
-  <div class="sidebar sidebar-component">
+  <div
+    class="sidebar sidebar-component"
+    :style="{
+      transform:
+        windowInfo.windowWidth <= 1440 && !dataX.isShowSidebar
+          ? `translateX(-100%)`
+          : '',
+    }"
+  >
     <h2>Starting</h2>
     <ul>
       <li>Installation</li>
@@ -8,7 +16,9 @@
     <h2>Code Examples</h2>
     <ul>
       <li v-for="code in dataX.codeExamples" :key="code.title">
-        tt.{{ code.title }}
+        <router-link :to="`#${code.title}`"
+          >tt.{{ code.title }}</router-link
+        >
       </li>
     </ul>
   </div>
@@ -39,4 +49,11 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+a {
+  color: #333;
+  &:hover{
+    color: #55a4ec;
+  }
+}
+</style>

@@ -21,7 +21,7 @@
         </div>
         <div class="intro-text">
           <div class="text">
-            <div class="title">Thists</div>
+            <div class="title">Thist</div>
             <p>Easily handle data in <strong>Nested List</strong></p>
           </div>
           <nav>
@@ -31,13 +31,13 @@
       </div>
     </div>
     <main>
-      <h2>What is Thists.js?</h2>
+      <h2>What is Thist.js?</h2>
       <p>
         <strong>Thist</strong> <span>(pronounced like list)</span> is a
         Javascript library that can help you easily control your nested list.
       </p>
       <h2>Quick Look Example</h2>
-      <CodeSectionComponent :maxHeight="'50vh'">
+      <CodeSectionComponent>
         <template v-slot:aside>
           <ExampleListSelectorComponent :codeName="'find'" />
         </template>
@@ -48,6 +48,95 @@
           </CodeIntroComponent>
         </template>
       </CodeSectionComponent>
+      <div class="intro-text">
+          <div class="text">
+            <div class="title">Thist</div>
+            <p>Easily handle data in <strong>Nested List</strong></p>
+          </div>
+          <nav>
+            <button class="button flat no-border">Get Started</button>
+          </nav>
+        </div><div class="intro-text">
+          <div class="text">
+            <div class="title">Thist</div>
+            <p>Easily handle data in <strong>Nested List</strong></p>
+          </div>
+          <nav>
+            <button class="button flat no-border">Get Started</button>
+          </nav>
+        </div><div class="intro-text">
+          <div class="text">
+            <div class="title">Thist</div>
+            <p>Easily handle data in <strong>Nested List</strong></p>
+          </div>
+          <nav>
+            <button class="button flat no-border">Get Started</button>
+          </nav>
+        </div><div class="intro-text">
+          <div class="text">
+            <div class="title">Thist</div>
+            <p>Easily handle data in <strong>Nested List</strong></p>
+          </div>
+          <nav>
+            <button class="button flat no-border">Get Started</button>
+          </nav>
+        </div><div class="intro-text">
+          <div class="text">
+            <div class="title">Thist</div>
+            <p>Easily handle data in <strong>Nested List</strong></p>
+          </div>
+          <nav>
+            <button class="button flat no-border">Get Started</button>
+          </nav>
+        </div><div class="intro-text">
+          <div class="text">
+            <div class="title">Thist</div>
+            <p>Easily handle data in <strong>Nested List</strong></p>
+          </div>
+          <nav>
+            <button class="button flat no-border">Get Started</button>
+          </nav>
+        </div><div class="intro-text">
+          <div class="text">
+            <div class="title">Thist</div>
+            <p>Easily handle data in <strong>Nested List</strong></p>
+          </div>
+          <nav>
+            <button class="button flat no-border">Get Started</button>
+          </nav>
+        </div><div class="intro-text">
+          <div class="text">
+            <div class="title">Thist</div>
+            <p>Easily handle data in <strong>Nested List</strong></p>
+          </div>
+          <nav>
+            <button class="button flat no-border">Get Started</button>
+          </nav>
+        </div><div class="intro-text">
+          <div class="text">
+            <div class="title">Thist</div>
+            <p>Easily handle data in <strong>Nested List</strong></p>
+          </div>
+          <nav>
+            <button class="button flat no-border">Get Started</button>
+          </nav>
+        </div><div class="intro-text">
+          <div class="text">
+            <div class="title">Thist</div>
+            <p>Easily handle data in <strong>Nested List</strong></p>
+          </div>
+          <nav>
+            <button class="button flat no-border">Get Started</button>
+          </nav>
+        </div><div class="intro-text">
+          <div class="text">
+            <div class="title">Thist</div>
+            <p>Easily handle data in <strong>Nested List</strong></p>
+          </div>
+          <nav>
+            <button class="button flat no-border">Get Started</button>
+          </nav>
+        </div>
     </main>
   </div>
 </template>

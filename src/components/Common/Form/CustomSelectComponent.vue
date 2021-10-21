@@ -8,7 +8,7 @@
     :style="{ width }"
   >
     <div
-      :class="['title', { active: showOptions }]"
+      :class="['option-title', { active: showOptions }]"
       @click="showOptionsHandler()"
       :style="{
         color: title === placeholder ? '#a5a7aa' : optionColor,
@@ -388,14 +388,14 @@ export default {
 <style scoped lang="scss">
 .custom-select {
   margin-bottom: 12px;
-  .title {
+  .option-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 10px;
     background-color: #606060;
   }
-  .title,
+  .option-title,
   .options {
     background-color: #606060;
     color: #fff;

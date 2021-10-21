@@ -12,7 +12,7 @@ import Common from "@/components/Common";
 import CodeIntroComponent from "@/components/CodeIntroComponent.vue";
 import "@/assets/js/custom-prototypes.js";
 import * as ttFn from "@/assets/js/custom-functions.js";
-import "@/assets/js/thists.js";
+import "@/assets/js/thist.js";
 import { _ } from "core-js";
 const app = createApp(App);
 app.config.globalProperties.axios = axios;
@@ -182,7 +182,10 @@ app.mixin({
                 .allIndexOf(arg, null, true)
                 .reverse();
               findedStartIndexList.forEach((_startIndex, _index) => {
-                argIndexList.push([_startIndex, _startIndex + arg.length]);
+                let regex = /[A-Za-z_]/g;
+                if (!withinString[_startIndex - 1].match(regex)) {
+                  argIndexList.push([_startIndex, _startIndex + arg.length]);
+                }
                 let __endIndex = _startIndex + arg.length;
                 /* _code = _code.insert(startIndex + __endIndex, "</span>");
                 _code = _code.insert(
@@ -216,6 +219,8 @@ app.mixin({
           "}",
         ]);
 
+        renderArgs(matchedIndexList);
+        matchedIndexList = _code.withinIndexList("(", ")", true, 0);
         renderArgs(matchedIndexList);
 
         //render defined args in es5 function
@@ -259,11 +264,11 @@ app.mixin({
           numberIndexList.push(regEx.lastIndex - 1);
         }
         numberIndexList.reverse().forEach(startIndex => {
-          if (_code[startIndex - 1].match(regEx)) {
+          if (_code[startIndex - 1] && _code[startIndex - 1].match(regEx)) {
             return;
           }
           let endIndex = startIndex;
-          while (_code[endIndex].match(regEx)) {
+          while (_code[startIndex - 1] && _code[endIndex].match(regEx)) {
             endIndex++;
           }
           if (
@@ -326,7 +331,10 @@ app.mixin({
             }
           }
           if (op === "&") {
-            if (_code.substr(index, 6).includes("&nbsp") && !_code.substr(index, 6).includes("&&")) {
+            if (
+              _code.substr(index, 6).includes("&nbsp") &&
+              !_code.substr(index, 6).includes("&&")
+            ) {
               return;
             }
           }
@@ -382,7 +390,7 @@ app.mixin({
     },
   },
   mounted() {
-    this.windowWidth = window.innerWidth;
+    this.windowInfo.windowWidth = window.innerWidth;
     window.addEventListener("resize", this.onWindowResize);
     window.addEventListener("scroll", this.onWindowScroll);
     this.$nextTick(() => {

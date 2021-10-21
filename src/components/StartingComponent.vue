@@ -5,11 +5,8 @@
         <section>
           <h2 class="title">Installation</h2>
           <h3>NPM</h3>
-          <div class="code-section">
-            $ npm i thist
-          </div>
+          <div class="code-section">$ npm i thist</div>
         </section>
-        
       </div>
       <div class="content">
         <section class="flex">
@@ -22,8 +19,8 @@
                 processed in nested list
               </li>
               <li>
-                <span class="code-parameter-dark">index</span>: Object index in each
-                level
+                <span class="code-parameter-dark">index</span>: Object index in
+                each level
                 <span class="question"></span>
               </li>
               <li>
@@ -31,43 +28,43 @@
                 processing nested list
               </li>
               <li>
-                <span class="code-parameter-dark">parent</span>: Parent of processing
-                nested list item
+                <span class="code-parameter-dark">parent</span>: Parent of
+                processing nested list item
               </li>
             </ul>
           </div>
-          <div><div class="code-explaination">
-                <ul>
-                  <li>
-                    <span
-                      class="color-block"
-                      :style="{ backgroundColor: '#fff' }"
-                    ></span>
-                    <span
-                      class="color-block"
-                      :style="{ backgroundColor: '#c3c6f3' }"
-                    ></span>
-                    <span
-                      class="color-block"
-                      :style="{ backgroundColor: '#fff700' }"
-                    ></span>
-                    Original JSON Code
-                  </li>
-                  <li>
-                    <span
-                      class="color-block"
-                      :style="{ backgroundColor: '#46eeff' }"
-                    ></span>
-                    Thists Explaination Code
-                  </li>
-                </ul>
-              </div>
+          <div class="code">
+            <div class="code-explaination">
+              <ul>
+                <li>
+                  <span
+                    class="color-block"
+                    :style="{ backgroundColor: '#fff' }"
+                  ></span>
+                  <span
+                    class="color-block"
+                    :style="{ backgroundColor: '#c3c6f3' }"
+                  ></span>
+                  <span
+                    class="color-block"
+                    :style="{ backgroundColor: '#fff700' }"
+                  ></span>
+                  Original JSON Code
+                </li>
+                <li>
+                  <span
+                    class="color-block"
+                    :style="{ backgroundColor: '#46eeff' }"
+                  ></span>
+                  Thist Explaination Code
+                </li>
+              </ul>
+            </div>
             <div class="code-section">
-              
               <div class="json">
                 <NestedListComponent
                   :indent="24"
-                  :list="dataX.listExamples.business.list"
+                  :list="dataX.listExamples.productLine.list"
                   :nextListKey="'subBusinessList'"
                   :isShowControl="true"
                   :isShowDebug="true"
@@ -77,7 +74,6 @@
           </div>
         </section>
       </div>
-      
     </div>
   </div>
 </template>

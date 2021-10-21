@@ -1,9 +1,9 @@
 <template>
-  <div class="code-intro code-intro-component">
+  <div class="code-intro code-intro-component" :id="`code-example-${codeData.title}`">
     <div class="code-title">
       <div class="code-name code code-function">{{ codeData.title }}</div>
       <p class="desc">{{ codeData.desc }}</p>
-      <p class="note">{{ codeData.note }}</p>
+      <p class="note" v-if="codeData.note">{{ codeData.note }}</p>
     </div>
     <section class="arguments-intro">
       <div class="title">Arguments</div>
@@ -23,7 +23,7 @@
                 key,
                 {
                   'code-parameter': key === 'argument',
-                  'code-reserved': key === 'type',
+                  //'code-reserved': key === 'type',
                 },
               ]"
             >
@@ -55,7 +55,7 @@
             "
           ></pre>
           <div class="result" v-if="usg.code">
-            <span style="margin-right: 1em">// => </span>
+            <span style="margin-right:5px">//=> </span>
             <pre
               v-html="
                 codeColorize(
@@ -77,8 +77,7 @@
           </div>
         </div>
         <p class="note" v-if="usg.note">
-          {{ usg.note.desc.replace("$ref", "")
-          }}<a href="#">{{ usg.note.ref }}</a>
+          {{ usg.note.desc }}<a href="#">{{ usg.note.ref }}</a>
         </p>
       </div>
     </section>
@@ -128,9 +127,10 @@ export default {
 }
 .code-title {
   position: sticky;
-  top: 0px;
+  top: 60px;
   margin-bottom: 1em;
   background-color: #ffffff;
+  border-bottom: 1px solid #eaeaea;
   .desc {
     letter-spacing: 1px;
   }
@@ -163,12 +163,14 @@ export default {
 .code-function {
   font-size: 24px;
   margin-bottom: 0.25em;
-  color: #55a4ec;
+  color: #3676b3;
 }
-
+.code-parameter{
+  color: #ff9900;
+}
 .note {
   font-size: 13px;
-  color: #ddd;
+  color: #999999;
 }
 .title {
   font-size: 16px;
@@ -178,6 +180,9 @@ export default {
 }
 .usage {
   margin-bottom: 2em;
+  .desc {
+    font-weight: bold;
+  }
   > .code {
     display: flex;
     border: 1px solid #a7a7a7;
@@ -192,6 +197,7 @@ export default {
       background-color: #606060;
       width: 60%;
       flex-shrink: 0;
+      line-height: 1.25;
     }
   }
   .note {
@@ -208,9 +214,10 @@ li {
   display: flex;
   font-size: 12px;
   color: #ccc;
-  padding: 8px;
+  padding: 4px 8px;
   overflow: auto;
-  max-height: 360px;
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+  max-height: 320px;
   flex-grow: 1;
   pre {
   }
