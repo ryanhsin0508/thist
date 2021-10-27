@@ -32,7 +32,20 @@ export default [
           desc: "Get first finded child whose age is under 35",
           code: `tt.find(
   $exampleList,
-  item => item.age < 30,
+  item => item.age < 35,
+  'children'
+)`,
+        },
+        {
+          desc: "Get first finded child whose age is under 5 and father is Peter",
+          code: `tt.find(
+  $exampleList, 
+  (item, index, list, parent) => {
+    return (
+      item.age < 5 && 
+      parent.name === 'Peter'
+    )
+  },
   'children'
 )`,
         },
@@ -78,8 +91,8 @@ export default [
   item.count < 150, 
   'subBusinessList',
   true
-)`
-        }
+)`,
+        },
       ],
     },
   },
@@ -188,11 +201,12 @@ export default [
           code: `tt.totalLevel(
   $exampleList,
   'subBusinessList'
-)`
-        }
+)`,
+        },
       ],
     },
-  },{
+  },
+  {
     title: "length",
     desc: "Get all nested list length",
     note: "",
@@ -225,11 +239,56 @@ export default [
           code: `tt.length(
   $exampleList,
   'subBusinessList'
-)`
-        }
+)`,
+        },
       ],
     },
-  },{
+  },
+  {
+    title: "getValueListByKey",
+    desc: "Get all values by designated key",
+    note: "",
+    argumentList: [
+      {
+        argument: "list",
+        type: "Array",
+        desc: "The list to process",
+      },
+      {
+        argument: "keyName",
+        type: "String",
+        desc: "Designated key you want to get.",
+      },
+      {
+        argument: "childrenKeyName",
+        type: "String",
+        desc: "Indicate where next level's list is under.",
+      },
+    ],
+    argumentNote: "",
+    usages: {
+      family: [
+        {
+          desc: "Add children count to each data",
+          code: `tt.getValueListByKey(
+  $exampleList,
+  'name',
+  'children'
+)`,
+        },
+      ],
+      productLine: [
+        {
+          desc: `Get all nested list length`,
+          code: `tt.length(
+  $exampleList,
+  'subBusinessList'
+)`,
+        },
+      ],
+    },
+  },
+  {
     title: "renderItems",
     desc: "Get all nested list length",
     note: "",
@@ -249,10 +308,35 @@ export default [
     usages: {
       family: [
         {
-          desc: "",
-          code: `tt.length(
+          desc: "Add children count to each data",
+          code: `tt.renderListItem(
   $exampleList,
+  item => {
+    item.childrenCount = 
+      item.children && 
+      item.children.length
+    return item
+  },
   'children'
+)`,
+        },
+        {
+          desc: "Add clarified parent info (familyLine) to each data",
+          code: `tt.renderListItem(
+  $exampleList,
+  (item, index, list, parent) => {
+    item.pName = parent && parent.name
+    if (parent) {
+      item.familyLine = 
+        parent.familyLine + 
+        " > " + 
+        item.name
+    } else {
+      item.familyLine = item.name
+    }
+    return item
+  },
+  "children"
 )`,
         },
       ],
@@ -262,9 +346,9 @@ export default [
           code: `tt.length(
   $exampleList,
   'subBusinessList'
-)`
-        }
+)`,
+        },
       ],
     },
-  }
+  },
 ];

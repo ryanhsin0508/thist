@@ -150,7 +150,6 @@ class Thist {
     let _list = JSON.parse(JSON.stringify(list));
     function createId(list, parentIndex, modifier) {
       list.forEach((item, index) => {
-        console.log(item, checkType(item))
         if (checkType(item) === "object") {
           for (let key in item) {
             let _modifier;
@@ -201,7 +200,7 @@ class Thist {
   renderItems(list, renderFunction) {
     let _list = list;
     _list.forEach((item, index) => {
-      let _item = renderFunction(item, index);
+      let _item = renderFunction(item, index, list, parent);
       for (let key in item) {
         if (checkType(item[key]) === "array" && item[key].length) {
           item[key] = this.renderItems(item[key], renderFunction);
@@ -302,7 +301,7 @@ class Thist {
       if (item[findKeyName]) {
         _valueList.push(item[findKeyName]);
       }
-      if (this.hasChildren(item, childrenKeyName)) {
+      if (childrenKeyName && this.hasChildren(item, childrenKeyName)) {
         _valueList = this.getValueListByKey(
           item[childrenKeyName],
           findKeyName,
@@ -312,7 +311,6 @@ class Thist {
       }
     });
     return _valueList;
-    // => ["Ryan", "Peter", "Lisa"]
   }
   hasKey(list, keyName, childrenKeyName) {
     let _boolean = false;
@@ -355,22 +353,24 @@ class Thist {
     list.forEach((item, index) => {});
     return;
   }
+  
   renderListItem(list, renderFunction, childrenKeyName) {
     let that = this;
     let level = -1;
-    function renderList(list) {
+    function renderList(list, parent) {
       level++;
       let renderedList = [];
-      list.forEach(item => {
-        let _item = renderFunction(item);
+      let _parent = parent ? parent : undefined;
+      list.forEach((item, index) => {
+        let _item = renderFunction(item, index, list, _parent);
         if (_item && _item[childrenKeyName]) {
           // delete _item[childrenKeyName];
         }
         renderedList.push(_item);
-        console.log(renderedList);
-        if (childrenKeyName && that.hasChildren(item, childrenKeyName)) {
+        if (childrenKeyName && that.hasChildren(_item, childrenKeyName)) {
           renderedList[renderedList.length - 1][childrenKeyName] = renderList(
-            item[childrenKeyName]
+            _item[childrenKeyName],
+            _item
           );
         }
       });

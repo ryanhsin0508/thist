@@ -195,6 +195,7 @@ app.mixin({
               });
             });
             argIndexList = argIndexList.bubbleSortFromLastIndex();
+            console.log(argIndexList)
             argIndexList.reverse().forEach(indexList => {
               _code = _code.insert(
                 indexList[1] + startIndex,
@@ -219,9 +220,9 @@ app.mixin({
           "}",
         ]);
 
-        renderArgs(matchedIndexList);
+        // renderArgs(matchedIndexList);
         matchedIndexList = _code.withinIndexList("(", ")", true, 0);
-        renderArgs(matchedIndexList);
+        // renderArgs(matchedIndexList);
 
         //render defined args in es5 function
       }

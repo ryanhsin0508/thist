@@ -232,7 +232,7 @@
       {
         "name": "Asia",
         "type": "region",
-        "landmark": ["China Great Wall", "Tokyo Tower", "Skytree"]
+        "landmarks": ["China Great Wall", "Tokyo Tower", "Skytree"]
       },
       {
         "name": "Australia",
