@@ -325,7 +325,7 @@ export default [
           code: `tt.renderListItem(
   $exampleList,
   (item, index, list, parent) => {
-    item.pName = parent && parent.name
+    item.parentName = parent && parent.name
     if (parent) {
       item.familyLine = 
         parent.familyLine + 

@@ -178,12 +178,16 @@ app.mixin({
             let reversedArgList = argList.reverse();
             let argIndexList = [];
             reversedArgList.forEach(arg => {
+              let len = arg.length;
               let findedStartIndexList = withinString
                 .allIndexOf(arg, null, true)
                 .reverse();
               findedStartIndexList.forEach((_startIndex, _index) => {
                 let regex = /[A-Za-z_]/g;
-                if (!withinString[_startIndex - 1].match(regex)) {
+                if (
+                  !withinString[_startIndex - 1].match(regex) &&
+                  !withinString[_startIndex + len].match(/[A-Za-z_0-9]/g)
+                ) {
                   argIndexList.push([_startIndex, _startIndex + arg.length]);
                 }
                 let __endIndex = _startIndex + arg.length;
@@ -195,8 +199,11 @@ app.mixin({
               });
             });
             argIndexList = argIndexList.bubbleSortFromLastIndex();
-            console.log(argIndexList)
+            if (argIndexList && argIndexList.length) {
+              console.log(argIndexList);
+            }
             argIndexList.reverse().forEach(indexList => {
+              console.log(withinString.substring(indexList[0], indexList[1]));
               _code = _code.insert(
                 indexList[1] + startIndex,
                 "</&nbsp;span>&nbsp;"

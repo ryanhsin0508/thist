@@ -25,7 +25,9 @@
             <p>Easily handle data in <strong>Nested List</strong></p>
           </div>
           <nav>
-            <button class="button flat no-border">Get Started</button>
+            <router-link class="button flat no-border" :to="'/documentation'">
+              Get Started
+            </router-link>
           </nav>
         </div>
       </div>
@@ -42,101 +44,9 @@
           <ExampleListSelectorComponent :codeName="'find'" />
         </template>
         <template v-slot:main>
-          <CodeIntroComponent
-            :codeName="'find'"
-          >
-          </CodeIntroComponent>
+          <CodeIntroComponent :codeName="'find'"> </CodeIntroComponent>
         </template>
       </CodeSectionComponent>
-      <div class="intro-text">
-          <div class="text">
-            <div class="title">Thist</div>
-            <p>Easily handle data in <strong>Nested List</strong></p>
-          </div>
-          <nav>
-            <button class="button flat no-border">Get Started</button>
-          </nav>
-        </div><div class="intro-text">
-          <div class="text">
-            <div class="title">Thist</div>
-            <p>Easily handle data in <strong>Nested List</strong></p>
-          </div>
-          <nav>
-            <button class="button flat no-border">Get Started</button>
-          </nav>
-        </div><div class="intro-text">
-          <div class="text">
-            <div class="title">Thist</div>
-            <p>Easily handle data in <strong>Nested List</strong></p>
-          </div>
-          <nav>
-            <button class="button flat no-border">Get Started</button>
-          </nav>
-        </div><div class="intro-text">
-          <div class="text">
-            <div class="title">Thist</div>
-            <p>Easily handle data in <strong>Nested List</strong></p>
-          </div>
-          <nav>
-            <button class="button flat no-border">Get Started</button>
-          </nav>
-        </div><div class="intro-text">
-          <div class="text">
-            <div class="title">Thist</div>
-            <p>Easily handle data in <strong>Nested List</strong></p>
-          </div>
-          <nav>
-            <button class="button flat no-border">Get Started</button>
-          </nav>
-        </div><div class="intro-text">
-          <div class="text">
-            <div class="title">Thist</div>
-            <p>Easily handle data in <strong>Nested List</strong></p>
-          </div>
-          <nav>
-            <button class="button flat no-border">Get Started</button>
-          </nav>
-        </div><div class="intro-text">
-          <div class="text">
-            <div class="title">Thist</div>
-            <p>Easily handle data in <strong>Nested List</strong></p>
-          </div>
-          <nav>
-            <button class="button flat no-border">Get Started</button>
-          </nav>
-        </div><div class="intro-text">
-          <div class="text">
-            <div class="title">Thist</div>
-            <p>Easily handle data in <strong>Nested List</strong></p>
-          </div>
-          <nav>
-            <button class="button flat no-border">Get Started</button>
-          </nav>
-        </div><div class="intro-text">
-          <div class="text">
-            <div class="title">Thist</div>
-            <p>Easily handle data in <strong>Nested List</strong></p>
-          </div>
-          <nav>
-            <button class="button flat no-border">Get Started</button>
-          </nav>
-        </div><div class="intro-text">
-          <div class="text">
-            <div class="title">Thist</div>
-            <p>Easily handle data in <strong>Nested List</strong></p>
-          </div>
-          <nav>
-            <button class="button flat no-border">Get Started</button>
-          </nav>
-        </div><div class="intro-text">
-          <div class="text">
-            <div class="title">Thist</div>
-            <p>Easily handle data in <strong>Nested List</strong></p>
-          </div>
-          <nav>
-            <button class="button flat no-border">Get Started</button>
-          </nav>
-        </div>
     </main>
   </div>
 </template>
@@ -160,7 +70,7 @@ export default {
   methods: {},
   async beforeCreate() {
     this.$store.commit("SET_DATA", {
-      codeExamples
+      codeExamples,
     });
   },
   mounted() {},

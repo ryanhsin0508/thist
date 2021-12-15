@@ -143,6 +143,7 @@ button {
 }
 .button {
   outline: none;
+  letter-spacing: normal;
   cursor: pointer;
   border: 1px solid $gray4;
   border-radius: 4px;
@@ -216,6 +217,7 @@ button {
     border-color: #55a4ec;
   }
   &.flat {
+    display: inline-flex;
     background-color: #55a4ec;
     color: #ffffff;
     font-size: 15px;
