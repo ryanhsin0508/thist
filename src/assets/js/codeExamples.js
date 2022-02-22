@@ -289,8 +289,65 @@ export default [
     },
   },
   {
+    title: "flatten",
+    desc: "Flatten children array",
+    note: "",
+    argumentList: [
+      {
+        argument: "list",
+        type: "Array",
+        desc: "The list to process",
+      },
+      {
+        argument: "childrenKeyName",
+        type: "String",
+        desc: "Indicate where next level's list is under.",
+      },
+    ],
+    argumentNote: "",
+    usages: {
+      family: [
+        {
+          desc: "Add children count to each data",
+          code: `tt.flatten(
+  $exampleList,
+  'children'
+)`,
+        },
+        {
+          desc: "Flatten the list",
+          code: `tt.renderListItem(
+  $exampleList,
+  (item, index, list, parent) => {
+    item.parentName = parent && parent.name
+    if (parent) {
+      item.familyLine = 
+        parent.familyLine + 
+        " > " + 
+        item.name
+    } else {
+      item.familyLine = item.name
+    }
+    return item
+  },
+  "children"
+)`,
+        },
+      ],
+      productLine: [
+        {
+          desc: `Flatten the list`,
+          code: `tt.flatten(
+  $exampleList,
+  'subBusinessList'
+)`,
+        },
+      ],
+    },
+  },
+  {
     title: "renderItems",
-    desc: "Get all nested list length",
+    desc: "Add / Adjust / Compute items in object",
     note: "",
     argumentList: [
       {

@@ -236,12 +236,15 @@ class Thist {
       list,
       item => {
         let _item = { ...item };
-        delete _item[childrenKeyName];
+        // delete _item[childrenKeyName];
         flattenNestedList.push(_item);
         return _item;
       },
       childrenKeyName
     );
+    this.renderListItem(flattenNestedList, item => {
+      delete item[childrenKeyName];
+    });
     return flattenNestedList;
   }
   //getAllNestedListLength
@@ -353,7 +356,7 @@ class Thist {
     list.forEach((item, index) => {});
     return;
   }
-  
+
   renderListItem(list, renderFunction, childrenKeyName) {
     let that = this;
     let level = -1;

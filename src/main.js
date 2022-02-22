@@ -86,19 +86,6 @@ app.mixin({
       if (skip) {
         return code;
       }
-      let a = `tt.find(familyList, (item, index, qq) => item.role === "Great granddaughter" && item - qq < 5, "ch1ildren", function(bbb){
-        { var a = "QQQ" }
-       return bbb
-      }),`;
-      let arr = a.withinIndexList("function", "}", true, 0, ["{", "}"]);
-      arr.forEach(withinIndexList => {
-        let startIndex = withinIndexList[0];
-        let endIndex = withinIndexList[1];
-        let withinString = a.substring(startIndex, endIndex, true, 0, [
-          "(",
-          ")",
-        ]);
-      });
 
       // return code;
       let operatorList = [
