@@ -38,7 +38,7 @@ export default createStore({
   },
   actions: {
     async getExamples() {
-      let res = await axios.get("/examples.json");
+      let res = await axios.get("json/examples.json");
       console.log(res.data);
       return res;
     },
