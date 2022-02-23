@@ -308,29 +308,10 @@ export default [
     usages: {
       family: [
         {
-          desc: "Add children count to each data",
+          desc: "Flatten the list",
           code: `tt.flatten(
   $exampleList,
   'children'
-)`,
-        },
-        {
-          desc: "Flatten the list",
-          code: `tt.renderListItem(
-  $exampleList,
-  (item, index, list, parent) => {
-    item.parentName = parent && parent.name
-    if (parent) {
-      item.familyLine = 
-        parent.familyLine + 
-        " > " + 
-        item.name
-    } else {
-      item.familyLine = item.name
-    }
-    return item
-  },
-  "children"
 )`,
         },
       ],
