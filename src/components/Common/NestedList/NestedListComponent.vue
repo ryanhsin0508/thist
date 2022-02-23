@@ -93,7 +93,6 @@ export default {
     },
     renderedList() {
       let renderedList = tt.createThistId(this.list, this.nextListKey);
-      console.log(renderedList);
       return renderedList;
     },
   },

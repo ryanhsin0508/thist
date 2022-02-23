@@ -39,7 +39,6 @@ export default {
   computed: {},
   methods: {},
   mounted() {
-    console.log(this.dataX);
     window.addEventListener("scroll", this.onWindowScroll);
   },
   beforeUnmount() {

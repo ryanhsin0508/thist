@@ -49,19 +49,6 @@ export default [
   'children'
 )`,
         },
-        {
-          desc: "Get first finded child whose age is under 5 and father is Peter",
-          code: `tt.find(
-  $exampleList, 
-  (item, index, list, parent) => {
-    return (
-      item.age < 5 && 
-      parent.name === 'Peter'
-    )
-  },
-  'children'
-)`,
-        },
       ],
       productLine: [
         {

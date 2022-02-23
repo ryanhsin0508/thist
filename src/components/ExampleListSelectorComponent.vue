@@ -63,7 +63,6 @@ export default {
       }
     },
     selected(value) {
-      console.log("QQQW");
       this.$store.commit("SET_DATA", { selectedExampleType: value });
       localStorage.setItem("thistSelectedExample", value);
     },

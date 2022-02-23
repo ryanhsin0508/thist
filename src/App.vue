@@ -19,11 +19,9 @@ export default {
   },
   methods: {
     onMainScroll() {
-      console.log("QQQ");
     },
   },
   async mounted() {
-    console.log(this.$refs.main);
     this.$nextTick(() => {
     });
   },

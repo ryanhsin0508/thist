@@ -14,22 +14,22 @@ class Thist {
       let _childrenKeyName = _childrenList[level];
       let _parent = parent ? parent : {};
       list.forEach((item, index) => {
-        if (findFunction(item, index, list, _parent)) {
-          _match = item;
-        } else if (isFindDeep) {
-          for (let key in item) {
-            if (
-              checkType(item[key]) === "array" &&
-              item[key].length &&
-              key !== _childrenKeyName
-            ) {
-              if (find(item[key], item, level)) {
-                _match = item;
+        if (!_match) {
+          if (findFunction(item, index, list, _parent)) {
+            _match = item;
+          } else if (isFindDeep) {
+            for (let key in item) {
+              if (
+                checkType(item[key]) === "array" &&
+                item[key].length &&
+                key !== _childrenKeyName
+              ) {
+                if (find(item[key], item, level)) {
+                  _match = item;
+                }
               }
             }
           }
-        }
-        if (!_match) {
           if (!_childrenKeyName) {
             for (let key in item) {
               if (

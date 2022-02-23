@@ -112,7 +112,6 @@ export default {
   methods: {},
 
   async mounted() {
-    console.log(this.dataX.codeExamples);
     this.codeData = this.dataX.codeExamples.find(
       code => code.title === this.codeName
     );

@@ -186,11 +186,7 @@ app.mixin({
               });
             });
             argIndexList = argIndexList.bubbleSortFromLastIndex();
-            if (argIndexList && argIndexList.length) {
-              console.log(argIndexList);
-            }
             argIndexList.reverse().forEach(indexList => {
-              console.log(withinString.substring(indexList[0], indexList[1]));
               _code = _code.insert(
                 indexList[1] + startIndex,
                 "</&nbsp;span>&nbsp;"
