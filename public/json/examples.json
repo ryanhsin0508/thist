@@ -87,77 +87,108 @@
       {
         "name": "Happy Farm",
         "role": "headquarter",
-        "income": 20000,
         "inventory": [
           {
             "productName": "milk",
-            "count": 2000
+            "count": 2000,
+            "price": 50,
+            "soldLastMonth": 1800
           },
           {
             "productName": "egg",
-            "count": 1000
+            "count": 1000,
+            "price": 3,
+            "soldLastMonth": 1000
           },
           {
             "productName": "corn",
-            "count": 100
+            "count": 100,
+            "price": 30,
+            "soldLastMonth": 90
           },
           {
             "productName": "chocolate",
-            "count": 500
+            "count": 500,
+            "price": 20,
+            "soldLastMonth": 450
           },
           {
             "productName": "bread",
-            "count": 250
+            "count": 250,
+            "price": 10,
+            "soldLastMonth": 240
           }
         ],
         "subBusinessList": [
           {
             "name": "Healthy-Foods",
             "role": "dealer",
-            "income": 6000,
             "inventory": [
               {
                 "productName": "milk",
-                "count": 80
+                "count": 80,
+                "price": 60,
+                "soldLastMonth": 77
               },
               {
                 "productName": "egg",
-                "count": 200
+                "count": 200,
+                "price": 4,
+                "soldLastMonth": 200
               },
               {
                 "productName": "corn",
-                "count": 100
+                "count": 100,
+                "price": 40,
+                "soldLastMonth": 37
+              },
+              {
+                "productName": "bread",
+                "count": 70,
+                "price": 14,
+                "soldLastMonth": 56
               }
             ],
             "subBusinessList": [
               {
                 "name": "Twelve-Eight",
                 "role": "store",
-                "income": 5500,
                 "inventory": [
                   {
                     "productName": "milk",
-                    "count": 50
+                    "count": 50,
+                    "price": 80,
+                    "soldLastMonth": 50
+                  },
+                  {
+                    "productName": "egg",
+                    "count": 100,
+                    "price": 5,
+                    "soldLastMonth": 100
                   },
                   {
                     "productName": "bread",
-                    "count": 30
-                  },
-                  { "productName": "egg", "count": 100 }
+                    "count": 30,
+                    "price": 20,
+                    "soldLastMonth": 30
+                  }
                 ]
               },
               {
                 "name": "Nutritious Life",
                 "role": "store",
-                "income": 6500,
                 "inventory": [
                   {
                     "productName": "milk",
-                    "count": 40
+                    "count": 40,
+                    "price": 78,
+                    "soldLastMonth": 30
                   },
                   {
                     "productName": "egg",
-                    "count": 120
+                    "count": 120,
+                    "price": 5,
+                    "soldLastMonth": 100
                   }
                 ]
               }
@@ -166,89 +197,96 @@
           {
             "name": "Daily Energy",
             "role": "dealer",
-            "income": 5800,
             "inventory": [
               {
                 "productName": "milk",
-                "count": 480
+                "count": 480,
+                "price": 75,
+                "soldLastMonth": 475
               },
               {
                 "productName": "egg",
-                "count": 330
+                "count": 330,
+                "price": 6,
+                "soldLastMonth": 300
+              },
+              {
+                "productName": "corn",
+                "count": 55,
+                "price": 50,
+                "soldLastMonth": 55
+              },
+              {
+                "productName": "chocolate",
+                "count": 300,
+                "price": 15,
+                "soldLastMonth": 289
+              },
+              {
+                "productName": "bread",
+                "count": 80,
+                "price": 20,
+                "soldLastMonth": 80
               }
             ],
             "subBusinessList": [
               {
                 "name": "Tusco",
                 "role": "store",
-                "income": 5000,
                 "inventory": [
                   {
                     "productName": "milk",
-                    "count": 40
+                    "count": 40,
+                    "price": 79,
+                    "soldLastMonth": 38
                   },
                   {
                     "productName": "egg",
-                    "count": 600
+                    "count": 600,
+                    "price": 7,
+                    "soldLastMonth": 590
                   },
                   {
                     "productName": "corn",
-                    "count": 55
+                    "count": 55,
+                    "price": 55,
+                    "soldLastMonth": 55
                   },
                   {
                     "productName": "chocolate",
-                    "count": 300
+                    "count": 300,
+                    "price": 50,
+                    "soldLastMonth": 300
                   },
                   {
                     "productName": "bread",
-                    "count": 80
+                    "count": 80,
+                    "price": 25,
+                    "soldLastMonth": 71
                   }
                 ]
               },
               {
                 "name": "Urban24",
                 "role": "store",
-                "income": 4000,
                 "inventory": [
                   {
                     "productName": "milk",
-                    "count": 75
+                    "count": 75,
+                    "price": 80,
+                    "soldLastMonth": 75
                   },
                   {
                     "productName": "egg",
-                    "count": 112
+                    "count": 112,
+                    "price": 6,
+                    "soldLastMonth": 110
                   }
                 ]
               }
             ]
           }
         ]
-      }
-    ]
-  },
-  "geography": {
-    "title": "Geography",
-    "list": [
-      {
-        "name": "Asia",
-        "type": "region",
-        "landmarks": ["China Great Wall", "Tokyo Tower", "Skytree"]
-      },
-      {
-        "name": "Australia",
-        "type": "region"
-      },
-      {
-        "name": "North America",
-        "type": "region"
-      },
-      {
-        "name": "South America",
-        "type": "region"
-      },
-      {
-        "name": "Europe",
-        "type": "region"
       }
     ]
   }

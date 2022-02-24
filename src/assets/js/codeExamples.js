@@ -232,6 +232,50 @@ export default [
     },
   },
   {
+    title: "getMaxByKey",
+    desc: "Get max number by key in nested list",
+    note: "",
+    argumentList: [
+      {
+        argument: "list",
+        type: "Array",
+        desc: "The list to process",
+      },
+      {
+        argument: "keyName",
+        type: "String",
+        desc: "Designated key you want to get.",
+      },
+      {
+        argument: "childrenKeyName",
+        type: "String",
+        desc: "Indicate where next level's list is under.",
+      },
+    ],
+    argumentNote: "",
+    usages: {
+      family: [
+        {
+          desc: "Get all family members' name",
+          code: `tt.getValueListByKey(
+  $exampleList,
+  'name',
+  'children'
+)`,
+        },
+      ],
+      productLine: [
+        {
+          desc: `Get all nested list length`,
+          code: `tt.length(
+  $exampleList,
+  'subBusinessList'
+)`,
+        },
+      ],
+    },
+  },
+  {
     title: "getValueListByKey",
     desc: "Get all values by designated key",
     note: "",
@@ -285,6 +329,7 @@ export default [
         type: "Array",
         desc: "The list to process",
       },
+      
       {
         argument: "childrenKeyName",
         type: "String",
@@ -314,7 +359,7 @@ export default [
     },
   },
   {
-    title: "renderItems",
+    title: "renderListItem",
     desc: "Add / Adjust / Compute items in object",
     note: "",
     argumentList: [
@@ -322,6 +367,11 @@ export default [
         argument: "list",
         type: "Array",
         desc: "The list to process",
+      },
+      {
+        argument: "renderFunction",
+        type: "Function",
+        desc: "",
       },
       {
         argument: "childrenKeyName",
@@ -367,10 +417,16 @@ export default [
       ],
       productLine: [
         {
-          desc: `Get all nested list length`,
-          code: `tt.length(
+          desc: `Calcluate totla price of a product`,
+          code: `tt.renderListItem(
   $exampleList,
-  'subBusinessList'
+  (item, index, listKeyName, parent) => {
+    if (listKeyName === "inventory"){
+      
+      item.totalPrice = item.count * item.price
+    }
+    return item
+  },
 )`,
         },
       ],

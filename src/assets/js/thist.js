@@ -360,20 +360,34 @@ class Thist {
   renderListItem(list, renderFunction, childrenKeyName) {
     let that = this;
     let level = -1;
-    function renderList(list, parent) {
+    function renderList(list, parent, listKeyName) {
       level++;
       let renderedList = [];
       let _parent = parent ? parent : undefined;
       list.forEach((item, index) => {
-        let _item = renderFunction(item, index, list, _parent);
+        let _item = renderFunction(item, index, listKeyName, _parent);
         if (_item && _item[childrenKeyName]) {
           // delete _item[childrenKeyName];
         }
         renderedList.push(_item);
-        if (childrenKeyName && that.hasChildren(_item, childrenKeyName)) {
+        if (!childrenKeyName) {
+          for (let key in _item) {
+            if (checkType(_item[key]) === "array" && _item[key].length) {
+              renderedList[renderedList.length - 1][key] = renderList(
+                _item[key],
+                _item,
+                key
+              );
+            }
+          }
+        } else if (
+          childrenKeyName &&
+          that.hasChildren(_item, childrenKeyName)
+        ) {
           renderedList[renderedList.length - 1][childrenKeyName] = renderList(
             _item[childrenKeyName],
-            _item
+            _item,
+            childrenKeyName
           );
         }
       });
@@ -411,6 +425,13 @@ class Thist {
       }
     });
     return sortedList;
+  }
+  sumByKey(list, keyName) {
+    let total = 0;
+    list.forEach(item => {
+      total += item[keyName];
+    });
+    return total;
   }
   sumByKeyList(list, keyList) {
     let total = 0;
