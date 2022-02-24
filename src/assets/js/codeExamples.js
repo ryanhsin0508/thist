@@ -256,7 +256,7 @@ export default [
     usages: {
       family: [
         {
-          desc: "Add children count to each data",
+          desc: "Get all family members' name",
           code: `tt.getValueListByKey(
   $exampleList,
   'name',
