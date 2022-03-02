@@ -361,6 +361,7 @@ class Thist {
     let that = this;
     let level = -1;
     function renderList(list, parent, listKeyName) {
+      console.log("QQA");
       level++;
       let renderedList = [];
       let _parent = parent ? parent : undefined;
@@ -371,14 +372,17 @@ class Thist {
         }
         renderedList.push(_item);
         if (!childrenKeyName) {
+          let index = 0;
           for (let key in _item) {
             if (checkType(_item[key]) === "array" && _item[key].length) {
-              renderedList[renderedList.length - 1][key] = renderList(
+              renderedList[renderedList.length - 1][key] = renderFunction(
                 _item[key],
-                _item,
-                key
+                index,
+                key,
+                _item
               );
             }
+            index++;
           }
         } else if (
           childrenKeyName &&
