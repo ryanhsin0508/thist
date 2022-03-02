@@ -230,6 +230,49 @@ export default [
         },
       ],
     },
+  },{
+    title: "getMinByKey",
+    desc: "Get max number by key in nested list",
+    note: "",
+    argumentList: [
+      {
+        argument: "list",
+        type: "Array",
+        desc: "The list to process",
+      },
+      {
+        argument: "keyName",
+        type: "String",
+        desc: "Designated key you want to get.",
+      },
+      {
+        argument: "childrenKeyName",
+        type: "String",
+        desc: "Indicate where next level's list is under.",
+      },
+    ],
+    argumentNote: "",
+    usages: {
+      family: [
+        {
+          desc: "Get youngest member's age",
+          code: `tt.getMinByKey(
+  $exampleList,
+  'age',
+  'children'
+)`,
+        },
+      ],
+      productLine: [
+        {
+          desc: `Get minimun number of product count`,
+          code: `tt.getMinByKey(
+  $exampleList,
+  'count'
+)`,
+        },
+      ],
+    },
   },
   {
     title: "getMaxByKey",
@@ -256,7 +299,7 @@ export default [
     usages: {
       family: [
         {
-          desc: "Get oldiest member",
+          desc: "Get oldiest member's age",
           code: `tt.getMaxByKey(
   $exampleList,
   'age',
@@ -310,9 +353,10 @@ export default [
       ],
       productLine: [
         {
-          desc: `Get all nested list length`,
-          code: `tt.length(
+          desc: `Get all listed name`,
+          code: `tt.getValueListByKey(
   $exampleList,
+  'name',
   'subBusinessList'
 )`,
         },

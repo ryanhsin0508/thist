@@ -264,8 +264,6 @@ class Thist {
   getMaxByKey(list, keyName, childrenKeyName) {
     let that = this;
     function checkMax(list, max) {
-      console.log(list[0]);
-      console.log(list[0][keyName]);
       let _max = max ? max : list[0][keyName] ? list[0][keyName] : 0;
       list.forEach(item => {
         if (item[keyName] > _max) {
@@ -278,7 +276,6 @@ class Thist {
             }
           }
         } else if (that.hasChildren(item, childrenKeyName)) {
-          console.log(_max);
           _max = checkMax(item[childrenKeyName], _max);
         }
       });
@@ -287,24 +284,30 @@ class Thist {
 
     return checkMax(list);
   }
-  getMinByKey(list, keyName, childrenKeyName, min) {
-    let _min = min ? min : list[0][keyName];
-    list.forEach(item => {
-      if (item[keyName] < _min) {
-        _min = item[keyName];
-      }
-      console.log(_min, min, item.name);
-      if (this.hasChildren(item, childrenKeyName)) {
-        _min = this.getMinByKey(
-          item[childrenKeyName],
-          keyName,
-          childrenKeyName,
-          _min
-        );
-      }
-    });
-    return _min;
+  getMinByKey(list, keyName, childrenKeyName) {
+    let that = this;
+    function checkMax(list, max) {
+      let _min = max ? max : list[0][keyName] ? list[0][keyName] : 0;
+      list.forEach(item => {
+        if (item[keyName] < _min) {
+          _min = item[keyName];
+        }
+        if (!childrenKeyName) {
+          for (let key in item) {
+            if (checkType(item[key]) === "array" && item[key].length) {
+              _min = checkMax(item[key], _min);
+            }
+          }
+        } else if (that.hasChildren(item, childrenKeyName)) {
+          _min = checkMax(item[childrenKeyName], _min);
+        }
+      });
+      return _min;
+    }
+
+    return checkMax(list);
   }
+  
   //getValueListByKey
   getValueListByKey(list, findKeyName, childrenKeyName, valueList) {
     let _valueList = valueList ? valueList : [];
