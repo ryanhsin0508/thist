@@ -417,13 +417,13 @@ export default [
       ],
       productLine: [
         {
-          desc: `Calcluate totla price of a product`,
+          desc: `Calcluate total price of a product`,
           code: `tt.renderListItem(
   $exampleList,
   (item, index, listKeyName, parent) => {
     if (listKeyName === "inventory"){
-      
-      item.totalPrice = item.count * item.price
+      item.totalPrice = 
+        item.count * item.price
     }
     return item
   },
