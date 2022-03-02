@@ -256,20 +256,20 @@ export default [
     usages: {
       family: [
         {
-          desc: "Get all family members' name",
-          code: `tt.getValueListByKey(
+          desc: "Get oldiest member",
+          code: `tt.getMaxByKey(
   $exampleList,
-  'name',
+  'age',
   'children'
 )`,
         },
       ],
       productLine: [
         {
-          desc: `Get all nested list length`,
-          code: `tt.length(
+          desc: `Get greatest number of product count`,
+          code: `tt.getMaxByKey(
   $exampleList,
-  'subBusinessList'
+  'count'
 )`,
         },
       ],
@@ -329,7 +329,7 @@ export default [
         type: "Array",
         desc: "The list to process",
       },
-      
+
       {
         argument: "childrenKeyName",
         type: "String",
